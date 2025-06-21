@@ -34,7 +34,7 @@ for (file in prior_files) {
     
   # FC Cholesky
   zlim_FC_mean <- c(-0.8, 0.8)
-  zlim_FC_sd <- c(0.1, 0.3)
+  zlim_FC_sd <- c(0, 0.4)
   prior_FC_mean_Cholesky <- prior$prior$FC_Chol$FC_samp_mean
   prior_FC_var_Cholesky <- prior$prior$FC_Chol$FC_samp_var
   diag(prior_FC_mean_Cholesky) <- diag(prior_FC_var_Cholesky) <- NA
