@@ -1,0 +1,1135 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\usepackage{pifont}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Individualized functional topographic mapping with the BayesBrainMap R package and Human Connectome Project-derived priors},
+  pdfauthor={Nohelia Da Silva Sanchez, Damon D. Pham, Ellyn Butler, Amanda F. Mejia},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Individualized functional topographic mapping with the
+BayesBrainMap R package and Human Connectome Project-derived priors}
+\author{Nohelia Da Silva Sanchez, Damon D. Pham, Ellyn Butler, Amanda F.
+Mejia}
+\date{2025-05-07}
+
+\begin{document}
+\maketitle
+
+\subsection{1. Introduction}\label{introduction}
+
+Bayesian brain mapping (BBM) is a technique for producing individualized
+functional brain topographic maps from existing group-level network
+maps. Group-level network maps are commonly group ICA maps or group
+average parcellations, but other types of networks maps such as
+non-negative matrix factorization and PROFUMO can be used. In the case
+of ICA, BBM is known as template ICA (Mejia et al. 2020). BBM is a
+hierarchical source separation model, with priors on the spatial
+topography and, optionally, on the functional connectivity. The priors
+are estimated a-priori, so the model can be fit to individual-level fMRI
+data. The noise-reduction properties of the population-derived priors
+result highly accurate and reliable individual network topography maps
+and the functional connectivity between them. Importantly, the
+subject-level network maps are matched to the corresponding group
+networks from the template (i.e.~parcellations or group ICA maps).
+Because BBM is applicable to individual-level analysis, it is
+computationally convenient and has potential clinical utility.
+
+Once a set of group-level network maps has been chosen, there are two
+steps to performing BBM. Both are implemented in the
+\texttt{BayesBrainMap} R package.
+
+\includegraphics[width=0.8\linewidth]{data_OSF/inputs/Drawing_v1}
+
+Here, we perform Step 1 using data from the Human Connectome Project
+(HCP). Specifically, we train CIFTI-format Bayesian brain mapping priors
+using a variety of ICA and parcellation-based templates, listed below.
+The population-derived priors described here are available for use for
+individual-level Bayesian brain mapping. For analysis of individuals
+from other populations, it is often desirable to train the prior on a
+set of training subjects representative of that population. To
+facilitate this, we also provide and describe the code used to produce
+the HCP-derived priors, so that this workflow can be easily reproduced
+in other datasets. Finally, we illustrate the use of
+
+For the choice of group-level network maps, we provide several options:
+
+\begin{itemize}
+\item
+  Group ICA maps from the HCP at resolutions from 15 to 50 (CITE)
+\item
+  The 17 Yeo networks (CITE)
+\end{itemize}
+
+\newcommand{\Checkmark}{\ding{51}}
+\begin{table}[ht]
+\centering
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Global Signal Regression} & \multicolumn{3}{c|}{\textbf{Group ICA}} & \textbf{Parcellation} \\
+\cline{2-4}
+ & 15 HCP ICs & 25 HCP ICs & 50 HCP ICs & Yeo 17 \\
+\hline
+With GSR & \ding{51}& \ding{51}& \ding{51}& \ding{51}\\
+\hline
+Without GSR & \ding{51}& \ding{51}& \ding{51}& \ding{51}\\
+\hline
+\end{tabular}
+\caption{Templates used for Bayesian brain mapping.}
+\label{tab:template-summary}
+\end{table}
+
+\subsection{2. Setup}\label{setup}
+
+To reproduce this workflow, first follow the setup process outlined in
+\hyperref[appendix-setup]{Appendix A}.
+
+\subsection{3. Choosing Training
+Subjects}\label{choosing-training-subjects}
+
+Before estimating the BBM priors, we first select a high-quality,
+balanced subject sample to ensure reliable, representative priors.
+Starting from the full HCP sample of 1206, we apply the following
+filtering steps:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Filter Subjects by Sufficient fMRI Scan Duration}
+
+  See \hyperref[appendix-filtering-1]{Appendix B.1} and script:
+  \texttt{1\_fd\_time\_filtering.R}
+\item
+  \textbf{Filter Unrelated Subjects}
+
+  See \hyperref[appendix-filtering-2]{Appendix B.2} and script:
+  \texttt{2\_unrelated\_filtering.R}
+\item
+  \textbf{Balance sex within age groups}
+
+  See \hyperref[appendix-filtering-3]{Appendix B.3} and script:
+  \texttt{3\_balance\_age\_sex.R}
+\end{enumerate}
+
+The resulting subject list
+(\texttt{valid\_combined\_subjects\_balanced.rds}) is used throughout
+the rest of the analysis.
+
+\subsection{\texorpdfstring{4. Step 1: Estimate Priors using
+\texttt{estimate\_prior()}}{4. Step 1: Estimate Priors using estimate\_prior()}}\label{step-1-estimate-priors-using-estimate_prior}
+
+In this step, we estimate group-level statistical priors using the
+\texttt{estimate\_prior()} function from the \texttt{BayesBrainMap}
+package.
+
+\subsection{4.1 Subject List and Scan
+Selection}\label{subject-list-and-scan-selection}
+
+The encoding parameter is set to \texttt{combined}, \texttt{LR}, and
+\texttt{RL} to use the final lists of subjects saved in Step 3.3
+(\texttt{valid\_combined\_subjects\_balanced.rds},
+\texttt{valid\_\_LR\_subjects\_balanced.rds}, and
+\texttt{valid\_RL\_subjects\_balanced.rds}). The \texttt{combined} list
+includes individuals who passed motion filtering in both LR and RL
+directions for both sessions, were unrelated, and were sex-balanced
+within age groups. The \texttt{LR} and \texttt{RL} lists include
+subjects who met these criteria independently for each direction.
+
+If encoding is \texttt{combined}, we include only REST1 sessions from
+both phase-encoding directions:
+
+\begin{itemize}
+\item
+  \texttt{rfMRI\_REST1\_LR\_Atlas\_MSMAll\_hp2000\_clean.dtseries.nii}
+\item
+  \texttt{rfMRI\_REST1\_RL\_Atlas\_MSMAll\_hp2000\_clean.dtseries.nii}
+\end{itemize}
+
+If encoding is \texttt{LR} or \texttt{RL}, we use both REST1 and REST2
+sessions from the specified direction:
+
+For \texttt{LR}:
+
+\begin{itemize}
+\item
+  \texttt{rfMRI\_REST1\_LR\_Atlas\_MSMAll\_hp2000\_clean.dtseries.nii}
+\item
+  \texttt{rfMRI\_REST2\_LR\_Atlas\_MSMAll\_hp2000\_clean.dtseries.nii}
+\end{itemize}
+
+For \texttt{RL}:
+
+\begin{itemize}
+\item
+  \texttt{rfMRI\_REST1\_RL\_Atlas\_MSMAll\_hp2000\_clean.dtseries.nii}
+\item
+  \texttt{rfMRI\_REST2\_RL\_Atlas\_MSMAll\_hp2000\_clean.dtseries.nii}
+\end{itemize}
+
+\subsection{4.2 Temporal Preprocessing
+Parameters}\label{temporal-preprocessing-parameters}
+
+To standardize scan duration and improve data quality, we apply both
+initial volume dropping and temporal truncation using parameters handled
+directly by the \texttt{estimate\_prior()} function from the
+\texttt{BayesBrainMap} package.
+
+Specifically:
+
+\begin{itemize}
+\item
+  \texttt{drop\_first\ =\ 15} removes the first 15 volumes from each
+  scan to eliminate early signal instability and motion artifacts.
+\item
+  \texttt{scrub} defines volumes to exclude after a target duration. In
+  our case, we truncate data to the first 10 minutes (600 seconds),
+  excluding any volumes beyond that point.
+\end{itemize}
+
+See \hyperref[appendix-scrub]{Appendix C} for more details.
+
+\subsection{4.3 Parcellation Choices}\label{parcellation-choices}
+
+We consider two types of group-level parcellations for estimating
+priors:
+
+\begin{itemize}
+\item
+  HCP GICA parcellation (\texttt{GICA15.dscalar.nii}, etc.), available
+  in the \texttt{data\_OSF/inputs} folder. These files were downloaded
+  from the HCP website, specifically from the CIFTI Subject-specific ICA
+  Parcellations dataset for 15-, 25-, and 50-dimensionalities.
+\item
+  Yeo17 parcellation (CITE). For details on how this parcellation was
+  processed and simplified for use, see
+  \hyperref[appendix-parcellations]{Appendix D}.
+\end{itemize}
+
+Each of these parcellations was used to estimate priors with and without
+global signal regression (GSR), resulting in eight total priors saved as
+.rds files. See Table
+\hyperref[tab:template-summary]{Table~\ref*{tab:template-summary}} for a
+summary of the parcellations and GSR combinations.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# This script estimates and saves functional connectivity priors }
+\CommentTok{\# for both spatial topography and connectivity.}
+\CommentTok{\# It supports both GICA{-}based (15/25/50 ICs) and Yeo17 parcellations, }
+\CommentTok{\# with or without global signal regression (GSR).}
+\CommentTok{\# For priors using the "combined" subject list, it loads REST1{-}LR and REST1{-}RL}
+\CommentTok{\# scans for each subject, }
+\CommentTok{\# drops the first 15 volumes, and truncates each scan to approximately 10 minutes.}
+\CommentTok{\# Outputs:}
+\CommentTok{\# {-} Priors \textasciigrave{}.rds\textasciigrave{} file saved in \textasciigrave{}dir\_results\textasciigrave{}}
+
+\FunctionTok{source}\NormalTok{(}\StringTok{"5\_estimate\_prior.R"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{4.4 Example Usage}\label{example-usage}
+
+Running \texttt{estimate\_prior()} on the full \texttt{"combined"}
+subject list (\textasciitilde350 subjects) takes approximately 27 hours
+and uses 135 GB of memory.
+
+For an example of how to run \texttt{estimate\_prior()} and all relevant
+parameters, see \hyperref[appendix-example]{Appendix E}.
+
+\subsection{5. Visualization}\label{visualization}
+
+In this section, we visualize both the parcellation maps and the priors
+outputs (mean and variance) for each parcellation scheme used in the
+study: Yeo17, 15 IC, 25 IC, and 50 IC using the \texttt{combined} list
+of subjects.
+
+We also visualize their corresponding functional connectivity (FC)
+priors.
+
+\subsubsection{5.1 Generate and Save Parcellation
+Visualizations}\label{generate-and-save-parcellation-visualizations}
+
+\paragraph{5.1.1 Yeo17 parcellation}\label{yeo17-parcellation}
+
+\leavevmode
+
+\textbf{Script:} \texttt{8\_visualization\_Yeo17parcellations.R}
+
+This script creates one PNG image per parcel (17 in total), where only
+the selected parcel is colored and all others are white. The
+parcellation used is Yeo17, created in
+\hyperref[appendix-parcellations]{Appendix D}.
+
+Images are saved in
+\texttt{data-OSF/outputs/parcellations\_plots/Yeo17}.
+
+\paragraph{5.1.2 GICA Parcellations}\label{gica-parcellations}
+
+\leavevmode
+
+Script: \texttt{9\_visualization\_GICAparcellations.R}
+
+This script loops over all independent components for each parcellation
+dimensionality (\texttt{nIC\ =\ 15,\ 25,\ 50}) and generates two images
+per component:
+
+\begin{itemize}
+\item
+  A cortical surface map (e.g., \texttt{GICA15\_IC1.png})
+\item
+  A subcortical view (e.g., \texttt{GICA15\_IC1\_sub.png})
+\end{itemize}
+
+The resulting images are saved in the following folders:
+
+\begin{itemize}
+\item
+  \texttt{data\_OSF/outputs/parcellations\_plots/GICA15/}
+\item
+  \texttt{data\_OSF/outputs/parcellations\_plots/GICA25}
+\item
+  \texttt{data\_OSF/outputs/parcellations\_plots/GICA50}
+\end{itemize}
+
+Each pair of files corresponds to a specific ICA component and captures
+its spatial map across brain regions.
+
+\subsubsection{5.2 Visualize Prior
+Components}\label{visualize-prior-components}
+
+\leavevmode
+
+Script: \texttt{6\_visualization\_prior.R}
+
+This script loads each estimated prior file from \texttt{priors\_rds/}
+and plots both the mean and standard deviation components for all
+independent components (ICs).
+
+All images are organized into folders by number of ICs, GSR setting, and
+corresponding list of subjects used, e.g.:
+
+\begin{verbatim}
+data_OSF/priors_plots/GICA15/combined/GSR/
+
+data_OSF/priors_plots/GICA15/combined/noGSR/
+
+data_OSF/priors_plots/GICA25/LR/noGSR/
+
+data_OSF/priors_plots/Yeo17/RL/GSR/
+...
+\end{verbatim}
+
+\subsubsection{5.3 Visual Summary of
+Priors}\label{visual-summary-of-priors}
+
+In this section, we present a comparative visual summary of the
+estimated group-level priors.
+
+For each parcellation type Yeo17, 15 ICs, 25 ICs, and 50 IC, we display:
+
+\begin{itemize}
+\item
+  First and Last Parcellation Map
+\item
+  First and Last Component Mean
+\item
+  First and Last Component Standard Deviation
+\end{itemize}
+
+These summaries are shown in a 2-column grid layout per parcellation to
+highlight spatial structure and variability.
+
+All images were generated using the scripts:
+
+\begin{itemize}
+\item
+  \texttt{8\_visualization\_Yeo17parcellations.R}
+\item
+  \texttt{9\_visualization\_GICAparcellations.R}
+\item
+  \texttt{6\_visualization\_prior.R}
+\end{itemize}
+
+\paragraph{5.3.1 15 ICs}\label{ics}
+
+\leavevmode
+
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/parcellations_plots/GICA15/GICA15_IC1}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/parcellations_plots/GICA15/GICA15_IC15}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA15/combined/GSR/prior_combined_GICA15_GSR_IC1_mean}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA15/combined/GSR/prior_combined_GICA15_GSR_IC15_mean}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA15/combined/GSR/prior_combined_GICA15_GSR_IC1_sd}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA15/combined/GSR/prior_combined_GICA15_GSR_IC15_sd}
+
+\paragraph{5.3.2 25 ICs}\label{ics-1}
+
+\leavevmode
+
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/parcellations_plots/GICA25/GICA25_IC1}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/parcellations_plots/GICA25/GICA25_IC25}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA25/combined/GSR/prior_combined_GICA25_GSR_IC1_mean}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA25/combined/GSR/prior_combined_GICA25_GSR_IC25_mean}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA25/combined/GSR/prior_combined_GICA25_GSR_IC1_sd}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA25/combined/GSR/prior_combined_GICA25_GSR_IC25_sd}
+
+\paragraph{5.3.3 50 ICs}\label{ics-2}
+
+\leavevmode
+
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/parcellations_plots/GICA50/GICA50_IC1}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/parcellations_plots/GICA50/GICA50_IC50}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA50/combined/GSR/prior_combined_GICA50_GSR_IC1_mean}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA50/combined/GSR/prior_combined_GICA50_GSR_IC50_mean}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA50/combined/GSR/prior_combined_GICA50_GSR_IC1_sd}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA50/combined/GSR/prior_combined_GICA50_GSR_IC50_sd}
+
+\paragraph{5.3.4 Yeo17}\label{yeo17}
+
+\leavevmode
+
+For the Yeo17 parcellation, we show visualizations of the two main
+networks (\texttt{DefaultA} and \texttt{DorsAttnA}):
+
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/parcellations_plots/Yeo17/Yeo17_DefaultA}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/parcellations_plots/Yeo17/Yeo17_DorsAttnA}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/Yeo17/combined/GSR/prior_combined_Yeo17_GSR_DefaultA_mean}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/Yeo17/combined/GSR/prior_combined_Yeo17_GSR_DorsAttnA_mean}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/Yeo17/combined/GSR/prior_combined_Yeo17_GSR_DefaultA_sd}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/Yeo17/combined/GSR/prior_combined_Yeo17_GSR_DorsAttnA_sd}
+
+\subsubsection{5.4 Visualize Functional Connectivity
+Priors}\label{visualize-functional-connectivity-priors}
+
+\leavevmode
+
+Script: \texttt{7\_visualization\_FC.R}
+
+This step visualizes the Functional Connectivity (FC) prior for each
+prior using both the Cholesky and Inverse-Wishart parameterizations. For
+each group-level prior in \texttt{priors/}, we compute and plot:
+
+\begin{itemize}
+\item
+  Mean FC matrix (off-diagonal values only)
+\item
+  Standard deviation of FC estimates (from the variance matrix)
+\end{itemize}
+
+For each prior, the following outputs are saved in the corresponding
+folder under:
+
+\texttt{data\_OSF/outputs/priors\_plots/\textless{}parcellation\textgreater{}/\textless{}encoding\textgreater{}/FC/}
+
+Where:
+
+\begin{itemize}
+\item
+  = GICA15, GICA25, GICA50, or Yeo17
+\item
+  = LR, RL, or combined
+\end{itemize}
+
+\paragraph{PDF files (2 per prior)}\label{pdf-files-2-per-prior}
+
+\begin{itemize}
+\item
+  \texttt{{[}prior\_name{]}\_FC\_Cholesky.pdf}
+\item
+  \texttt{{[}prior\_name{]}\_FC\_InverseWishart.pdf}
+\end{itemize}
+
+Each PDF includes:
+
+\begin{itemize}
+\item
+  FC Prior Mean (Page 1)
+\item
+  FC Prior Standard Deviation (Page 2)
+\end{itemize}
+
+\paragraph{PNG imgaes (4 per prior)}\label{png-imgaes-4-per-prior}
+
+\begin{itemize}
+\item
+  \texttt{{[}prior\_name{]}\_FC\_Cholesky\_mean.png}
+\item
+  \texttt{{[}prior\_name{]}\_FC\_Cholesky\_sd.png}
+\item
+  \texttt{{[}prior\_name{]}\_FC\_InverseWishart\_mean.png}
+\item
+  \texttt{{[}prior\_name{]}\_FC\_InverseWishart\_sd.png}
+\end{itemize}
+
+These visualizations allow for a direct comparison of spatial FC
+structure and uncertainty across priors and estimation methods.
+
+The figures below show the mean and standard deviation of FC priors for
+each parcellation (GICA15, GICA25, GICA50, Yeo17) using Cholesky and
+Inverse-Wishart methods. Only combined priors are shown.
+
+\paragraph{5.4.1 GICA15}\label{gica15}
+
+\leavevmode
+
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA15/combined/GSR/FC/prior_combined_GICA15_GSR_FC_Cholesky_mean}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA15/combined/GSR/FC/prior_combined_GICA15_GSR_FC_InverseWishart_mean}
+
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA15/combined/GSR/FC/prior_combined_GICA15_GSR_FC_Cholesky_sd}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA15/combined/GSR/FC/prior_combined_GICA15_GSR_FC_InverseWishart_sd}
+
+\paragraph{5.4.2 25 ICs}\label{ics-3}
+
+\leavevmode
+
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA25/combined/GSR/FC/prior_combined_GICA25_GSR_FC_Cholesky_mean}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA25/combined/GSR/FC/prior_combined_GICA25_GSR_FC_InverseWishart_mean}
+
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA25/combined/GSR/FC/prior_combined_GICA25_GSR_FC_Cholesky_sd}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA25/combined/GSR/FC/prior_combined_GICA25_GSR_FC_InverseWishart_sd}
+
+\paragraph{5.4.3 50 ICs}\label{ics-4}
+
+\leavevmode
+
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA50/combined/GSR/FC/prior_combined_GICA50_GSR_FC_Cholesky_mean}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA50/combined/GSR/FC/prior_combined_GICA50_GSR_FC_InverseWishart_mean}
+
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA50/combined/GSR/FC/prior_combined_GICA50_GSR_FC_Cholesky_sd}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA50/combined/GSR/FC/prior_combined_GICA50_GSR_FC_InverseWishart_sd}
+
+\paragraph{5.4.4 Yeo17}\label{yeo17-1}
+
+\leavevmode
+
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/Yeo17/combined/GSR/FC/prior_combined_yeo17_GSR_FC_Cholesky_mean}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/Yeo17/combined/GSR/FC/prior_combined_Yeo17_GSR_FC_InverseWishart_mean}
+
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/Yeo17/combined/GSR/FC/prior_combined_Yeo17_GSR_FC_Cholesky_sd}
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/Yeo17/combined/GSR/FC/prior_combined_Yeo17_GSR_FC_InverseWishart_sd}
+
+\subsection{6. Step 2: Using Priors for Individual-Level Brain
+Mapping}\label{step-2-using-priors-for-individual-level-brain-mapping}
+
+In this section, we demonstrate how to apply the population-level priors
+estimated in Section 4 to perform subject-level analysis using the
+\texttt{BayesBrainMap} package.
+
+The process involves two steps:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Fitting the Bayesian brain mapping model to subject data using a
+  precomputed prior.
+\item
+  Identifying regions of significant deviation from the prior mean
+  (i.e., areas of engagement).
+\end{enumerate}
+
+This example uses:
+
+\begin{itemize}
+\item
+  A prior based on Yeo17 template with global signal regression (GSR)
+  and the \texttt{combined} list of subjects.
+\item
+  One subject's resting-state data in CIFTI format. In this case, we use
+  HCP subject 100206.
+\end{itemize}
+
+\paragraph{6.1 Load Subject-Level fMRI Data and
+Prior}\label{load-subject-level-fmri-data-and-prior}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Load population prior }
+\NormalTok{prior }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\StringTok{"priors/Yeo17/prior\_combined\_Yeo17\_GSR.rds"}\NormalTok{)}
+
+\CommentTok{\# Load subject fMRI data (CIFTI format)}
+\NormalTok{BOLD }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(dir\_data, }\StringTok{"inputs"}\NormalTok{, }\StringTok{"rfMRI\_REST1\_LR\_Atlas\_MSMAll\_hp2000\_clean.dtseries.nii"}\NormalTok{),}
+          \FunctionTok{file.path}\NormalTok{(dir\_data, }\StringTok{"inputs"}\NormalTok{, }\StringTok{"rfMRI\_REST1\_RL\_Atlas\_MSMAll\_hp2000\_clean.dtseries.nii"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+The fMRI input must be a CIFTI, NIFTI, or matrix object compatible with
+the prior.
+
+\paragraph{6.2 Estimate Subject-Level
+Networks}\label{estimate-subject-level-networks}
+
+Once the data is loaded, we fit the Bayesian brain mapping model to
+obtain individualized functional networks aligned to the prior
+components:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bMap }\OtherTok{\textless{}{-}} \FunctionTok{BrainMap}\NormalTok{(}
+  \AttributeTok{BOLD =}\NormalTok{ BOLD,}
+  \AttributeTok{prior =}\NormalTok{ prior,}
+  \AttributeTok{TR =} \FloatTok{0.72}\NormalTok{,}
+  \AttributeTok{drop\_first =} \DecValTok{15}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{6.3 Identify Engagement Maps}\label{identify-engagement-maps}
+
+\leavevmode
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eng }\OtherTok{\textless{}{-}} \FunctionTok{engagements}\NormalTok{(}
+  \AttributeTok{bMap =}\NormalTok{ bMap}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{6.4 Visualize the Results}\label{visualize-the-results}
+
+\leavevmode
+
+We now plot:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  The subject-level networks estimated by \texttt{BrainMap()} (both mean
+  and standard error).
+\item
+  The engagement maps, showing regions of deviation from the prior mean.
+\end{enumerate}
+
+For all outputs, we only visualize ContA network from the Yeo 17
+parcellation.
+
+\begin{center}\includegraphics[width=0.8\linewidth]{data_OSF/outputs/subject_maps/posterior_Yeo17_ContA_mean} \end{center}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{data_OSF/outputs/subject_maps/posterior_Yeo17_ContA_se} \end{center}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{data_OSF/outputs/subject_maps/subject_Yeo17_ContA_engaged} \end{center}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{data_OSF/outputs/subject_maps/subject_Yeo17_ContA_engaged_legend} \end{center}
+
+\appendix
+
+\subsection{Appendix A: Setup}\label{appendix-setup}
+
+To reproduce this workflow, first clone the repository to your local
+machine or cluster:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{git clone https}\SpecialCharTok{:}\ErrorTok{//}\NormalTok{github.com}\SpecialCharTok{/}\NormalTok{mandymejia}\SpecialCharTok{/}\NormalTok{BayesianBrainMapping}\SpecialCharTok{{-}}\NormalTok{Templates.git}
+\NormalTok{cd BayesianBrainMapping}\SpecialCharTok{{-}}\NormalTok{Templates}
+\end{Highlighting}
+\end{Shaded}
+
+Next, download the required \texttt{data\_OSF/} and \texttt{priors}
+folders from the following OSF link:
+
+\href{https://osf.io/n3wk5/?view_only=0d95b31090a245eb9ef51fe262be60ef}{\texttt{https://osf.io/n3wk5/?view\_only=0d95b31090a245eb9ef51fe262be60ef}}
+
+Once downloaded, unzip the folder and place in the folder in the GitHub
+directory with the same corresponding name. The folder structure should
+look like this:
+
+This section initializes the environment by loading required packages,
+setting analysis parameters, and defining directory paths.
+
+\textbf{Important:} Before running the workflow, you must review
+\texttt{0\_setup.R} and install any necessary packages, ensure you have
+an installation of Connectome Workbench, and update the following
+variables to match your local or cluster environment:
+
+\begin{itemize}
+\item
+  \texttt{dir\_project} (path to the GitHub folder)
+\item
+  \texttt{dir\_HCP} (path to the HCP data)
+\item
+  \texttt{HCP\_unrestricted\_fname} (path to the unrestricted HCP CSV if
+  you have access to it)
+\item
+  \texttt{HCP\_restricted\_fname} (path to the restricted HCP CSV if you
+  have access to it)
+\item
+  \texttt{wb\_path} (location of the CIFTI Workbench on your system)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{github\_repo\_dir }\OtherTok{\textless{}{-}} \FunctionTok{getwd}\NormalTok{()}
+\NormalTok{src\_dir }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(github\_repo\_dir, }\StringTok{"src"}\NormalTok{)}
+\FunctionTok{source}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(src\_dir, }\StringTok{"0\_setup.R"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Appendix B: Subject
+Filtering}\label{appendix-b-subject-filtering}
+
+\subsubsection{Appendix B.1: Filter Subjects by Sufficient fMRI Scan
+Duration}\label{appendix-filtering-1}
+
+We begin by filtering subjects based on the fMRI scan duration after
+motion scrubbing For each subject, and for each session (\texttt{REST1},
+\texttt{REST2}) and encoding direction (\texttt{LR}, \texttt{RL}), we
+compute framewise displacement (FD) using the \texttt{fMRIscrub}
+package. We use a lagged and filtered version of FD (CITE Pham Less is
+More and Power/Fair refs therein) appropriate for multiband data. FD is
+calculated from the \texttt{Movement\_Regressors.txt} file available in
+the HCP data for each subject, encoding and session.
+
+A volume is considered valid if it passes an FD threshold, and a subject
+is retained only if both sessions in both encodings have at least 10
+minutes (600 seconds) of valid data.
+
+The final subject lists include those who passed the filtering criteria
+separately for each encoding: \texttt{LR}, \texttt{RL}, and their
+intersection, referred to as the\texttt{combined} list. The combined
+list includes only subjects who passed all criteria for both LR and RL
+encodings across both visits (REST1 and REST2), and is the one used
+throughout this project.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# This script filters subjects based on motion using framewise displacement (FD)}
+\CommentTok{\# from fMRIscrub.}
+\CommentTok{\# For each subject, encoding (LR/RL), and session (REST1/REST2), it computes FD }
+\CommentTok{\# and valid scan}
+\CommentTok{\# time after excluding high{-}motion volumes.}
+\CommentTok{\# Subjects with ≥10 minutes of valid data in both sessions are retained.}
+\CommentTok{\# Outputs (saved in dir\_results):}
+\CommentTok{\# {-} Valid subject lists for LR, RL, and combined encodings (intersection)}
+\CommentTok{\# {-} FD summary per subject/session/encoding}
+
+\CommentTok{\#set up path, etc.}
+\NormalTok{github\_repo\_dir }\OtherTok{\textless{}{-}} \FunctionTok{getwd}\NormalTok{()}
+\NormalTok{src\_dir }\OtherTok{\textless{}{-}} \FunctionTok{file.path}\NormalTok{(github\_repo\_dir, }\StringTok{"src"}\NormalTok{)}
+\FunctionTok{source}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(src\_dir, }\StringTok{"0\_setup.R"}\NormalTok{))}
+
+\CommentTok{\#run script to exclude sessions based on head motion}
+\FunctionTok{source}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(src\_dir,}\StringTok{"1\_fd\_time\_filtering.R"}\NormalTok{)) }
+\end{Highlighting}
+\end{Shaded}
+
+During this step, an FD summary table is generated with the following
+columns:
+
+\begin{itemize}
+\item
+  subject: HCP subject ID
+\item
+  session: REST1 or REST2
+\item
+  encoding: LR or RL
+\item
+  mean\_fd: mean framewise displacement
+\item
+  valid\_time\_sec: total duration of valid data in seconds
+\end{itemize}
+
+\paragraph{Preview of FD Summary
+Table}\label{preview-of-fd-summary-table}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Read FD summary}
+\NormalTok{fd\_summary }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(dir\_data, }\StringTok{"outputs"}\NormalTok{, }\StringTok{"filtering"}\NormalTok{, }\StringTok{"fd\_summary.csv"}\NormalTok{))}
+
+\CommentTok{\# Display the first 4 rows}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\FunctionTok{head}\NormalTok{(fd\_summary, }\DecValTok{4}\NormalTok{), }\AttributeTok{caption =} \StringTok{"First rows of FD summary table"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}rrllrr@{}}
+\caption{First rows of FD summary table}\tabularnewline
+\toprule\noalign{}
+X & subject & session & encoding & mean\_fd & valid\_time\_sec \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+X & subject & session & encoding & mean\_fd & valid\_time\_sec \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & 100206 & REST1 & LR & 0.1017240 & 858.24 \\
+2 & 100206 & REST2 & LR & 0.1361220 & 858.96 \\
+3 & 100206 & REST1 & RL & 0.0698779 & 864.00 \\
+4 & 100206 & REST2 & RL & 0.0824894 & 863.28 \\
+\end{longtable}
+
+As shown above, subject 100206 qualifies for further analysis because
+each of the four sessions (REST1/REST2 × LR/RL) contains at least 600
+seconds of valid data.
+
+The script is currently designed to filter based on valid time only, but
+it can be easily adapted to apply additional constraints such as maximum
+mean FD thresholds if desired (e.g., mean\_fd \textless{} 0.2).
+
+\subsubsection{Appendix B.2: Filter Unrelated
+Subjects}\label{appendix-filtering-2}
+
+Building on the previous step, we use the HCP restricted demographic
+data to exclude related individuals. This step helps ensure the
+statistical independence of subjects in the group-level priors
+estimation.
+
+For the \texttt{LR}, \texttt{RL}, and \texttt{combined} lists of valid
+subjects derived in the previous step, we:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Subset the HCP restricted demographics to include only those subjects
+  with at least 10 minutes remaining after scrubbing.
+\item
+  Filter by \texttt{Family\_ID} to retain a single individual per
+  family.
+\end{enumerate}
+
+Note: This step requires access to the HCP restricted data. If you do
+not have access, you can skip this step, resulting in some related
+subjects being included in your training data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# This script filters subjects to retain only unrelated individuals, using Family ID }
+\CommentTok{\# information from the restricted HCP data.}
+\CommentTok{\# For each encoding (LR, RL, combined), it selects one subject per family from the }
+\CommentTok{\# FD{-}valid lists.}
+\CommentTok{\# Outputs (saved in dir\_personal due to restricted data):}
+\CommentTok{\# {-} Unrelated subject lists for LR, RL, and combined encodings (intersection)}
+
+\FunctionTok{source}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(src\_dir,}\StringTok{"2\_unrelated\_filtering.R"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Appendix B.3: Balance Sex Within Age
+Groups}\label{appendix-filtering-3}
+
+In the final step of subject selection, we balance sex across age groups
+to reduce potential demographic bias in priors estimation.
+
+For the \texttt{LR}, \texttt{RL}, and \texttt{combined} lists of valid
+subjects derived in the previous step, we:
+
+\begin{itemize}
+\item
+  Subset the HCP unrestricted demographics to include only those
+  subjects.
+\item
+  Split subjects by age group and examine the sex distribution within
+  each group.
+\item
+  If both sexes are present but imbalanced, we randomly remove subjects
+  from the overrepresented group to achieve balance.
+\end{itemize}
+
+Note: If the unrelated subject filtering step is skipped (e.g., due to
+lack of restricted data access), the code automatically falls back to
+using \texttt{valid\_\textless{}encoding\textgreater{}\_subjects\_FD}
+instead of
+\texttt{valid\_\textless{}encoding\textgreater{}\_subjects\_unrelated}.
+
+The final list of valid subjects is saved in \texttt{dir\_results} as:
+
+\begin{itemize}
+\item
+  \texttt{valid\_\textless{}encoding\textgreater{}\_subjects\_balanced.csv}
+\item
+  \texttt{valid\_\textless{}encoding\textgreater{}\_subjects\_balanced.rds}
+  (used in the prior estimation step)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# This script balances sex within each age group for subjects who passed FD and }
+\CommentTok{\# unrelated filtering.}
+\CommentTok{\# For each encoding (LR, RL, combined), it samples subjects to equalize the number}
+\CommentTok{\# of males and females per age group, }
+\CommentTok{\# unless an age group includes only one gender (in which case no balancing is applied).}
+\CommentTok{\# Uses age and gender information from the unrestricted HCP data.}
+\CommentTok{\# Outputs (saved in dir\_personal):}
+\CommentTok{\# {-} Sex{-}balanced subject lists for LR, RL, and combined encodings (as .csv and .rds)}
+
+\FunctionTok{source}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(src\_dir,}\StringTok{"3\_balance\_age\_sex.R"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Appendix C: Scrubbing and Temporal
+Truncation}\label{appendix-scrub}
+
+Given the HCP TR of 0.72 seconds, 10 minutes corresponds to:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{T\_total }\OtherTok{\textless{}{-}} \FunctionTok{floor}\NormalTok{(}\DecValTok{600} \SpecialCharTok{/}\NormalTok{ TR\_HCP) }\CommentTok{\# \textasciitilde{}833 volumes}
+\end{Highlighting}
+\end{Shaded}
+
+To define the volumes to scrub (i.e., exclude beyond 10 minutes), we
+compute:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{T\_scrub\_start }\OtherTok{\textless{}{-}}\NormalTok{ T\_total }\SpecialCharTok{+} \DecValTok{1}
+\NormalTok{scrub\_BOLD1 }\OtherTok{\textless{}{-}} \FunctionTok{replicate}\NormalTok{(}\FunctionTok{length}\NormalTok{(BOLD\_paths1), T\_scrub\_start}\SpecialCharTok{:}\NormalTok{nT\_HCP, }\AttributeTok{simplify =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{scrub\_BOLD2 }\OtherTok{\textless{}{-}} \FunctionTok{replicate}\NormalTok{(}\FunctionTok{length}\NormalTok{(BOLD\_paths2), T\_scrub\_start}\SpecialCharTok{:}\NormalTok{nT\_HCP, }\AttributeTok{simplify =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{scrub }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(scrub\_BOLD1, scrub\_BOLD2)}
+\end{Highlighting}
+\end{Shaded}
+
+Because \texttt{drop\_first\ =\ 15} removes frames before truncation,
+the final retained time series per scan will be slightly shorter than 10
+minutes. Approximately:
+
+\begin{verbatim}
+(833 - 15) * 0.72 = ~589 seconds (~9.8 minutes)
+\end{verbatim}
+
+\subsection{Appendix D: Prepare Yeo17 Parcellation for Prior
+Estimation}\label{appendix-parcellations}
+
+In this step, we load and preprocess a group-level cortical parcellation
+to be used as the template to estimate the priors in the next step.
+Specifically, we use the Yeo 17-network parcellation (\texttt{Yeo\_17})
+and perform the following operations:
+
+\begin{itemize}
+\item
+  Simplify the labels by collapsing hemisphere-specific naming and
+  removing subnetwork identifiers, grouping regions by their main
+  network.
+\item
+  Create a new \texttt{dlabel} object that maps each vertex to its
+  corresponding network.
+\item
+  Mask out the medial wall to exclude it from analysis.
+\end{itemize}
+
+The resulting parcellation is saved as
+\texttt{Yeo17\_simplified\_mwall.rds}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# This script simplifies the Yeo 17{-}network parcellation by collapsing region }
+\CommentTok{\# labels and masking out the medial wall.}
+\CommentTok{\# It creates a cleaned version of the parcellation suitable for downstream analyses.}
+\CommentTok{\# Output:}
+\CommentTok{\# {-} Saved as RDS file in dir\_data: "Yeo17\_simplified\_mwall.rds"}
+
+\FunctionTok{source}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(src\_dir,}\StringTok{"4\_parcellations.R"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+We can visualize the Yeo17 networks and their corresponding labels:
+
+** todo: visualize better in pdf **
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Load libraries}
+\FunctionTok{library}\NormalTok{(ciftiTools)}
+\FunctionTok{library}\NormalTok{(rgl)}
+\NormalTok{rgl}\SpecialCharTok{::}\FunctionTok{setupKnitr}\NormalTok{()}
+
+\CommentTok{\# Load the parcellation}
+\NormalTok{yeo17 }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(dir\_data, }\StringTok{"outputs"}\NormalTok{, }\StringTok{"Yeo17\_simplified\_mwall.rds"}\NormalTok{))}
+\NormalTok{yeo17 }\OtherTok{\textless{}{-}} \FunctionTok{add\_surf}\NormalTok{(yeo17)}
+
+\FunctionTok{view\_xifti\_surface}\NormalTok{(}
+  \AttributeTok{xifti =}\NormalTok{ yeo17,}
+  \AttributeTok{widget =} \ConstantTok{TRUE}\NormalTok{,}
+  \AttributeTok{title =} \StringTok{"Yeo17 Network Parcellation"}\NormalTok{,}
+  \AttributeTok{legend\_ncol =} \DecValTok{6}\NormalTok{,}
+  \AttributeTok{legend\_fname =} \FunctionTok{file.path}\NormalTok{(dir\_data, }\StringTok{"outputs"}\NormalTok{, }\StringTok{"parcellations\_plots"}\NormalTok{, }
+                           \StringTok{"Yeo17"}\NormalTok{, }\StringTok{"Yeo17\_legend.png"}\NormalTok{),}
+  \AttributeTok{fname=}\FunctionTok{file.path}\NormalTok{(dir\_data, }\StringTok{"outputs"}\NormalTok{, }\StringTok{"parcellations\_plots"}\NormalTok{, }\StringTok{"Yeo17"}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{data_OSF/outputs/parcellations_plots/Yeo17/Yeo17} \end{center}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{data_OSF/outputs/parcellations_plots/Yeo17/Yeo17_legend} \end{center}
+
+\subsection{Appendix E: Example Function Call for Prior
+Estimation}\label{appendix-example}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# For detailed parameter descriptions, run: ?estimate\_prior}
+
+\FunctionTok{estimate\_prior}\NormalTok{(}
+  \AttributeTok{BOLD =}\NormalTok{ BOLD\_paths1,         }\CommentTok{\# REST1 LR scans (list of file paths)}
+  \AttributeTok{BOLD2 =}\NormalTok{ BOLD\_paths2,        }\CommentTok{\# REST2 LR scans (same subjects/order as BOLD)}
+  \AttributeTok{template =}\NormalTok{ GICA,            }\CommentTok{\# GICA 15{-}component parcellation (CIFTI dscalar file path)}
+  \AttributeTok{GSR =} \ConstantTok{TRUE}\NormalTok{,                 }\CommentTok{\# Apply global signal regression}
+  \AttributeTok{TR =} \FloatTok{0.72}\NormalTok{,                  }\CommentTok{\# Repetition time in seconds}
+  \AttributeTok{hpf =} \FloatTok{0.01}\NormalTok{,                 }\CommentTok{\# High{-}pass filter cutoff in Hz}
+  \AttributeTok{Q2 =} \DecValTok{0}\NormalTok{,                     }\CommentTok{\# No nuisance IC denoising}
+  \AttributeTok{drop\_first =} \DecValTok{15}\NormalTok{,            }\CommentTok{\# Drop first 15 volumes}
+  \AttributeTok{scrub =}\NormalTok{ scrub,              }\CommentTok{\# Timepoints to scrub (list format)}
+  \AttributeTok{verbose =} \ConstantTok{TRUE}              \CommentTok{\# Print progress updates}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection*{References}\label{references}
+\addcontentsline{toc}{subsection}{References}
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{1}{0}
+\bibitem[\citeproctext]{ref-mejia2020bayesian}
+Mejia, Amanda F, Yu Yue, David Bolin, Finn Lindgren, and Martin A
+Lindquist. 2020. {``A Bayesian General Linear Modeling Approach to
+Cortical Surface fMRI Data Analysis.''} \emph{Journal of the American
+Statistical Association} 115 (530): 501--20.
+
+\end{CSLReferences}
+
+\end{document}

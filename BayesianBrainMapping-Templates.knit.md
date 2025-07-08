@@ -15,15 +15,11 @@ editor_options:
     wrap: sentence
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+
 
 ## 1. Introduction
 
-```{r setup-env, include=FALSE}
-dir_data <- "data_OSF"
-```
+
 
 Bayesian brain mapping (BBM) is a technique for producing individualized functional brain
 topographic maps from existing group-level network maps. Group-level network maps 
@@ -44,9 +40,8 @@ Once a set of group-level network maps has been chosen, there are two steps to
 performing BBM.  Both are implemented in the 
 `BayesBrainMap` R package.
 
-```{r, echo=FALSE, out.width="80%"}
-knitr::include_graphics(file.path(dir_data, "inputs/Drawing_v1.pdf"))
-```
+
+\includegraphics[width=0.8\linewidth]{data_OSF/inputs/Drawing_v1} 
 
 Here, we perform Step 1 using data from the Human Connectome Project (HCP). Specifically,
 we train CIFTI-format Bayesian brain mapping priors using a variety of ICA and 
@@ -64,27 +59,24 @@ For the choice of group-level network maps, we provide several options:
 
 * The 17 Yeo networks (CITE)
 
-```{r, results='asis', echo=FALSE}
-cat('
-\\newcommand{\\Checkmark}{\\ding{51}}
-\\begin{table}[ht]
-\\centering
-\\begin{tabular}{|l|c|c|c|c|}
-\\hline
-\\textbf{Global Signal Regression} & \\multicolumn{3}{c|}{\\textbf{Group ICA}} & \\textbf{Parcellation} \\\\
-\\cline{2-4}
- & 15 HCP ICs & 25 HCP ICs & 50 HCP ICs & Yeo 17 \\\\
-\\hline
-With GSR & \\Checkmark & \\Checkmark & \\Checkmark & \\Checkmark \\\\
-\\hline
-Without GSR & \\Checkmark & \\Checkmark & \\Checkmark & \\Checkmark \\\\
-\\hline
-\\end{tabular}
-\\caption{Templates used for Bayesian brain mapping.}
-\\label{tab:template-summary}
-\\end{table}
-')
-```
+
+\newcommand{\Checkmark}{\ding{51}}
+\begin{table}[ht]
+\centering
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Global Signal Regression} & \multicolumn{3}{c|}{\textbf{Group ICA}} & \textbf{Parcellation} \\
+\cline{2-4}
+ & 15 HCP ICs & 25 HCP ICs & 50 HCP ICs & Yeo 17 \\
+\hline
+With GSR & \Checkmark & \Checkmark & \Checkmark & \Checkmark \\
+\hline
+Without GSR & \Checkmark & \Checkmark & \Checkmark & \Checkmark \\
+\hline
+\end{tabular}
+\caption{Templates used for Bayesian brain mapping.}
+\label{tab:template-summary}
+\end{table}
 
 ## 2. Setup
 
@@ -160,7 +152,8 @@ We consider two types of group-level parcellations for estimating priors:
 
 Each of these parcellations was used to estimate priors with and without global signal regression (GSR), resulting in eight total priors saved as .rds files. See Table \hyperref[tab:template-summary]{Table~\ref*{tab:template-summary}} for a summary of the parcellations and GSR combinations.
 
-```{r warning=FALSE, eval=FALSE}
+
+``` r
 # This script estimates and saves functional connectivity priors 
 # for both spatial topography and connectivity.
 # It supports both GICA-based (15/25/50 ICs) and Yeo17 parcellations, 
@@ -268,76 +261,22 @@ All images were generated using the scripts:
 
 \leavevmode
 
-```{r fig.show='hold', out.width='48%', echo=FALSE}
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "GICA15", "GICA15_IC1.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "GICA15", "GICA15_IC15.png"))
 
-knitr::include_graphics(file.path(
-  dir_data, "outputs", "priors_plots", "GICA15", "combined", "GSR", 
-  "prior_combined_GICA15_GSR_IC1_mean.png"))
-knitr::include_graphics(file.path(
-  dir_data, "outputs", "priors_plots", "GICA15", "combined", "GSR", 
-  "prior_combined_GICA15_GSR_IC15_mean.png"))
-
-knitr::include_graphics(file.path(
-  dir_data, "outputs", "priors_plots", "GICA15", "combined", "GSR", 
-  "prior_combined_GICA15_GSR_IC1_sd.png"))
-knitr::include_graphics(file.path(
-  dir_data, "outputs", "priors_plots", "GICA15", "combined", "GSR", 
-  "prior_combined_GICA15_GSR_IC15_sd.png"))
-```
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/parcellations_plots/GICA15/GICA15_IC1} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/parcellations_plots/GICA15/GICA15_IC15} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA15/combined/GSR/prior_combined_GICA15_GSR_IC1_mean} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA15/combined/GSR/prior_combined_GICA15_GSR_IC15_mean} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA15/combined/GSR/prior_combined_GICA15_GSR_IC1_sd} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA15/combined/GSR/prior_combined_GICA15_GSR_IC15_sd} 
 
 #### 5.3.2 25 ICs
 
 \leavevmode
 
-```{r fig.show='hold', out.width='48%', echo=FALSE}
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "GICA25", "GICA25_IC1.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "GICA25", "GICA25_IC25.png"))
 
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA25", "combined", "GSR", 
-                                  "prior_combined_GICA25_GSR_IC1_mean.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA25", "combined", "GSR", 
-                                  "prior_combined_GICA25_GSR_IC25_mean.png"))
-
-knitr::include_graphics(file.path(dir_data,"outputs",
-                                  "priors_plots", "GICA25", "combined", "GSR", 
-                                  "prior_combined_GICA25_GSR_IC1_sd.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA25", "combined", "GSR", 
-                                  "prior_combined_GICA25_GSR_IC25_sd.png"))
-```
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/parcellations_plots/GICA25/GICA25_IC1} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/parcellations_plots/GICA25/GICA25_IC25} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA25/combined/GSR/prior_combined_GICA25_GSR_IC1_mean} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA25/combined/GSR/prior_combined_GICA25_GSR_IC25_mean} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA25/combined/GSR/prior_combined_GICA25_GSR_IC1_sd} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA25/combined/GSR/prior_combined_GICA25_GSR_IC25_sd} 
 
 #### 5.3.3 50 ICs
 
 \leavevmode
 
-```{r fig.show='hold', out.width='48%', echo=FALSE}
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "GICA50", "GICA50_IC1.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "GICA50", "GICA50_IC50.png"))
 
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA50", "combined", "GSR", 
-                                  "prior_combined_GICA50_GSR_IC1_mean.png"))
-knitr::include_graphics(file.path(dir_data,"outputs",
-                                  "priors_plots", "GICA50", "combined", "GSR",
-                                  "prior_combined_GICA50_GSR_IC50_mean.png"))
-
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA50", "combined", "GSR", 
-                                  "prior_combined_GICA50_GSR_IC1_sd.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA50", "combined", "GSR",
-                                  "prior_combined_GICA50_GSR_IC50_sd.png"))
-```
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/parcellations_plots/GICA50/GICA50_IC1} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/parcellations_plots/GICA50/GICA50_IC50} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA50/combined/GSR/prior_combined_GICA50_GSR_IC1_mean} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA50/combined/GSR/prior_combined_GICA50_GSR_IC50_mean} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA50/combined/GSR/prior_combined_GICA50_GSR_IC1_sd} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA50/combined/GSR/prior_combined_GICA50_GSR_IC50_sd} 
 
 #### 5.3.4 Yeo17
 
@@ -345,26 +284,8 @@ knitr::include_graphics(file.path(dir_data, "outputs",
 
 For the Yeo17 parcellation, we show visualizations of the two main networks (`DefaultA` and `DorsAttnA`):
 
-```{r fig.show='hold', out.width='48%', echo=FALSE}
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "Yeo17", "Yeo17_DefaultA.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "Yeo17", "Yeo17_DorsAttnA.png"))
 
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "Yeo17", "combined", "GSR", 
-                                  "prior_combined_Yeo17_GSR_DefaultA_mean.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "Yeo17", "combined", "GSR",
-                                  "prior_combined_Yeo17_GSR_DorsAttnA_mean.png"))
-
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "Yeo17", "combined", "GSR",
-                                  "prior_combined_Yeo17_GSR_DefaultA_sd.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "Yeo17", "combined", "GSR",
-                                  "prior_combined_Yeo17_GSR_DorsAttnA_sd.png"))
-```
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/parcellations_plots/Yeo17/Yeo17_DefaultA} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/parcellations_plots/Yeo17/Yeo17_DorsAttnA} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/Yeo17/combined/GSR/prior_combined_Yeo17_GSR_DefaultA_mean} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/Yeo17/combined/GSR/prior_combined_Yeo17_GSR_DorsAttnA_mean} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/Yeo17/combined/GSR/prior_combined_Yeo17_GSR_DefaultA_sd} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/Yeo17/combined/GSR/prior_combined_Yeo17_GSR_DorsAttnA_sd} 
 
 ### 5.4 Visualize Functional Connectivity Priors
 
@@ -418,89 +339,41 @@ The figures below show the mean and standard deviation of FC priors for each par
 
 \leavevmode
 
-```{r fig.show='hold', out.width='48%', echo=FALSE}
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA15", "combined", "GSR", "FC",
-                                  "prior_combined_GICA15_GSR_FC_Cholesky_mean.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA15", "combined", "GSR", "FC",
-                                  "prior_combined_GICA15_GSR_FC_InverseWishart_mean.png"))
-```
 
-```{r fig.show='hold', out.width='48%', echo=FALSE}
-knitr::include_graphics(file.path(dir_data,"outputs",
-                                  "priors_plots", "GICA15", "combined", "GSR", "FC",
-                                  "prior_combined_GICA15_GSR_FC_Cholesky_sd.png"))
-knitr::include_graphics(file.path(dir_data,"outputs",
-                                  "priors_plots", "GICA15", "combined", "GSR", "FC",
-                                  "prior_combined_GICA15_GSR_FC_InverseWishart_sd.png"))
-```
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA15/combined/GSR/FC/prior_combined_GICA15_GSR_FC_Cholesky_mean} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA15/combined/GSR/FC/prior_combined_GICA15_GSR_FC_InverseWishart_mean} 
+
+
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA15/combined/GSR/FC/prior_combined_GICA15_GSR_FC_Cholesky_sd} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA15/combined/GSR/FC/prior_combined_GICA15_GSR_FC_InverseWishart_sd} 
 
 #### 5.4.2 25 ICs
 
 \leavevmode
 
-```{r fig.show='hold', out.width='48%', echo=FALSE}
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA25", "combined", "GSR", "FC",
-                                  "prior_combined_GICA25_GSR_FC_Cholesky_mean.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA25", "combined", "GSR", "FC",
-                                  "prior_combined_GICA25_GSR_FC_InverseWishart_mean.png"))
-```
 
-```{r fig.show='hold', out.width='48%', echo=FALSE}
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA25", "combined", "GSR", "FC",
-                                  "prior_combined_GICA25_GSR_FC_Cholesky_sd.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA25", "combined", "GSR", "FC",
-                                  "prior_combined_GICA25_GSR_FC_InverseWishart_sd.png"))
-```
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA25/combined/GSR/FC/prior_combined_GICA25_GSR_FC_Cholesky_mean} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA25/combined/GSR/FC/prior_combined_GICA25_GSR_FC_InverseWishart_mean} 
+
+
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA25/combined/GSR/FC/prior_combined_GICA25_GSR_FC_Cholesky_sd} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA25/combined/GSR/FC/prior_combined_GICA25_GSR_FC_InverseWishart_sd} 
 
 #### 5.4.3 50 ICs
 
 \leavevmode
 
-```{r fig.show='hold', out.width='48%', echo=FALSE}
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA50", "combined", "GSR", "FC",
-                                  "prior_combined_GICA50_GSR_FC_Cholesky_mean.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA50", "combined","GSR", "FC",
-                                  "prior_combined_GICA50_GSR_FC_InverseWishart_mean.png"))
-```
 
-```{r fig.show='hold', out.width='48%', echo=FALSE}
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA50", "combined","GSR", "FC",
-                                  "prior_combined_GICA50_GSR_FC_Cholesky_sd.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA50", "combined", "GSR","FC",
-                                  "prior_combined_GICA50_GSR_FC_InverseWishart_sd.png"))
-```
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA50/combined/GSR/FC/prior_combined_GICA50_GSR_FC_Cholesky_mean} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA50/combined/GSR/FC/prior_combined_GICA50_GSR_FC_InverseWishart_mean} 
+
+
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA50/combined/GSR/FC/prior_combined_GICA50_GSR_FC_Cholesky_sd} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/GICA50/combined/GSR/FC/prior_combined_GICA50_GSR_FC_InverseWishart_sd} 
 
 #### 5.4.4 Yeo17
 
 \leavevmode
 
-```{r fig.show='hold', out.width='48%', echo=FALSE}
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "Yeo17", "combined", "GSR","FC",
-                                  "prior_combined_yeo17_GSR_FC_Cholesky_mean.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "Yeo17", "combined", "GSR","FC",
-                                  "prior_combined_Yeo17_GSR_FC_InverseWishart_mean.png"))
-```
 
-```{r fig.show='hold', out.width='48%', echo=FALSE}
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "Yeo17", "combined", "GSR","FC",
-                                  "prior_combined_Yeo17_GSR_FC_Cholesky_sd.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "Yeo17", "combined","GSR", "FC",
-                                  "prior_combined_Yeo17_GSR_FC_InverseWishart_sd.png"))
-```
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/Yeo17/combined/GSR/FC/prior_combined_yeo17_GSR_FC_Cholesky_mean} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/Yeo17/combined/GSR/FC/prior_combined_Yeo17_GSR_FC_InverseWishart_mean} 
+
+
+\includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/Yeo17/combined/GSR/FC/prior_combined_Yeo17_GSR_FC_Cholesky_sd} \includegraphics[width=0.48\linewidth]{data_OSF/outputs/priors_plots/Yeo17/combined/GSR/FC/prior_combined_Yeo17_GSR_FC_InverseWishart_sd} 
 
 ## 6. Step 2: Using Priors for Individual-Level Brain Mapping
 
@@ -520,7 +393,8 @@ This example uses:
 
 #### 6.1 Load Subject-Level fMRI Data and Prior 
 
-```{r warning=FALSE, eval=FALSE}
+
+``` r
 # Load population prior 
 prior <- readRDS("priors/Yeo17/prior_combined_Yeo17_GSR.rds")
 
@@ -535,7 +409,8 @@ The fMRI input must be a CIFTI, NIFTI, or matrix object compatible with the prio
 
 Once the data is loaded, we fit the Bayesian brain mapping model to obtain individualized functional networks aligned to the prior components:
 
-```{r warning=FALSE, eval=FALSE}
+
+``` r
 bMap <- BrainMap(
   BOLD = BOLD,
   prior = prior,
@@ -548,7 +423,8 @@ bMap <- BrainMap(
 
 \leavevmode
 
-```{r warning=FALSE, eval=FALSE}
+
+``` r
 eng <- engagements(
   bMap = bMap
   )
@@ -566,55 +442,24 @@ We now plot:
 
 For all outputs, we only visualize ContA network from the Yeo 17 parcellation.
 
-```{r, eval=FALSE, echo=FALSE}
-for (i in 1:17) {
-  label_name <- rownames(prior$template_parc_table)[prior$template_parc_table$Key == i]
-  title <- paste0("Yeo 17 Network ", label_name, " (#", i, ") Subject-Level Mean") 
-  fname <- file.path(dir_data, "outputs", "subject_maps", 
-                     paste0("posterior_Yeo17_", label_name))
-  plot(bMap, idx = i, stat = "mean", title = title,
-     fname_suffix="idx", fname=fname) 
-}
-```
 
-```{r, echo=FALSE, out.width="80%", fig.align="center"}
-knitr::include_graphics(file.path(dir_data, "outputs", "subject_maps",
-                                  "posterior_Yeo17_ContA_mean.png"))
-```
 
-```{r, eval=FALSE, echo=FALSE}
-for (i in 1:17) {
-  label_name <- rownames(prior$template_parc_table)[prior$template_parc_table$Key == i]
-  title <- paste0("Yeo 17 Network ", label_name, " (#", i, ") Subject-Level SE") 
-  fname <- file.path(dir_data, "outputs", "subject_maps", 
-                     paste0("posterior_Yeo17_", label_name))
-  plot(bMap, idx = i, stat = "se", title = title,
-     fname_suffix="idx", fname=fname) 
-}
-```
 
-```{r, echo=FALSE, out.width="80%", fig.align="center"}
-knitr::include_graphics(file.path(dir_data, "outputs", "subject_maps",
-                                  "posterior_Yeo17_ContA_se.png"))
-```
+\begin{center}\includegraphics[width=0.8\linewidth]{data_OSF/outputs/subject_maps/posterior_Yeo17_ContA_mean} \end{center}
 
-```{r, eval=FALSE, echo=FALSE}
-for (i in 1:17) {
-  label_name <- rownames(prior$template_parc_table)[prior$template_parc_table$Key == i]
-  title <- paste0("Yeo 17 Network ", label_name, " (#", i, ") Engagement Map") 
-  fname <- file.path(dir_data, "outputs", "subject_maps", 
-                     paste0("subject_Yeo17_", label_name))
-  plot(eng, idx = i, stat = "engaged", title = title,
-     fname_suffix="idx", fname=fname) 
-}
-```
 
-```{r, echo=FALSE, out.width="80%", fig.align="center"}
-knitr::include_graphics(file.path(dir_data, "outputs", "subject_maps", 
-                                  "subject_Yeo17_ContA_engaged.png"))
-knitr::include_graphics(file.path(dir_data, "outputs", "subject_maps",
-                                  "subject_Yeo17_ContA_engaged_legend.png"))
-```
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{data_OSF/outputs/subject_maps/posterior_Yeo17_ContA_se} \end{center}
+
+
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{data_OSF/outputs/subject_maps/subject_Yeo17_ContA_engaged} \end{center}
+
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{data_OSF/outputs/subject_maps/subject_Yeo17_ContA_engaged_legend} \end{center}
 
 \appendix
 
@@ -622,7 +467,8 @@ knitr::include_graphics(file.path(dir_data, "outputs", "subject_maps",
 
 To reproduce this workflow, first clone the repository to your local machine or cluster:
 
-```{r warning=FALSE, eval=FALSE}
+
+``` r
 git clone https://github.com/mandymejia/BayesianBrainMapping-Templates.git
 cd BayesianBrainMapping-Templates
 ```
@@ -665,7 +511,8 @@ the following variables to match your local or cluster environment:
 
 -   `wb_path` (location of the CIFTI Workbench on your system)
 
-```{r, echo=TRUE, message=FALSE, warning=FALSE, results='hide', eval=FALSE}
+
+``` r
 github_repo_dir <- getwd()
 src_dir <- file.path(github_repo_dir, "src")
 source(file.path(src_dir, "0_setup.R"))
@@ -686,7 +533,8 @@ A volume is considered valid if it passes an FD threshold, and a subject is reta
 
 The final subject lists include those who passed the filtering criteria separately for each encoding: `LR`, `RL`, and their intersection, referred to as the`combined` list. The combined list includes only subjects who passed all criteria for both LR and RL encodings across both visits (REST1 and REST2), and is the one used throughout this project.
 
-```{r warning=FALSE, eval=FALSE}
+
+``` r
 # This script filters subjects based on motion using framewise displacement (FD)
 # from fMRIscrub.
 # For each subject, encoding (LR/RL), and session (REST1/REST2), it computes FD 
@@ -720,13 +568,25 @@ During this step, an FD summary table is generated with the following columns:
 
 #### Preview of FD Summary Table
 
-```{r warning=FALSE}
+
+``` r
 # Read FD summary
 fd_summary <- read.csv(file.path(dir_data, "outputs", "filtering", "fd_summary.csv"))
 
 # Display the first 4 rows
 knitr::kable(head(fd_summary, 4), caption = "First rows of FD summary table")
 ```
+
+
+
+Table: First rows of FD summary table
+
+|  X| subject|session |encoding |   mean_fd| valid_time_sec|
+|--:|-------:|:-------|:--------|---------:|--------------:|
+|  1|  100206|REST1   |LR       | 0.1017240|         858.24|
+|  2|  100206|REST2   |LR       | 0.1361220|         858.96|
+|  3|  100206|REST1   |RL       | 0.0698779|         864.00|
+|  4|  100206|REST2   |RL       | 0.0824894|         863.28|
 
 As shown above, subject 100206 qualifies for further analysis because each of the four sessions (REST1/REST2 × LR/RL) contains at least 600 seconds of valid data.
 
@@ -749,7 +609,8 @@ Note: This step requires access to the HCP restricted data. If you do not have a
 you can skip this step, resulting in some related subjects being included
 in your training data.
 
-```{r warning=FALSE, eval=FALSE}
+
+``` r
 # This script filters subjects to retain only unrelated individuals, using Family ID 
 # information from the restricted HCP data.
 # For each encoding (LR, RL, combined), it selects one subject per family from the 
@@ -781,7 +642,8 @@ The final list of valid subjects is saved in `dir_results` as:
 
 -   `valid_<encoding>_subjects_balanced.rds` (used in the prior estimation step)
 
-```{r warning=FALSE, eval=FALSE}
+
+``` r
 # This script balances sex within each age group for subjects who passed FD and 
 # unrelated filtering.
 # For each encoding (LR, RL, combined), it samples subjects to equalize the number
@@ -798,13 +660,15 @@ source(file.path(src_dir,"3_balance_age_sex.R"))
 
 Given the HCP TR of 0.72 seconds, 10 minutes corresponds to:
 
-```{r warning=FALSE, eval=FALSE}
+
+``` r
 T_total <- floor(600 / TR_HCP) # ~833 volumes
 ```
 
 To define the volumes to scrub (i.e., exclude beyond 10 minutes), we compute:
 
-```{r warning=FALSE, eval=FALSE}
+
+``` r
 T_scrub_start <- T_total + 1
 scrub_BOLD1 <- replicate(length(BOLD_paths1), T_scrub_start:nT_HCP, simplify = FALSE)
 scrub_BOLD2 <- replicate(length(BOLD_paths2), T_scrub_start:nT_HCP, simplify = FALSE)
@@ -832,7 +696,8 @@ subnetwork identifiers, grouping regions by their main network.
 
 The resulting parcellation is saved as `Yeo17_simplified_mwall.rds`.
 
-```{r warning=FALSE, eval=FALSE}
+
+``` r
 # This script simplifies the Yeo 17-network parcellation by collapsing region 
 # labels and masking out the medial wall.
 # It creates a cleaned version of the parcellation suitable for downstream analyses.
@@ -846,7 +711,8 @@ We can visualize the Yeo17 networks and their corresponding labels:
 
 ** todo: visualize better in pdf **
 
-```{r warning=FALSE, eval=FALSE}
+
+``` r
 # Load libraries
 library(ciftiTools)
 library(rgl)
@@ -867,18 +733,16 @@ view_xifti_surface(
 )
 ```
 
-```{r, echo=FALSE, out.width="80%", fig.align="center"}
-knitr::include_graphics(file.path(dir_data, "outputs", "parcellations_plots", "Yeo17", "Yeo17.png"))
-```
 
-```{r, echo=FALSE, out.width="80%", fig.align="center"}
-# Show legend
-knitr::include_graphics(file.path(dir_data, "outputs", "parcellations_plots", "Yeo17", "Yeo17_legend.png"))
-```
+\begin{center}\includegraphics[width=0.8\linewidth]{data_OSF/outputs/parcellations_plots/Yeo17/Yeo17} \end{center}
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{data_OSF/outputs/parcellations_plots/Yeo17/Yeo17_legend} \end{center}
 
 ## Appendix E: Example Function Call for Prior Estimation {#appendix-example}
 
-```{r warning=FALSE, eval=FALSE}
+
+``` r
 # For detailed parameter descriptions, run: ?estimate_prior
 
 estimate_prior(

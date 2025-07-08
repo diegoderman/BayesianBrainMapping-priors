@@ -5,7 +5,7 @@ prior_files <- list.files(file.path(dir_project, "priors"), recursive = TRUE, fu
 get_prior_title <- function(base_name, i, prior, encoding, gsr_status) {
 
   if (grepl("Yeo17", base_name, ignore.case = TRUE)) {
-    label_name <- rownames(prior$GICA_parc_table)[prior$GICA_parc_table$Key == i]
+    label_name <- rownames(prior$template_parc_table)[prior$template_parc_table$Key == i]
     return(paste0("Yeo 17 Network ", label_name, " (#", i, ")"))
   }
   ic_match <- regmatches(base_name, regexpr("GICA\\d+", base_name))
@@ -26,7 +26,7 @@ for (file in prior_files) {
   parcellation <- parts[3]   
   gsr_status <- parts[4]  
 
-  # If Yeo17 template, GICA_parc_table needs to be updated to only reflect the correct number of labels (17)
+  # If Yeo17 template, template_parc_table needs to be updated to only reflect the correct number of labels (17)
   if (grepl("Yeo17", base_name)) {
     prior$template_parc_table <- subset(prior$template_parc_table, prior$template_parc_table$Key > 0)
   }
@@ -47,6 +47,7 @@ for (file in prior_files) {
     }
 
     title <- get_prior_title(base_name, i, prior, encoding, gsr_status)
+    cat("Plotting prior ", i, "\n")
 
     # Plot mean
     plot(
@@ -54,8 +55,7 @@ for (file in prior_files) {
       stat = "mean",
       fname = fname,
       idx = i,
-      title = title,
-      zlim = c(-0.1, 0.1)
+      title = title
     )
 
     # Plot standard deviation
@@ -64,8 +64,7 @@ for (file in prior_files) {
       stat = "sd",
       fname = fname,
       idx = i,
-      title = title,
-      zlim = c(0, 0.1)
+      title = title
     )
   }
 }
