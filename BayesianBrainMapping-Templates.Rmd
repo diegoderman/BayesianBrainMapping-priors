@@ -44,7 +44,7 @@ Once a set of group-level network maps has been chosen, there are two steps to
 performing BBM.  Both are implemented in the 
 `BayesBrainMap` R package.
 
-```{r, echo=FALSE, out.width="80%"}
+```{r, echo=FALSE, out.width="80%", fig.align='center'}
 knitr::include_graphics(file.path(dir_data, "inputs/Drawing_v1.pdf"))
 ```
 
@@ -579,7 +579,7 @@ for (i in 1:17) {
 }
 ```
 
-```{r, echo=FALSE, out.width="80%", fig.align="center"}
+```{r, echo=FALSE, out.width="60%", fig.align="center"}
 knitr::include_graphics(file.path(dir_data, "outputs", "subject_maps",
                                   "posterior_Yeo17_ContA_mean.png"))
 ```
@@ -595,7 +595,7 @@ for (i in 1:17) {
 }
 ```
 
-```{r, echo=FALSE, out.width="80%", fig.align="center"}
+```{r, echo=FALSE, out.width="60%", fig.align="center"}
 knitr::include_graphics(file.path(dir_data, "outputs", "subject_maps",
                                   "posterior_Yeo17_ContA_se.png"))
 ```
@@ -611,9 +611,12 @@ for (i in 1:17) {
 }
 ```
 
-```{r, echo=FALSE, out.width="80%", fig.align="center"}
+```{r, echo=FALSE, out.width="60%", fig.align="center"}
 knitr::include_graphics(file.path(dir_data, "outputs", "subject_maps", 
                                   "subject_Yeo17_ContA_engaged.png"))
+```
+
+```{r, echo=FALSE, out.width="30%", fig.align="center"}
 knitr::include_graphics(file.path(dir_data, "outputs", "subject_maps",
                                   "subject_Yeo17_ContA_engaged_legend.png"))
 ```
@@ -846,8 +849,6 @@ source(file.path(src_dir,"4_parcellations.R"))
 
 We can visualize the Yeo17 networks and their corresponding labels:
 
-** todo: visualize better in pdf **
-
 ```{r warning=FALSE, eval=FALSE}
 # Load libraries
 library(ciftiTools)
@@ -869,7 +870,7 @@ view_xifti_surface(
 )
 ```
 
-```{r, echo=FALSE, out.width="80%", fig.align="center"}
+```{r, echo=FALSE, out.width="60%", fig.align="center"}
 knitr::include_graphics(file.path(dir_data, "outputs", "parcellations_plots", "Yeo17", "Yeo17.png"))
 ```
 
