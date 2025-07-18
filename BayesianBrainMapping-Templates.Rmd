@@ -1,6 +1,6 @@
 ---
 title: "Individualized functional topographic mapping with the BayesBrainMap R package
-  and Human Connectome Project-derived priors"
+  and population-derived priors"
 author: "Nohelia Da Silva Sanchez, Damon D. Pham, Ellyn Butler, Amanda F. Mejia"
 date: "2025-05-07"
 output:
@@ -25,44 +25,129 @@ knitr::opts_chunk$set(echo = TRUE)
 dir_data <- "data_OSF"
 ```
 
-Bayesian brain mapping (BBM) is a technique for producing individualized functional brain
-topographic maps from existing group-level network maps. Group-level network maps 
-are commonly group ICA maps or group average parcellations, but other types of 
-networks maps such as non-negative matrix factorization and PROFUMO can be used. 
-In the case of ICA, BBM is known as template ICA [@mejia2020bayesian].  BBM is
-a hierarchical source separation model, with priors on the spatial topography and, 
-optionally, on the functional connectivity.  The priors are estimated a-priori,
-so the model can be fit to individual-level fMRI data. The noise-reduction properties
-of the population-derived priors result highly accurate and reliable individual 
-network topography maps and the functional connectivity between them. Importantly, 
-the subject-level network maps are matched to the corresponding group networks from 
-the template (i.e. parcellations or group ICA maps). Because BBM is applicable to 
-individual-level analysis, it is computationally convenient and has potential clinical 
-utility.
+Bayesian brain mapping (BBM) is a technique for producing individualized
+functional brain topographic maps from existing group-level network maps or
+*templates*.  Those templates take the form of either a group parcellation, a
+set of group ICA maps, or other types of network maps like PROFUMO or NNF.  BBM
+is a generalization of template ICA [@mejia2020bayesian], in which the template
+is a set of group ICA maps. In BBM, the template is not used directly in the
+individual-level model, but rather forms is the basis of *population-derived
+priors*, which are used in a Bayesian model. The priors are derived from a
+training set of subjects from a representative population, either using holdout
+data from the focal study or using data from a publicly available neuroimaging
+repository such as the Human Connectome Project (HCP) (CITE) or Alzheimer's
+Disease Neuroimaging Initiative (ADNI) (CITE).
 
-Once a set of group-level network maps has been chosen, there are two steps to 
-performing BBM.  Both are implemented in the 
-`BayesBrainMap` R package.
+The Bayesian model in BBM is a single-subject ``hierarchical'' source separation
+model, with parameters representing the spatial topography of different networks
+and their corresponding temporal activation profiles. The model is hierarchical
+in the sense that it includes population-derived priors on those parameters.
+While hierarchical models typically require multi-subject data to establish the
+shared prior parameters, in BBM the model is fit to a single subject using
+priors that are already established. This allows BBM to be highly pragmatic,
+computationally efficient, and potentially clinically applicable.
+
+The use of population-derived priors in BBM reduces noise while retaining
+relevant signal. This results in more reliable individual-level network
+topography maps and the functional connectivity between them
+[@mejia2020bayesian] (also CITE Mejia 2022 and 2025). An important feature of
+the BBM priors on spatial topography is that they spatially vary within each
+network, which allows individual differences to be expressed where they exist
+while reducing noise in background regions. Furthermore, due to the continuous,
+overlapping nature of BBM network maps, noise reduction in background regions of
+one network indirectly contributes to estimation of signal in the same region in
+other networks. The powerful noise-reduction properties of BBM allows it to
+produce reliable maps of individual functional topography with moderate scan
+duration, without the need for ``dense sampling'' of individuals.
+
+There are two steps to performing BBM, which are implemented in the
+`BayesBrainMap` R package: *(1) prior estimation* and *(2) model fitting*
+(Figure 1). Here, our primary focus is creating and sharing population-derived
+priors for using data from the HCP, based on various templates. These priors can
+be directly used to perform BBM in studies of healthy young adults. To perform
+BBM to study individuals from other populations, or using other templates, we
+provide and describe the code used to produce the HCP-derived priors, so that
+this workflow can be easily reproduced using other datasets. We also provide
+guidance for visual investigation of the priors to ensure quality.
+
+Finally, we illustrate the model fitting step using an individual from the HCP
+and individuals from an external study, the midnight scan club (MSC) (CITE). The
+MSC focuses on a similar population as the HCP but differs in acquisition
+methods. Since the population-derived priors used in BBM encode the distribution
+of signal, not noise, priors derived from one study can be applied to other
+studies with differing noise properties, as long as the populations are similar.
+We will illustrate this through application of HCP-derived priors to data from
+the MSC. Application to the MSC will also exemplify the ability of BBM to reveal
+individual features of functional topography from a single session of data,
+without the need for dense sampling.
 
 ```{r, echo=FALSE, out.width="80%", fig.align='center'}
 knitr::include_graphics(file.path(dir_data, "inputs/Drawing_v1.pdf"))
+#Nohelia, can you add Figure captions and dynamic references in the text?
 ```
 
-Here, we perform Step 1 using data from the Human Connectome Project (HCP). Specifically,
-we train CIFTI-format Bayesian brain mapping priors using a variety of ICA and 
-parcellation-based templates, listed below.  The population-derived priors described 
-here are available for use for individual-level Bayesian brain mapping.  For 
-analysis of individuals from other populations, it is often desirable to train the
-prior on a set of training subjects representative of that population. To facilitate 
-this, we also provide and describe the code used to produce the HCP-derived priors, 
-so that this workflow can be easily reproduced in other datasets. Finally, we illustrate
-the use of 
+## 2. Methods
 
-For the choice of group-level network maps, we provide several options:
+### 2.1 The Bayesian Brain Mapping Model
 
-* Group ICA maps from the HCP at resolutions from 15 to 50 (CITE)
+Here we provide a brief overview of the BBM statistical model.  For a given
+subject and fMRI session, let ${y}_{tv}$ be the preprocessed BOLD fMRI time
+series at voxel or vertex $v$ and time point $t$. The BBM model assumes that the
+BOLD time series can be decomposed into contributions from a set of networks,
+similar to ICA. The first level of the model is given by
 
-* The 17 Yeo networks (CITE)
+$$
+{y}_{tv} = \sum_{q=1}^{Q} a_{tq} s_{qv} + {e}_{tv} 
+= \mathbf{a}_t^\top \mathbf{s}_v + {e}_{tv}, 
+\quad {e}_{tv} \sim N(0, \tau^2_v),
+$$
+
+where $s_{qv}$ is the spatial engagement of network $q$ at voxel or vertex $v$, 
+and $a_{tq}$ is the temporal activation of network $q$ at time point $t$. The vectors 
+$\mathbf{a}_t$ and $\mathbf{s}_v$ combine those values across all $Q$ networks. 
+
+The second level of the model incorporates the population-derived prior on the 
+spatial topography in ${s}_{qv}$, as described in [CITE Mejia 2020]:
+
+$$
+s_{qv} = s^0_{qv} + \delta_{qv},\quad\delta_{qv} \sim N(0, \sigma^2_{qv}),
+$$
+where $s^0_{qv}$ and $\sigma^2_{qv}$ are known via the prior, and the deviation
+terms $\delta_{qv}$ represent individual differences between the subject and the
+population average. Optionally, spatial dependencies in $\delta_{qv}$ can be
+modeled via a spatial prior for additional accuracy and power, though at a
+higher computational cost (CITE Mejia 2022). Note that structured noise may
+exist in the data that is not well-captured by the residual noise term. While in
+ICA it is common to model structured noise as components, in BBM these are not
+included in the model because can be removed beforehand as described in [CITE
+Mejia 2020] or via other methods like ICA-FIX.
+
+The third level of the mdoel incorporates the population-derived prior on the
+functional connectivity between networks, which is represented by the covariance
+of $\mathbf{a}_t$. This is accomplished by assuming a multivariate Normal prior
+on $\mathbf{a}_t$ with mean zero and covariance $\mathbf{G}$, and assuming a
+population-derived hyperprior on $\mathbf{G}$:
+
+$$
+\mathbf{a}_t &\sim N(\mathbf{0}, \mathbf{G}), \mbox{ where } \mathbf{G} \sim p(\mathbf{G}) ,
+$$
+
+See [CITE Mejia 2025] for details on the population-derived prior on the
+functional connectivity. Briefly, two choices exist for this prior: the
+conjugate Inverse-Wishart distribution, or a novel Cholesky-based prior
+developed for this model, which involves sampling. The former is faster, while
+the latter has somewhat better performance but is more computationally
+intensive.
+
+### 2.2 Building HCP-Derived Priors
+
+Here, we build HCP-derived priors for Bayesian brain mapping using several
+different choices of template, including two different parcellations and group
+ICA maps (Table 1). Specifically, we use the 17-network Yeo parcellation (CITE),
+the MSC group parcellation (CITE and get the real name), and the HCP group ICA maps
+with 15, 25, and 50 components. For each template, we build priors with and
+without global signal regression (GSR), since whether or not to perform GSR is
+an important choice that remains the subject of debate.
 
 ```{r, results='asis', echo=FALSE}
 cat('
@@ -86,15 +171,36 @@ Without GSR & \\Checkmark & \\Checkmark & \\Checkmark & \\Checkmark \\\\
 ')
 ```
 
-## 2. Setup
+Since the functional MRI data in the HCP was acquired with two different
+phase-encoding directions (left-to-right, LR, and right-to-left, RL), we build
+the HCP-derived priors using both phase encoding directions separately, as well
+as a combined version. Comparing the LR and RL priors allows us to assess the
+impact of phase encoding direction on the priors, while the combined version
+provides a general purpose prior that is not specific to either the LR or RL
+acquisition.
+
+Before estimating the BBM priors, we first select a high-quality, balanced
+subject sample to ensure high-quality and representative priors. Starting from
+the full HCP sample of $N=1206$ subjects, we apply several filters to obtain the
+final sample for the priors. First, we exclude subjects with insufficient scan
+duration after motion scrubbing [Nohelia, what FD threhold was used?] and
+dropping the first 15 frames. Second, we exclude any related subjects. Finally,
+we balace sex within age groups. See [Appendix B] for details.  After all
+filters, our final sample contains data from X [Nohelia, how many?  Can be
+approximate if it differs across LR/RL/combined] subjects, which is used to
+estimate the priors. [Nohelia, we are missing the information about which runs
+were actually used for the LR, RL and combined priors.  For LR I guess it must
+be REST1_LR and REST2_LR, and same for RL, but what about combined?]
+
+
+### 2.3 Workflow Overview
+
+Setup
 
 To reproduce this workflow, first follow the setup process outlined in [Appendix A](#appendix-setup). 
 
 ## 3. Choosing Training Subjects
 
-Before estimating the BBM priors, we first select a high-quality, balanced subject 
-sample to ensure reliable, representative priors. Starting from the full HCP sample of
-1206, we apply the following filtering steps:
 
 1. **Filter Subjects by Sufficient fMRI Scan Duration**
    
@@ -692,6 +798,12 @@ A volume is considered valid if it passes an FD threshold, and a subject is reta
 The final subject lists include those who passed the filtering criteria separately for each encoding: `LR`, `RL`, and their intersection, referred to as the`combined` list. The combined list includes only subjects who passed all criteria for both LR and RL encodings across both visits (REST1 and REST2), and is the one used throughout this project.
 
 ```{r warning=FALSE, eval=FALSE}
+
+# ````````````````````
+# @Nohelia, can you report the FD threshold used, both here and above in the 
+# Methods section where the filters are mentioned?
+# ````````````````````
+
 # This script filters subjects based on motion using framewise displacement (FD)
 # from fMRIscrub.
 # For each subject, encoding (LR/RL), and session (REST1/REST2), it computes FD 
@@ -737,7 +849,7 @@ As shown above, subject 100206 qualifies for further analysis because each of th
 
 The script is currently designed to filter based on valid time only, but it can 
 be easily adapted to apply additional constraints such as maximum mean FD thresholds 
-if desired (e.g., mean_fd \< 0.2).
+if desired (e.g., mean_fd \< 0.1).
 
 ### Appendix B.2: Filter Unrelated Subjects {#appendix-filtering-2}
 
