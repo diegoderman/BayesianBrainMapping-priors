@@ -4,10 +4,11 @@ title: "Individualized functional topographic mapping with the BayesBrainMap R p
 author: "Nohelia Da Silva Sanchez, Damon D. Pham, Ellyn Butler, Amanda F. Mejia"
 date: "2025-05-07"
 output:
-  html_document: default
   bookdown::pdf_document2:
     toc: false
     latex_engine: xelatex
+    number_sections: false
+  html_document: default
   word_document: default
 bibliography: references.bib
 link-citations: yes
