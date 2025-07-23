@@ -10,9 +10,10 @@ fd_summary <- data.frame(
   session = character(),
   encoding = character(),
   mean_fd = numeric(),
-  valid_time_sec = numeric(),
-  stringsAsFactors = FALSE
+  valid_time_sec = numeric()
 )
+
+# subject ids will be 
 
 for (subject in subject_ids) {
     for (encoding in c("LR", "RL")) {

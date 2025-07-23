@@ -2,7 +2,7 @@
 
 # Example func call: estimate_and_export_prior("LR", 15, FALSE, dir_data, TR_HCP)
 # encoding is "LR" / "RL" / "combined"
-# nIC is 15 / 25 / 50 or 0 meaning it is going to use the Yeo17 parcellation
+# nIC is 15 / 25 / 50, 0 meaning it is going to use the Yeo17 parcellation, or 1 meaning MSC parcellation
 # GSR is TRUE / FALSE
 estimate_and_export_prior <- function(
   encoding,
@@ -33,7 +33,14 @@ estimate_and_export_prior <- function(
                                 sprintf("MNINonLinear/Results/rfMRI_REST1_RL/rfMRI_REST1_RL_Atlas_MSMAll_hp2000_clean.dtseries.nii"))
     }
 
-    parcellation <- if (nIC == 0) "Yeo17" else sprintf("GICA%d", nIC)
+    parcellation <- if (nIC == 0) {
+        "Yeo17"
+    } else if (nIC == 1) {
+        "MSC"
+    } else {
+        sprintf("GICA%d", nIC)
+    }
+    
     gsr_label <- ifelse(GSR, "GSR", "noGSR")
     save_dir <- file.path(dir_project, "priors", parcellation)
     if (!dir.exists(save_dir)) dir.create(save_dir, recursive = TRUE)
@@ -69,11 +76,35 @@ estimate_and_export_prior <- function(
                 brainstructures = c("left", "right"),
                 drop_first = 15,
                 scrub = scrub
-                )
+            )
         
         # Save file
         saveRDS(prior, file.path(save_dir, sprintf("prior_%s_%s_%s.rds", encoding, parcellation, gsr_label)))
 
+    # MSC
+    } else if (nIC == 1) {
+
+        GICA <- read_cifti(file.path(dir_data, "inputs", "Networks_template.dscalar.nii"))
+
+        prior <- estimate_prior(
+                BOLD = BOLD_paths1,
+                BOLD2 = BOLD_paths2,
+                template = GICA,
+                GSR = GSR,
+                TR = TR_HCP,
+                hpf = 0.01,
+                Q2 = 0,
+                Q2_max = NULL,
+                verbose = TRUE,
+                inds = inds,
+                brainstructures = c("left", "right"),
+                drop_first = 15,
+                scrub = scrub
+            )
+
+        # Save file
+        saveRDS(prior, file.path(save_dir, sprintf("prior_%s_%s_%s.rds", encoding, parcellation, gsr_label)))
+    
     # GICA
     } else {
 

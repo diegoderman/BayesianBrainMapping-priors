@@ -1,4 +1,6 @@
 data_OSF/*
+!data_OSF/inputs/Networks_template.dscalar.nii
+
 !data_OSF/README.txt
 
 priors/*
@@ -7,3 +9,5 @@ priors/*
 temp_brain_plot.png
 temp_plot.png
 yeo17_legend.png
+
+.lintr
