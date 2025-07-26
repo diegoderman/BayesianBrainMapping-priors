@@ -29,32 +29,32 @@ dir_project <- "~/Documents/GitHub/BayesianBrainMapping-Templates" # Path to Git
 
 dir_data <- file.path(dir_project, "data_OSF") # Path to data folder
 
-HCP_unrestricted_fname <- file.path(dir_data, "inputs", "unrestricted_HCP_demographics.csv")
-HCP_restricted_fname <- file.path(dir_data, "inputs", "restricted_HCP.csv")
+# HCP_unrestricted_fname <- file.path(dir_data, "inputs", "unrestricted_HCP_demographics.csv")
+# HCP_restricted_fname <- file.path(dir_data, "inputs", "restricted_HCP.csv")
 
 # Read CSV
-HCP_unrestricted <- read.csv(HCP_unrestricted_fname)
+# HCP_unrestricted <- read.csv(HCP_unrestricted_fname)
 
 # All subject IDS
-subject_ids <- HCP_unrestricted$Subject
+# subject_ids <- HCP_unrestricted$Subject
 
-subject_ids_msc <- c(
-  "sub-MSC01",
-  "sub-MSC02",
-  "sub-MSC03",
-  "sub-MSC04",
-  "sub-MSC05",
-  "sub-MSC06",
-  "sub-MSC07",
-  "sub-MSC08",
-  "sub-MSC09",
-  "sub-MSC10"
-)
+# subject_ids_msc <- c(
+#   "sub-MSC01",
+#   "sub-MSC02",
+#   "sub-MSC03",
+#   "sub-MSC04",
+#   "sub-MSC05",
+#   "sub-MSC06",
+#   "sub-MSC07",
+#   "sub-MSC08",
+#   "sub-MSC09",
+#   "sub-MSC10"
+# )
 
-sessions_msc <- c(
-  "ses-func01", "ses-func02", "ses-func03", "ses-func04", "ses-func05",
-  "ses-func06", "ses-func07", "ses-func08", "ses-func09", "ses-func10"
-)
+# sessions_msc <- c(
+#   "ses-func01", "ses-func02", "ses-func03", "ses-func04", "ses-func05",
+#   "ses-func06", "ses-func07", "ses-func08", "ses-func09", "ses-func10"
+# )
 
 # Constants
 fd_lag_HCP <- 4 
