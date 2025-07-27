@@ -84,7 +84,7 @@ estimate_and_export_prior <- function(
     # MSC
     } else if (nIC == 1) {
 
-        GICA <- read_cifti(file.path(dir_data, "Networks_template.dscalar.nii"))
+        GICA <- read_cifti(file.path(dir_data, "inputs", "Networks_template.dscalar.nii"))
 
         prior <- estimate_prior(
                 BOLD = BOLD_paths1,
@@ -96,7 +96,6 @@ estimate_and_export_prior <- function(
                 Q2 = 0,
                 Q2_max = NULL,
                 verbose = TRUE,
-                inds = inds,
                 brainstructures = c("left", "right"),
                 drop_first = 15,
                 scrub = scrub

@@ -121,7 +121,7 @@ applicable.
 The use of population-derived priors in BBM reduces noise while retaining
 relevant signal. This results in more reliable individual-level network
 topography maps and the functional connectivity between them
-[@mejia2020bayesian] [@mejia2022longitudinal] [@singh2025robust]. An important
+[@mejia2020bayesian; @mejia2022longitudinal; @mejia2023leveraging]. An important
 feature of the BBM priors on spatial topography is that they spatially vary
 within each network, generally showing higher inter-individual variance where
 engagement tends to exist, and lower variance in background regions.
@@ -219,7 +219,7 @@ $$
 \mathbf{a}_t \sim N(\mathbf{0}, \mathbf{G}), \mbox{ where } \mathbf{G} \sim p(\mathbf{G}) ,
 $$
 
-See [@singh2025robust] for details on the population-derived prior on the
+See [@mejia2023leveraging] for details on the population-derived prior on the
 functional connectivity. Briefly, two choices exist for this prior: the
 conjugate Inverse-Wishart distribution, or a novel Cholesky-based prior
 developed for this model that more accurately encodes patterns of population variance in FC. 
@@ -241,18 +241,18 @@ cat('
 \\newcommand{\\Checkmark}{\\ding{51}}
 \\begin{table}[ht]
 \\centering
-\\begin{tabular}{|l|c|c|c|c|}
+\\begin{tabular}{|l|c|c|c|c|c|}
 \\hline
-\\textbf{Global Signal Regression} & \\multicolumn{3}{c|}{\\textbf{Group ICA}} & \\textbf{Parcellation} \\\\
-\\cline{2-4}
- & 15 HCP ICs & 25 HCP ICs & 50 HCP ICs & Yeo 17 \\\\
+\\textbf{GSR} & \\multicolumn{3}{c|}{\\textbf{Group ICA}} & \\multicolumn{2}{c|}{\\textbf{Parcellation}} \\\\
+\\cline{2-6}
+ & 15 HCP ICs & 25 HCP ICs & 50 HCP ICs & Yeo 17 & MSC \\\\
 \\hline
-With GSR & \\Checkmark & \\Checkmark & \\Checkmark & \\Checkmark \\\\
+With GSR & \\Checkmark & \\Checkmark & \\Checkmark & \\Checkmark & \\Checkmark \\\\
 \\hline
-Without GSR & \\Checkmark & \\Checkmark & \\Checkmark & \\Checkmark \\\\
+Without GSR & \\Checkmark & \\Checkmark & \\Checkmark & \\Checkmark & \\Checkmark \\\\
 \\hline
 \\end{tabular}
-\\caption{Templates used for Bayesian brain mapping.}
+\\caption{Templates used for construction of population-derived priors.}
 \\label{tab:template-summary}
 \\end{table}
 ')
@@ -842,7 +842,7 @@ Next, download the required `data_OSF/` and `priors` folders from the following 
 
 Once downloaded, unzip the folder and place in the folder in the GitHub directory with the same corresponding name. The folder structure should look like this:
 
-<pre>
+```text
 BayesianBrainMapping-Templates/
 ├── data_OSF/
 │   ├── inputs/
@@ -853,10 +853,10 @@ BayesianBrainMapping-Templates/
 ├── src/
 │   ├── 0_setup.R
 │   └── 1_fd_time_filtering.R
-|   └── ...
+   └── ...
 ├── BayesianBrainMapping-Templates.Rmd
 └── ...
-</pre>
+```
 
 This section initializes the environment by loading required packages, setting analysis parameters, and defining directory paths.
 
@@ -887,7 +887,7 @@ source(file.path(src_dir, "0_setup.R"))
 We begin by filtering subjects based on the fMRI scan duration after motion scrubbing
 For each subject, and for each session (`REST1`, `REST2`) and encoding direction (`LR`, `RL`), 
 we compute framewise displacement (FD) using the `fMRIscrub` package. We use a lagged
-and filtered version of FD [@phạm2023less] [@power2012spurious] [@fair2009functional] 
+and filtered version of FD [@phạm2023less; @power2012spurious; @fair2009functional] 
 appropriate for multiband data. FD is calculated from the `Movement_Regressors.txt` 
 file available in the HCP data for each subject, encoding and session.
 
