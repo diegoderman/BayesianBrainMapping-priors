@@ -22,6 +22,7 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE, fig.pos = "H")
 library(kableExtra)
 library(magrittr)
+library(knitr)
 ```
 
 
@@ -245,24 +246,28 @@ All images were generated using the scripts:
 \leavevmode
 
 ```{r fig.show='hold', out.width='48%', echo=FALSE}
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "GICA15", "GICA15_IC1.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "GICA15", "GICA15_IC15.png"))
+ic_table <- data.frame(
+  `IC` = c("IC1", "IC15"),
+  
+  `Component` = c(
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/parcellations_plots/GICA15/GICA15_IC1_cropped.png}",
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/parcellations_plots/GICA15/GICA15_IC15_cropped.png}"
+  ),
+  
+  `Mean` = c(
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/priors_plots/GICA15/combined/GSR/prior_combined_GICA15_GSR_IC1_mean_cropped.png}",
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/priors_plots/GICA15/combined/GSR/prior_combined_GICA15_GSR_IC15_mean_cropped.png}"
+  ),
+  
+  `Sqrt Var` = c(
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/priors_plots/GICA15/combined/GSR/prior_combined_GICA15_GSR_IC1_sd_cropped.png}",
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/priors_plots/GICA15/combined/GSR/prior_combined_GICA15_GSR_IC15_sd_cropped.png}"
+  )
+)
 
-knitr::include_graphics(file.path(
-  dir_data, "outputs", "priors_plots", "GICA15", "combined", "GSR", 
-  "prior_combined_GICA15_GSR_IC1_mean.png"))
-knitr::include_graphics(file.path(
-  dir_data, "outputs", "priors_plots", "GICA15", "combined", "GSR", 
-  "prior_combined_GICA15_GSR_IC15_mean.png"))
-
-knitr::include_graphics(file.path(
-  dir_data, "outputs", "priors_plots", "GICA15", "combined", "GSR", 
-  "prior_combined_GICA15_GSR_IC1_sd.png"))
-knitr::include_graphics(file.path(
-  dir_data, "outputs", "priors_plots", "GICA15", "combined", "GSR", 
-  "prior_combined_GICA15_GSR_IC15_sd.png"))
+kable(ic_table, escape = FALSE, align = c("c", "c", "c", "c"),
+      col.names = c("IC", "Component", "Mean", "Standard Deviation")) %>%
+  kable_styling(full_width = FALSE, position = "center", latex_options = "H")
 ```
 
 #### 5.3.2 25 ICs
@@ -270,24 +275,28 @@ knitr::include_graphics(file.path(
 \leavevmode
 
 ```{r fig.show='hold', out.width='48%', echo=FALSE}
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "GICA25", "GICA25_IC1.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "GICA25", "GICA25_IC25.png"))
+ic_table <- data.frame(
+  `IC` = c("IC1", "IC25"),
+  
+  `Component` = c(
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/parcellations_plots/GICA25/GICA25_IC1_cropped.png}",
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/parcellations_plots/GICA25/GICA25_IC25_cropped.png}"
+  ),
+  
+  `Mean` = c(
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/priors_plots/GICA25/combined/GSR/prior_combined_GICA25_GSR_IC1_mean_cropped.png}",
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/priors_plots/GICA25/combined/GSR/prior_combined_GICA25_GSR_IC25_mean_cropped.png}"
+  ),
+  
+  `Sqrt Var` = c(
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/priors_plots/GICA25/combined/GSR/prior_combined_GICA25_GSR_IC1_sd_cropped.png}",
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/priors_plots/GICA25/combined/GSR/prior_combined_GICA25_GSR_IC25_sd_cropped.png}"
+  )
+)
 
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA25", "combined", "GSR", 
-                                  "prior_combined_GICA25_GSR_IC1_mean.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA25", "combined", "GSR", 
-                                  "prior_combined_GICA25_GSR_IC25_mean.png"))
-
-knitr::include_graphics(file.path(dir_data,"outputs",
-                                  "priors_plots", "GICA25", "combined", "GSR", 
-                                  "prior_combined_GICA25_GSR_IC1_sd.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA25", "combined", "GSR", 
-                                  "prior_combined_GICA25_GSR_IC25_sd.png"))
+kable(ic_table, escape = FALSE, align = c("c", "c", "c", "c"),
+      col.names = c("IC", "Component", "Mean", "Standard Deviation")) %>%
+  kable_styling(full_width = FALSE, position = "center", latex_options = "H")
 ```
 
 #### 5.3.3 50 ICs
@@ -295,51 +304,57 @@ knitr::include_graphics(file.path(dir_data, "outputs",
 \leavevmode
 
 ```{r fig.show='hold', out.width='48%', echo=FALSE}
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "GICA50", "GICA50_IC1.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "GICA50", "GICA50_IC50.png"))
+ic_table <- data.frame(
+  `IC` = c("IC1", "IC50"),
+  
+  `Component` = c(
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/parcellations_plots/GICA50/GICA50_IC1_cropped.png}",
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/parcellations_plots/GICA50/GICA50_IC50_cropped.png}"
+  ),
+  
+  `Mean` = c(
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/priors_plots/GICA50/combined/GSR/prior_combined_GICA50_GSR_IC1_mean_cropped.png}",
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/priors_plots/GICA50/combined/GSR/prior_combined_GICA50_GSR_IC50_mean_cropped.png}"
+  ),
+  
+  `Sqrt Var` = c(
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/priors_plots/GICA50/combined/GSR/prior_combined_GICA50_GSR_IC1_sd_cropped.png}",
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/priors_plots/GICA50/combined/GSR/prior_combined_GICA50_GSR_IC50_sd_cropped.png}"
+  )
+)
 
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA50", "combined", "GSR", 
-                                  "prior_combined_GICA50_GSR_IC1_mean.png"))
-knitr::include_graphics(file.path(dir_data,"outputs",
-                                  "priors_plots", "GICA50", "combined", "GSR",
-                                  "prior_combined_GICA50_GSR_IC50_mean.png"))
-
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA50", "combined", "GSR", 
-                                  "prior_combined_GICA50_GSR_IC1_sd.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA50", "combined", "GSR",
-                                  "prior_combined_GICA50_GSR_IC50_sd.png"))
+kable(ic_table, escape = FALSE, align = c("c", "c", "c", "c"),
+      col.names = c("IC", "Component", "Mean", "Standard Deviation")) %>%
+  kable_styling(full_width = FALSE, position = "center", latex_options = "H")
 ```
 
 #### 5.3.4 Yeo17
 
 \leavevmode
 
-For the Yeo17 parcellation, we show visualizations of the two main networks (`DefaultA` and `DorsAttnA`):
-
 ```{r fig.show='hold', out.width='48%', echo=FALSE}
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "Yeo17", "Yeo17_DefaultA.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "Yeo17", "Yeo17_DorsAttnA.png"))
+ic_table <- data.frame(
+  `Network` = c("DefaultA", "DorsAttnA"),
+  
+  `Component` = c(
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/parcellations_plots/Yeo17/Yeo17_DefaultA_cropped.png}",
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/parcellations_plots/Yeo17/Yeo17_DorsAttnA_cropped.png}"
+  ),
+  
+  `Mean` = c(
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/priors_plots/Yeo17/combined/GSR/prior_combined_Yeo17_GSR_DefaultA_mean_cropped.png}",
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/priors_plots/Yeo17/combined/GSR/prior_combined_Yeo17_GSR_DorsAttnA_mean_cropped.png}"
+  ),
+  
+  `Sqrt Var` = c(
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/priors_plots/Yeo17/combined/GSR/prior_combined_Yeo17_GSR_DefaultA_sd_cropped.png}",
+    "\\includegraphics[width=0.18\\linewidth]{data_OSF/outputs/priors_plots/Yeo17/combined/GSR/prior_combined_Yeo17_GSR_DorsAttnA_sd_cropped.png}"
+  )
+)
 
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "Yeo17", "combined", "GSR", 
-                                  "prior_combined_Yeo17_GSR_DefaultA_mean.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "Yeo17", "combined", "GSR",
-                                  "prior_combined_Yeo17_GSR_DorsAttnA_mean.png"))
-
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "Yeo17", "combined", "GSR",
-                                  "prior_combined_Yeo17_GSR_DefaultA_sd.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "Yeo17", "combined", "GSR",
-                                  "prior_combined_Yeo17_GSR_DorsAttnA_sd.png"))
+kable(ic_table, escape = FALSE, align = c("c", "c", "c", "c"),
+      col.names = c("IC", "Component", "Mean", "Standard Deviation")) %>%
+  kable_styling(full_width = FALSE, position = "center", latex_options = "H")
 ```
 
 ### 5.4 Visualize Functional Connectivity Priors
@@ -360,9 +375,9 @@ For each prior, the following outputs are saved in the corresponding folder unde
 
 Where:
 
-- <parcellation> = GICA15, GICA25, GICA50, or Yeo17
+- `parcellation` = GICA15, GICA25, GICA50, or Yeo17
 
-- <encoding> = LR, RL, or combined
+- `encoding` = LR, RL, or combined
 
 #### PDF files (2 per prior)
 
