@@ -4,12 +4,10 @@ title: "Individualized functional topographic mapping with the BayesBrainMap R p
 author: "Nohelia Da Silva Sanchez, Damon D. Pham, Ellyn Butler, Amanda F. Mejia"
 date: "2025-05-07"
 output:
-  bookdown::pdf_document2:
+  bookdown::html_document2:
     toc: false
-    latex_engine: xelatex
     number_sections: false
   html_document: default
-  word_document: default
 bibliography: references.bib
 link-citations: yes
 header-includes: \usepackage{pifont} \usepackage{float} \usepackage{caption}
@@ -22,260 +20,66 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE, fig.pos = "H")
 library(kableExtra)
 library(magrittr)
+library(knitr)
 ```
 
-## 1. Introduction
 
 ```{r setup-env, include=FALSE}
 dir_data <- "data_OSF"
 ```
 
-The functional organization of the brain is highly individualized, both in terms
-of the spatial configuration (CITE Gordon 2017 MSC paper) and temporal dynamics
-(CITE Finn fingerprinting paper) of functional brain networks. The collection
-and analysis of datasets featuring "highly sampled" individuals (CITE Braga and
-Buckner 2017, Gordon 2017 MSC paper, Xue et al. 2021) have been crucial in
-elucidating individual differences in spatial topography in particular, since
-large amounts of data per individual facilitates accurate estimation of
-individual functional topographic maps. Furthermore, individual functional
-topography has been shown to be predictive of various phenotypes as well as
-disease severity (see citations from OHBM 2023 talk, slide 4). Therefore,
-individual features of functional topography are a potentially valuable source
-of imaging-based biomarkers.
-
-Recent research has also revealed that the use of group parcellations or network
-maps for studies of functional connectivity (FC), i.e. the temporal synchrony
-between regions of the brain, can lead to systematically biased estimates of FC
-(CITE Bijsterbosch 2018, 2019). This is because group parcels or networks that
-are misaligned to the individual's functional topography mix signals from
-different functional areas. Thus, true differences in functional topography can
-be misinterpreted as differences in FC.  A potential consequence is that real
-behavioral or phenotypic correlates with functional topography may be
-incorrectly attributed to FC. To understand the brain mechanisms underlying
-certain behaviors or disease states, rather than simply predict them, it is
-crucial to disengangle differences in spatial topography from temporal
-engagement and connectivity.
-
-An effective approach for extracting individual functional topography from
-functional magnetic resonance imaging (fMRI) data is the use of hierarchical
-Bayesian models. These models reduce noise by combining information from
-multiple subjects, while respecting individual differences and ensuring
-correspondence between individuals.  Hierarchical models been successfully
-applied in the context of parcellation (CITE Kong et al 2021), probabilistic
-functional modes (PROFUMO) (CITE Harrison et al., 2015, Farahibozorg et al.
-2021), and independent component analysis (ICA) (CITE Guo and Tang, 2013; Mejia
-et al., 2020). Importantly, they have been shown to perform well based on a
-modest amount of data per individual, potentially avoiding the need to collect
-prolonged or repeated sessions of data in individuals (CITE Kong 2021, Mejia
-2020). This makes them highly pragmatic, since extensive subject-level scanning
-is not feasible in many contexts, especially in clinical settings where it can
-present a financial and physical burden for patients.
-
-Meanwhile, there is growing evidence for the existence and relevance of
-overlapping functional architecture (Cite Faskowitz 2020 Nature Neuroscience).
-This favors "soft" parcellations allowing for overlap between functional
-networks over traditional "hard" parcellations (CITE Bijsterbosch 2023,
-https://www.sciencedirect.com/science/article/pii/S1053811920306121,
-https://doi.org/10.1016/j.neuroimage.2017.11.003, others). Examples of soft
-parcellation approaches include spatial ICA (CITE
-https://doi.org/10.1109/TMI.2003.822821), temporal ICA (CITE
-https://doi.org/10.1073/pnas.112132910), PROFUMO (CITE Harrison 2015),
-non-negative matrix factorization (NMF) (CITE), gradients (CITE
-https://doi.org/10.1073/pnas.1608282113), and dictionaries of functional modes
-(DiFuMo) (CITE https://doi.org/10.1016/j.neuroimage.2020.117126). Spatial ICA,
-while one of the most popular methods, has the disadvantage of discouraging
-statistical dependence between network maps, leading to relatively little
-overlap between networks. PROFUMO and temporal ICA allow for greater spatial
-overlap, but have the disadvantage of encouraging or enforcing temporal
-independence between networks, resulting in low levels of functional
-connectivity between networks (CITE Pervais 2020). Less constrained methods have
-the potential advantage of expressing both the temporal and spatial dependence
-between networks, but in the absence of model constraints they often require
-externally-derived information to guide estimation.
-
-Here we describe Bayesian brain mapping (BBM), a pragmatic and flexible
-hierarchical Bayesian technique for producing individualized functional brain
-topographic maps without constraining the spatial or temporal structure of the
-networks.  BBM begins with a *template*, which can take the form of either a
-group parcellation or a set of continous network maps.  BBM is a generalization
-of template ICA [@mejia2020bayesian], in which the template is a set of group
-ICA maps, but BBM allows for other types of network maps or parcellations.  
-In BBM, the template is not used directly in the individual-level
-model, but rather is used to construct *population-derived priors*, which are in turn
-used in a Bayesian model fit to an individual subject. The priors are based on a training set of subjects
-from a representative population, either using holdout data from the focal study
-or data from a publicly available neuroimaging repository such as the Human
-Connectome Project (HCP) [@van2013wu] or Alzheimer's Disease Neuroimaging
-Initiative (ADNI) [@mueller2005alzheimer]. The BBM model includes
-parameters representing subject-specific spatial topography of different networks and their
-corresponding temporal activation profiles. The model is hierarchical in the
-sense that it includes population-derived priors on those parameters, but it is
-fit to data from a single subject to estimate the subject-specific spatial
-topography and temporal activation. While hierarchical models typically require
-multi-subject data to establish the shared prior parameters, BBM avoids this
-requirement by using priors that are already established. This allows BBM to be
-highly pragmatic, computationally efficient, and potentially clinically
-applicable.
-
-
-The use of population-derived priors in BBM reduces noise while retaining
-relevant signal. This results in more reliable individual-level network
-topography maps and the functional connectivity between them
-[@mejia2020bayesian; @mejia2022longitudinal; @mejia2023leveraging]. An important
-feature of the BBM priors on spatial topography is that they spatially vary
-within each network, generally showing higher inter-individual variance where
-engagement tends to exist, and lower variance in background regions.
-This allows individual differences to be expressed where they exist, while
-reducing noise in background regions. Furthermore, due to the continuous, whole-brain nature 
-of BBM network maps, noise reduction in background regions of
-one network indirectly contributes to estimation of signal in the same area of
-the brain in another network. The powerful noise-reduction properties of BBM
-allows it to produce reliable maps of individual functional topography with
-moderate scan duration, without necessarily requiring ``dense sampling'' of
-individuals (CITE Mejia et al 2020).
-
-We have several goals in this work.  First, to describe Bayesian brain mapping
-and illustrate its use, including how to produce population-derived priors and
-how to perform model fitting using the `BayesBrainMap` R package. Second, to
-establish and share high-quality population-derived priors using data from the
-HCP, based on a variety of templates (parcellations and group ICA maps at
-different resolutions). These priors can be directly adopted to perform BBM in
-studies of healthy young adults; additionally, we provide and describe the code used to
-produce them so that population-derived priors can be easily produced for
-different populations or using different templates. We also provide guidance for
-visual investigation of the priors to ensure quality. Third, using data from the
-Midnight Scan Club [@gordon2017precision], we illustrate several key strengths
-of BBM:
-1. Its ability to reveal features of individual functional topography, 
-previously revealed through extensive subject-level scanning, from a single session of data
-2. The reliability of individualized network maps with limited scan duration
-3. The applicability of externally-derived priors to smaller studies or 
-individuals from a similar population, even when acquisition protocols differ 
-from the focal study
-4. The overlapping nature of brain networks, even when using templates that enforce 
-(e.g. parcellations) or encourage (e.g. ICA) independence between networks, without 
-compromising the functional connectivity between networks
-5. The pragmatic nature of BBM, which can be quickly fit to individual sessions of data 
-once the prior has been established.
-
-
 ## 2. Methods
 
 There are two steps to performing BBM, which are implemented in the
-`BayesBrainMap` R package: *(1) prior estimation* and *(2) model fitting*
+`BayesBrainMap` R package: *(1) prior estimation* and *(2) model fitting* 
 (Figure \@ref(fig:model-overview)).  
 
-```{r model-overview, echo=FALSE, out.width="80%", fig.align='center', fig.cap="Overview of Bayesian Brain Mapping."}
-knitr::include_graphics(file.path(dir_data, "inputs/Drawing_v1.pdf"))
+```{r model-overview, echo=FALSE, out.width="100%", fig.align='center', fig.cap="Overview of Bayesian Brain Mapping."}
+knitr::include_graphics(file.path(dir_data, "inputs/Drawing_v1.svg"))
 ```
 
-Here, we first present the BBM model. We then explain how we derive
-population-derived priors using data from the HCP and how they can be accessed
-and applied, and illustrate the application of BBM to reveal individual-level
-topography and connectivity. Next, we describe our analysis of data from the
-Midnight Scan Club using HCP-derived priors, which will illustrate several
-important features of BBM.
-
-### 2.1 The Bayesian Brain Mapping Model
-
-Here we provide a brief overview of the BBM statistical model.  For a given
-subject and fMRI session, let ${y}_{tv}$ be the preprocessed BOLD fMRI time
-series at voxel or vertex $v$ and time point $t$. The BBM model assumes that the
-BOLD time series can be decomposed into contributions from a set of networks,
-similar to ICA. The first level of the model is given by
-
-$$
-{y}_{tv} = \sum_{q=1}^{Q} a_{tq} s_{qv} + {e}_{tv} 
-= \mathbf{a}_t^\top \mathbf{s}_v + {e}_{tv}, 
-\quad {e}_{tv} \sim N(0, \tau^2_v),
-$$
-
-where $s_{qv}$ is the spatial engagement of network $q$ at voxel or vertex $v$, 
-and $a_{tq}$ is the temporal activation of network $q$ at time point $t$. The vectors 
-$\mathbf{a}_t$ and $\mathbf{s}_v$ combine those values across all $Q$ networks. 
-The second level of the model incorporates the population-derived prior on the 
-spatial topography in ${s}_{qv}$, as described in [@mejia2020bayesian]:
-
-$$
-s_{qv} = s^0_{qv} + \delta_{qv},\quad\delta_{qv} \sim N(0, \sigma^2_{qv}),
-$$
-where $s^0_{qv}$ and $\sigma^2_{qv}$ are known via the prior, and the deviation
-terms $\delta_{qv}$ represent individual differences between the subject and the
-population average. Optionally, spatial dependencies in $\delta_{qv}$ can be
-modeled via a spatial prior for additional accuracy and power, though at a
-higher computational cost [@mejia2022longitudinal]. Note that structured noise may
-exist in the data that is not well-captured by the residual noise term. While in
-ICA it is common to model structured noise as components, in BBM these are not
-included in the model because can be removed beforehand as described in 
-[@mejia2020bayesian] or via pre-processing methods like ICA-FIX.
-
-The third level of the model incorporates the population-derived prior on the
-functional connectivity between networks, which is represented by the covariance
-of $\mathbf{a}_t$. This is accomplished by assuming a multivariate Normal prior
-on $\mathbf{a}_t$ with mean zero and covariance $\mathbf{G}$, and assuming a
-population-derived hyperprior on $\mathbf{G}$:
-
-$$
-\mathbf{a}_t \sim N(\mathbf{0}, \mathbf{G}), \mbox{ where } \mathbf{G} \sim p(\mathbf{G}) ,
-$$
-
-See [@mejia2023leveraging] for details on the population-derived prior on the
-functional connectivity. Briefly, two choices exist for this prior: the
-conjugate Inverse-Wishart distribution, or a novel Cholesky-based prior
-developed for this model that more accurately encodes patterns of population variance in FC. 
-The former is faster, while the latter provides somewhat better performance at a higher computational cost.
-
-### 2.2 Building HCP-Derived Priors
-
-Here, we describe construction of HCP-derived priors for Bayesian brain mapping using several
-different choices of template. These include two different parcellations and group
-ICA maps (Table \@ref(tab:template-summary)). Specifically, we use the
-17-network Yeo parcellation [@yeo2011organization], the MSC group parcellation
-[@gordon2017precision], and HCP-derived group ICA maps
-with 15 to 50 components [@smith2013functional]. For each template, we build priors with and
-without global signal regression (GSR), since whether or not to perform GSR is
-an important choice that remains the subject of debate.
-
-```{r, results='asis', echo=FALSE}
+```{r template-summary, results='asis', echo=FALSE}
 cat('
-\\newcommand{\\Checkmark}{\\ding{51}}
-\\begin{table}[ht]
-\\centering
-\\begin{tabular}{|l|c|c|c|c|c|}
-\\hline
-\\textbf{GSR} & \\multicolumn{3}{c|}{\\textbf{Group ICA}} & \\multicolumn{2}{c|}{\\textbf{Parcellation}} \\\\
-\\cline{2-6}
- & 15 HCP ICs & 25 HCP ICs & 50 HCP ICs & Yeo 17 & MSC \\\\
-\\hline
-With GSR & \\Checkmark & \\Checkmark & \\Checkmark & \\Checkmark & \\Checkmark \\\\
-\\hline
-Without GSR & \\Checkmark & \\Checkmark & \\Checkmark & \\Checkmark & \\Checkmark \\\\
-\\hline
-\\end{tabular}
-\\caption{Templates used for construction of population-derived priors.}
-\\label{tab:template-summary}
-\\end{table}
+<div style="text-align: center;">
+  <table style="margin-left: auto; margin-right: auto; border-collapse: collapse; width: 80%; text-align: center; border: 1px solid black;">
+    <thead>
+      <tr>
+        <th style="border: 1px solid black;">Global Signal Regression</th>
+        <th style="border: 1px solid black;" colspan="3">Group ICA</th>
+        <th style="border: 1px solid black;">Parcellation</th>
+      </tr>
+      <tr>
+        <th style="border: 1px solid black;"></th>
+        <th style="border: 1px solid black;">15 HCP ICs</th>
+        <th style="border: 1px solid black;">25 HCP ICs</th>
+        <th style="border: 1px solid black;">50 HCP ICs</th>
+        <th style="border: 1px solid black;">Yeo 17</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border: 1px solid black;">With GSR</td>
+        <td style="border: 1px solid black;">✔</td>
+        <td style="border: 1px solid black;">✔</td>
+        <td style="border: 1px solid black;">✔</td>
+        <td style="border: 1px solid black;">✔</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid black;">Without GSR</td>
+        <td style="border: 1px solid black;">✔</td>
+        <td style="border: 1px solid black;">✔</td>
+        <td style="border: 1px solid black;">✔</td>
+        <td style="border: 1px solid black;">✔</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="table-caption" style="text-align: center; margin-top: 8px; margin-bottom: 8px;">
+    Templates used for Bayesian brain mapping.
+  </p>
+</div>
 ')
 ```
-
-Since the functional MRI data in the HCP was acquired with two different
-phase-encoding directions (left-to-right, LR, and right-to-left, RL), we build
-the HCP-derived priors using both phase encoding directions separately, as well
-as a combined version. Comparing the LR and RL priors allows us to assess the
-impact of phase encoding direction on the priors, while the combined version
-provides a general purpose prior that is not specific to either the LR or RL
-acquisition.
-
-Before estimating the BBM priors, we first select a high-quality, balanced
-subject sample to ensure high-quality and representative priors. Starting from
-the full HCP sample of $N=1206$ subjects, we apply several filters to obtain the
-final sample for the priors. First, we exclude subjects with insufficient scan
-duration after motion  scrubbing using a framewise displacement (FD) threshold
-of 0.5 mm and dropping the first 15 frames. Second, we exclude any related subjects. 
-Finally, we balanced sex within age groups. See [Appendix B](#appendix-subjectfiltering)
-for details.  After all filters, our final sample contains approximately 350 
-subjects for each encoding condition (LR, RL) and for the combined dataset, which are used to
-estimate the priors. 
 
 ### 2.3 Workflow Overview
 
@@ -341,13 +145,15 @@ See [Appendix C](#appendix-scrub) for more details.
 
 ## 4.3 Parcellation Choices
 
-We consider two types of group-level parcellations for estimating priors:
+We consider three types of group-level parcellations for estimating priors:
 
 - HCP GICA parcellation (`GICA15.dscalar.nii`, etc.), available in the `data_OSF/inputs` folder. These files were downloaded from the HCP website, specifically from the CIFTI Subject-specific ICA Parcellations dataset for 15-, 25-, and 50-dimensionalities.
 
 - Yeo17 parcellation [@yeo2011organization]. For details on how this parcellation was processed and simplified for use, see [Appendix D](#appendix-parcellations).
 
-Each of these parcellations was used to estimate priors with and without global signal regression (GSR), resulting in eight total priors saved as .rds files. See (Table \@ref(tab:template-summary)) for a summary of the parcellations and GSR combinations.
+- Midnight Scan Club (MSC) parcellation [@gordon2017precision].For details on how the MSC parcellation was processed for use in this project, see [TODO]. 
+
+Each of these parcellations was used to estimate priors with and without global signal regression (GSR), resulting in eight total priors saved as .rds files. See Table 1 [TODO link] for a summary of the parcellations and GSR combinations.
 
 ```{r warning=FALSE, eval=FALSE}
 # This script estimates and saves functional connectivity priors 
@@ -431,20 +237,6 @@ data_OSF/priors_plots/Yeo17/RL/GSR/
 ...
 ```
 
-### MSC Data
-
-To illustrate the applicability of BBM when using externally-derived priors, we analyze
-data from the Midnight Scan Club (MSC) (CITE Gordon et al 2017).  The MSC studies on a similar population as the HCP, healthy young adults, but the two datasets
-differ in acquisition methods. Since the population-derived priors used in BBM
-encode the distribution of signal, not noise, priors derived from one study can
-be applied to other studies with differing noise properties, as long as the
-populations are similar. We illustrate this through application of
-HCP-derived priors to data from the MSC. Application to the MSC will also
-exemplify the ability of BBM to reveal individual features of functional
-topography from just a single session of data.
-
-
-## Results
 
 ### 5.3 Visual Summary of Priors
 
@@ -472,103 +264,195 @@ All images were generated using the scripts:
 
 \leavevmode
 
-```{r fig.show='hold', out.width='48%', echo=FALSE}
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "GICA15", "GICA15_IC1.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "GICA15", "GICA15_IC15.png"))
-
-knitr::include_graphics(file.path(
-  dir_data, "outputs", "priors_plots", "GICA15", "combined", "GSR", 
-  "prior_combined_GICA15_GSR_IC1_mean.png"))
-knitr::include_graphics(file.path(
-  dir_data, "outputs", "priors_plots", "GICA15", "combined", "GSR", 
-  "prior_combined_GICA15_GSR_IC15_mean.png"))
-
-knitr::include_graphics(file.path(
-  dir_data, "outputs", "priors_plots", "GICA15", "combined", "GSR", 
-  "prior_combined_GICA15_GSR_IC1_sd.png"))
-knitr::include_graphics(file.path(
-  dir_data, "outputs", "priors_plots", "GICA15", "combined", "GSR", 
-  "prior_combined_GICA15_GSR_IC15_sd.png"))
+```{r results='asis', echo=FALSE}
+cat('
+<table style="border-collapse: collapse; margin: auto; text-align: center;" border="1">
+  <style>
+    table td, table th {
+      padding: 6px;
+    }
+  </style>
+  <tr>
+    <th>IC</th>
+    <th>Component</th>
+    <th>Mean</th>
+    <th>Standard Deviation</th>
+  </tr>
+  <tr>
+    <td>IC1</td>
+    <td><img src="data_OSF/outputs/parcellations_plots/GICA15/GICA15_IC1_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA15/combined/GSR/prior_combined_GICA15_GSR_IC1_mean_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA15/combined/GSR/prior_combined_GICA15_GSR_IC1_sd_cropped.png" width="120"/></td>
+  </tr>
+  <tr>
+    <td>IC15</td>
+    <td><img src="data_OSF/outputs/parcellations_plots/GICA15/GICA15_IC15_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA15/combined/GSR/prior_combined_GICA15_GSR_IC15_mean_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA15/combined/GSR/prior_combined_GICA15_GSR_IC15_sd_cropped.png" width="120"/></td>
+  </tr>
+</table>
+')
 ```
 
 #### 5.3.2 25 ICs
 
 \leavevmode
 
-```{r fig.show='hold', out.width='48%', echo=FALSE}
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "GICA25", "GICA25_IC1.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "GICA25", "GICA25_IC25.png"))
-
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA25", "combined", "GSR", 
-                                  "prior_combined_GICA25_GSR_IC1_mean.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA25", "combined", "GSR", 
-                                  "prior_combined_GICA25_GSR_IC25_mean.png"))
-
-knitr::include_graphics(file.path(dir_data,"outputs",
-                                  "priors_plots", "GICA25", "combined", "GSR", 
-                                  "prior_combined_GICA25_GSR_IC1_sd.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA25", "combined", "GSR", 
-                                  "prior_combined_GICA25_GSR_IC25_sd.png"))
+```{r results='asis', echo=FALSE}
+cat('
+<table style="border-collapse: collapse; margin: auto; text-align: center;" border="1">
+  <style>
+    table td, table th {
+      padding: 6px;
+    }
+  </style>
+  <tr>
+    <th>IC</th>
+    <th>Component</th>
+    <th>Mean</th>
+    <th>Standard Deviation</th>
+  </tr>
+  <tr>
+    <td>IC1</td>
+    <td><img src="data_OSF/outputs/parcellations_plots/GICA25/GICA25_IC1_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA25/combined/GSR/prior_combined_GICA25_GSR_IC1_mean_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA25/combined/GSR/prior_combined_GICA25_GSR_IC1_sd_cropped.png" width="120"/></td>
+  </tr>
+  <tr>
+    <td>IC25</td>
+    <td><img src="data_OSF/outputs/parcellations_plots/GICA25/GICA25_IC25_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA25/combined/GSR/prior_combined_GICA25_GSR_IC25_mean_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA25/combined/GSR/prior_combined_GICA25_GSR_IC25_sd_cropped.png" width="120"/></td>
+  </tr>
+</table>
+')
 ```
 
 #### 5.3.3 50 ICs
 
 \leavevmode
 
-```{r fig.show='hold', out.width='48%', echo=FALSE}
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "GICA50", "GICA50_IC1.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "GICA50", "GICA50_IC50.png"))
-
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA50", "combined", "GSR", 
-                                  "prior_combined_GICA50_GSR_IC1_mean.png"))
-knitr::include_graphics(file.path(dir_data,"outputs",
-                                  "priors_plots", "GICA50", "combined", "GSR",
-                                  "prior_combined_GICA50_GSR_IC50_mean.png"))
-
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA50", "combined", "GSR", 
-                                  "prior_combined_GICA50_GSR_IC1_sd.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA50", "combined", "GSR",
-                                  "prior_combined_GICA50_GSR_IC50_sd.png"))
+```{r results='asis', echo=FALSE}
+cat('
+<table style="border-collapse: collapse; margin: auto; text-align: center;" border="1">
+  <style>
+    table td, table th {
+      padding: 6px;
+    }
+  </style>
+  <tr>
+    <th>IC</th>
+    <th>Component</th>
+    <th>Mean</th>
+    <th>Standard Deviation</th>
+  </tr>
+  <tr>
+    <td>IC1</td>
+    <td><img src="data_OSF/outputs/parcellations_plots/GICA50/GICA50_IC1_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA50/combined/GSR/prior_combined_GICA50_GSR_IC1_mean_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA50/combined/GSR/prior_combined_GICA50_GSR_IC1_sd_cropped.png" width="120"/></td>
+  </tr>
+  <tr>
+    <td>IC50</td>
+    <td><img src="data_OSF/outputs/parcellations_plots/GICA50/GICA50_IC50_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA50/combined/GSR/prior_combined_GICA50_GSR_IC50_mean_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA50/combined/GSR/prior_combined_GICA50_GSR_IC50_sd_cropped.png" width="120"/></td>
+  </tr>
+</table>
+')
 ```
 
 #### 5.3.4 Yeo17
 
 \leavevmode
 
-For the Yeo17 parcellation, we show visualizations of the two main networks (`DefaultA` and `DorsAttnA`):
-
-```{r fig.show='hold', out.width='48%', echo=FALSE}
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "Yeo17", "Yeo17_DefaultA.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "parcellations_plots", "Yeo17", "Yeo17_DorsAttnA.png"))
-
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "Yeo17", "combined", "GSR", 
-                                  "prior_combined_Yeo17_GSR_DefaultA_mean.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "Yeo17", "combined", "GSR",
-                                  "prior_combined_Yeo17_GSR_DorsAttnA_mean.png"))
-
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "Yeo17", "combined", "GSR",
-                                  "prior_combined_Yeo17_GSR_DefaultA_sd.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "Yeo17", "combined", "GSR",
-                                  "prior_combined_Yeo17_GSR_DorsAttnA_sd.png"))
+```{r results='asis', echo=FALSE}
+cat('
+<table style="border-collapse: collapse; margin: auto; text-align: center;" border="1">
+  <style>
+    table td, table th {
+      padding: 6px;
+    }
+  </style>
+  <tr>
+    <th>Network</th>
+    <th>Component</th>
+    <th>Mean</th>
+    <th>Standard Deviation</th>
+  </tr>
+  <tr>
+    <td>DefaultA</td>
+    <td><img src="data_OSF/outputs/parcellations_plots/Yeo17/Yeo17_DefaultA_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/Yeo17/combined/GSR/prior_combined_Yeo17_GSR_DefaultA_mean_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/Yeo17/combined/GSR/prior_combined_Yeo17_GSR_DefaultA_sd_cropped.png" width="120"/></td>
+  </tr>
+  <tr>
+    <td>DorsAttnA</td>
+    <td><img src="data_OSF/outputs/parcellations_plots/Yeo17/Yeo17_DorsAttnA_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/Yeo17/combined/GSR/prior_combined_Yeo17_GSR_DorsAttnA_mean_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/Yeo17/combined/GSR/prior_combined_Yeo17_GSR_DorsAttnA_sd_cropped.png" width="120"/></td>
+  </tr>
+</table>
+')
 ```
+
+#### 5.3.5 Mix
+
+TODO: For the paper instead of here? 
+
+```{r results='asis', echo=FALSE}
+cat('
+<table style="border-collapse: collapse; margin: auto; text-align: center;" border="1">
+  <style>
+    table td, table th {
+      padding: 6px;
+    }
+  </style>
+  <tr>
+    <th>Network</th>
+    <th>Component</th>
+    <th>Mean</th>
+    <th>Standard Deviation</th>
+  </tr>
+  <tr>
+    <td>Yeo17 DefaultA</td>
+    <td><img src="data_OSF/outputs/parcellations_plots/Yeo17/Yeo17_DefaultA_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/Yeo17/combined/GSR/prior_combined_Yeo17_GSR_DefaultA_mean_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/Yeo17/combined/GSR/prior_combined_Yeo17_GSR_DefaultA_sd_cropped.png" width="120"/></td>
+  </tr>
+  
+  <tr>
+    <td>GICA15 IC 10</td>
+    <td><img src="data_OSF/outputs/parcellations_plots/GICA15/GICA15_IC10.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA15/combined/GSR/prior_combined_GICA15_GSR_IC10_mean.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA15/combined/GSR/prior_combined_GICA15_GSR_IC10_sd.png" width="120"/></td>
+  </tr>
+  
+  <tr>
+    <td>GICA25 IC 18</td>
+    <td><img src="data_OSF/outputs/parcellations_plots/GICA25/GICA25_IC18.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA25/combined/GSR/prior_combined_GICA25_GSR_IC18_mean.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA25/combined/GSR/prior_combined_GICA25_GSR_IC18_sd.png" width="120"/></td>
+  </tr>
+  
+  <tr>
+    <td>GICA50 IC 15</td>
+    <td><img src="data_OSF/outputs/parcellations_plots/GICA50/GICA50_IC15.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA50/combined/GSR/prior_combined_GICA50_GSR_IC15_mean.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA50/combined/GSR/prior_combined_GICA50_GSR_IC15_sd.png" width="120"/></td>
+  </tr>
+  
+  <tr>
+    <td>MSC Salience</td>
+    <td><img src="data_OSF/outputs/parcellations_plots/MSC/MSC_Salience.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/MSC/combined/GSR/prior_combined_MSC_GSR_Salience_mean.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/MSC/combined/GSR/prior_combined_MSC_GSR_Salience_sd.png" width="120"/></td>
+  </tr>
+  
+</table>
+')
+```
+
 
 ### 5.4 Visualize Functional Connectivity Priors
 
@@ -588,9 +472,9 @@ For each prior, the following outputs are saved in the corresponding folder unde
 
 Where:
 
-- <parcellation> = GICA15, GICA25, GICA50, or Yeo17
+- `parcellation` = GICA15, GICA25, GICA50, or Yeo17
 
-- <encoding> = LR, RL, or combined
+- `encoding` = LR, RL, or combined
 
 #### PDF files (2 per prior)
 
@@ -842,7 +726,7 @@ Next, download the required `data_OSF/` and `priors` folders from the following 
 
 Once downloaded, unzip the folder and place in the folder in the GitHub directory with the same corresponding name. The folder structure should look like this:
 
-```text
+<pre>
 BayesianBrainMapping-Templates/
 ├── data_OSF/
 │   ├── inputs/
@@ -853,10 +737,10 @@ BayesianBrainMapping-Templates/
 ├── src/
 │   ├── 0_setup.R
 │   └── 1_fd_time_filtering.R
-   └── ...
+|   └── ...
 ├── BayesianBrainMapping-Templates.Rmd
 └── ...
-```
+</pre>
 
 This section initializes the environment by loading required packages, setting analysis parameters, and defining directory paths.
 
@@ -887,7 +771,7 @@ source(file.path(src_dir, "0_setup.R"))
 We begin by filtering subjects based on the fMRI scan duration after motion scrubbing
 For each subject, and for each session (`REST1`, `REST2`) and encoding direction (`LR`, `RL`), 
 we compute framewise displacement (FD) using the `fMRIscrub` package. We use a lagged
-and filtered version of FD [@phạm2023less; @power2012spurious; @fair2009functional] 
+and filtered version of FD [@phạm2023less] [@power2012spurious] [@fair2009functional] 
 appropriate for multiband data. FD is calculated from the `Movement_Regressors.txt` 
 file available in the HCP data for each subject, encoding and session.
 
@@ -931,16 +815,11 @@ During this step, an FD summary table is generated with the following columns:
 
 \leavevmode
 
-```{r, results='asis', echo=FALSE}
+```{r results='asis', echo=FALSE}
 fd_summary <- read.csv(file.path(dir_data, "outputs", "filtering", "fd_summary.csv"))
 
-tbl <- kable(fd_summary[1:4, ], caption = NULL, booktabs = TRUE, format = "latex") %>%
-  kable_styling(latex_options = "HOLD_position")
-
-cat(tbl)
-cat("\\vspace{-0.4cm}\n")
-cat("\\captionof{table}{First rows of FD summary table}\n")
-cat("\\vspace{0.5cm}\n")
+kable(fd_summary[1:4, ]) %>%
+  kable_styling(full_width = FALSE, position = "center")
 ```
 
 As shown above, subject 100206 qualifies for further analysis because each of the four sessions (REST1/REST2 × LR/RL) contains at least 600 seconds of valid data.
