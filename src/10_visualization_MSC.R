@@ -41,7 +41,7 @@ network_df <- data.frame(
 )
 
 mparc <- read_cifti(file.path(dir_data, "inputs", "Networks_template.dscalar.nii"))
-mparc <- move_from_mwall(mparc, 0)
+# mparc <- move_from_mwall(mparc, 0)
 
 invalid_vals <- setdiff(unique(mparc$data$subcort), network_df$value)
 mparc$data$subcort[mparc$data$subcort %in% invalid_vals] <- NA
@@ -74,23 +74,23 @@ saveRDS(
 
 # Plot every network separately
 
-# for (parc in 1:17) {
+for (parc in 1:17) {
     
-#   parc_copy <- mparc
-#   curr_color <- network_df[network_df$value == parc, "color"]
-#   rgb_vals <- col2rgb(curr_color)
-#   labels_table <- parc_copy$meta$cifti$labels[[1]]
-#   labels_table[, 2:4] <- matrix(1, nrow = nrow(labels_table), ncol = 3)
-#   labels_table[labels_table$Key == parc, 2:4] <- t(rgb_vals / 255)
-#   parc_copy$meta$cifti$labels[[1]] <- labels_table
-#   label_name <- network_df[network_df$value == parc, "name"]
-#   plot_title <- paste0("MSC Network ", label_name, " (#", parc, ")")
+  parc_copy <- mparc
+  curr_color <- network_df[network_df$value == parc, "color"]
+  rgb_vals <- col2rgb(curr_color)
+  labels_table <- parc_copy$meta$cifti$labels[[1]]
+  labels_table[, 2:4] <- matrix(1, nrow = nrow(labels_table), ncol = 3)
+  labels_table[labels_table$Key == parc, 2:4] <- t(rgb_vals / 255)
+  parc_copy$meta$cifti$labels[[1]] <- labels_table
+  label_name <- network_df[network_df$value == parc, "name"]
+  plot_title <- paste0("MSC Network ", label_name, " (#", parc, ")")
 
-#   plot(
-#     parc_copy,
-#     fname = file.path(out_dir, paste0("MSC_", gsub(" ", "_", label_name), ".png")),
-#     title = plot_title
-#   )
-# }
+  plot(
+    parc_copy,
+    fname = file.path(out_dir, paste0("MSC_", gsub(" ", "_", label_name), ".png")),
+    title = plot_title
+  )
+}
 
 
