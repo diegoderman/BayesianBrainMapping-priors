@@ -21,5 +21,21 @@ saveRDS(profumo_mw, file.path(dir_data, "outputs", "PROFUMO_simplified_mwall.rds
 
 # Plot
 
-plot(profumo_mw,zlim = c(-0.5, 2.5))
+out_dir <- file.path(dir_data, "outputs", "parcellations_plots", "PROFUMO")
+if (!dir.exists(out_dir)) dir.create(out_dir, recursive = TRUE)
 
+plot(profumo_mw,
+    fname = file.path(out_dir, "PROFUMO.png"),
+    title = "PROFUMO Network Parcellation",
+    zlim = c(-0.5, 2.5)
+)
+
+for (parc in 1:12) {
+  plot(
+    profumo_mw,
+    idx = parc,
+    fname = file.path(out_dir, sprintf("PROFUMO_%02d.png", parc)),
+    title = paste("PROFUMO Network", parc),
+    zlim = c(-0.5, 2.5)
+  )
+}

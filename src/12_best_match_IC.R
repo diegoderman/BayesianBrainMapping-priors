@@ -31,6 +31,7 @@ GICA15_file <- file.path(dir_data, "inputs", "GICA15.dscalar.nii")
 GICA25_file <- file.path(dir_data, "inputs", "GICA25.dscalar.nii")
 GICA50_file <- file.path(dir_data, "inputs", "GICA50.dscalar.nii")
 MSC_file <- file.path(dir_data, "outputs", "MSC_parcellation.rds")
+PROFUMO_file <- file.path(dir_data, "outputs", "PROFUMO_simplified_mwall.rds")
 
 match_gica15 <- find_best_match_IC(GICA15_file, defaultA_map)
 cat("Best IC for GICA15:", match_gica15$best_ic, "cor =", match_gica15$max_cor, "\n")
@@ -43,3 +44,6 @@ cat("Best IC for GICA50:", match_gica50$best_ic, "cor =", match_gica50$max_cor, 
 
 match_msc <- find_best_match_IC(MSC_file, defaultA_map)
 cat("Best IC for MSC:", match_msc$best_ic, "cor =", match_msc$max_cor, "\n")
+
+match_profumo <- find_best_match_IC(PROFUMO_file, defaultA_map)
+cat("Best IC for PROFUMO:", match_msc$best_ic, "cor =", match_msc$max_cor, "\n")
