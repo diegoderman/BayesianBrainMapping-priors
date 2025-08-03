@@ -423,28 +423,28 @@ cat('
   
   <tr>
     <td>GICA15 IC 2</td>
-    <td><img src="data_OSF/outputs/parcellations_plots/GICA15/GICA15_IC2.png" width="120"/></td>
-    <td><img src="data_OSF/outputs/priors_plots/GICA15/combined/GSR/prior_combined_GICA15_GSR_IC2_mean.png" width="120"/></td>
-    <td><img src="data_OSF/outputs/priors_plots/GICA15/combined/GSR/prior_combined_GICA15_GSR_IC2_sd.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/parcellations_plots/GICA15/GICA15_IC2_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA15/combined/GSR/prior_combined_GICA15_GSR_IC2_mean_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA15/combined/GSR/prior_combined_GICA15_GSR_IC2_sd_cropped.png" width="120"/></td>
   </tr>
   
   <tr>
     <td>GICA25 IC 2</td>
-    <td><img src="data_OSF/outputs/parcellations_plots/GICA25/GICA25_IC2.png" width="120"/></td>
-    <td><img src="data_OSF/outputs/priors_plots/GICA25/combined/GSR/prior_combined_GICA25_GSR_IC2_mean.png" width="120"/></td>
-    <td><img src="data_OSF/outputs/priors_plots/GICA25/combined/GSR/prior_combined_GICA25_GSR_IC2_sd.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/parcellations_plots/GICA25/GICA25_IC2_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA25/combined/GSR/prior_combined_GICA25_GSR_IC2_mean_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA25/combined/GSR/prior_combined_GICA25_GSR_IC2_sd_cropped.png" width="120"/></td>
   </tr>
   
   <tr>
     <td>GICA50 IC 12</td>
-    <td><img src="data_OSF/outputs/parcellations_plots/GICA50/GICA50_IC12.png" width="120"/></td>
-    <td><img src="data_OSF/outputs/priors_plots/GICA50/combined/GSR/prior_combined_GICA50_GSR_IC12_mean.png" width="120"/></td>
-    <td><img src="data_OSF/outputs/priors_plots/GICA50/combined/GSR/prior_combined_GICA50_GSR_IC12_sd.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/parcellations_plots/GICA50/GICA50_IC12_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA50/combined/GSR/prior_combined_GICA50_GSR_IC12_mean_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/GICA50/combined/GSR/prior_combined_GICA50_GSR_IC12_sd_cropped.png" width="120"/></td>
   </tr>
   
   <tr>
     <td>MSC Default</td>
-    <td><img src="data_OSF/outputs/parcellations_plots/MSC/MSC_Default.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/parcellations_plots/MSC/MSC_Default_cropped.png" width="120"/></td>
     <td><img src="data_OSF/outputs/priors_plots/MSC/combined/GSR/prior_combined_MSC_GSR_Default_mean.png" width="120"/></td>
     <td><img src="data_OSF/outputs/priors_plots/MSC/combined/GSR/prior_combined_MSC_GSR_Default_sd.png" width="120"/></td>
   </tr>

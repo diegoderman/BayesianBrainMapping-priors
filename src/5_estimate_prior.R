@@ -37,6 +37,8 @@ estimate_and_export_prior <- function(
         "Yeo17"
     } else if (nIC == 1) {
         "MSC"
+    } else if (nIC == 2) {
+        "PROFUMO"
     } else {
         sprintf("GICA%d", nIC)
     }
@@ -91,7 +93,7 @@ estimate_and_export_prior <- function(
                 BOLD2 = BOLD_paths2,
                 template = GICA,
                 GSR = GSR,
-                TR = 2.2,
+                TR = TR_HCP,
                 hpf = 0.01,
                 Q2 = 0,
                 Q2_max = NULL,
@@ -104,6 +106,31 @@ estimate_and_export_prior <- function(
         # Save file
         saveRDS(prior, file.path(save_dir, sprintf("prior_%s_%s_%s.rds", encoding, parcellation, gsr_label)))
     
+    # PROFUMO
+    } else if (nIC == 2) {
+
+        PROFUMO <- readRDS(file.path(dir_data, "outputs", "PROFUMO_simplified_mwall.rds"))
+
+        prior <- estimate_prior(
+                BOLD = BOLD_paths1,
+                BOLD2 = BOLD_paths2,
+                template = PROFUMO,
+                GSR = GSR,
+                TR = TR_HCP,
+                hpf = 0.01,
+                Q2 = 0,
+                Q2_max = NULL,
+                verbose = TRUE,
+                brainstructures = c("left", "right"),
+                drop_first = 15,
+                scrub = scrub
+            )
+
+        # Save file
+        save_dir <- file.path(dir_project, "priors", "PROFUMO")
+        if (!dir.exists(save_dir)) dir.create(save_dir, recursive = TRUE)
+        saveRDS(prior, file.path(save_dir, sprintf("prior_%s_PROFUMO_%s.rds", encoding, gsr_label)))
+
     # GICA
     } else {
 
