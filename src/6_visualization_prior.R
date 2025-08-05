@@ -1,12 +1,5 @@
 # Plots both the mean and standard deviation components for all priors
 
-msc_labels <- c(
-  "NA", "Default", "Visual", "Fronto-Par", "Visual2", 
-  "Dors Attn", "Premotor", "Vent Attn", "Salience", 
-  "Cing-Operc", "Motor", "Motor2", "Auditory", 
-  "Ant MTL", "Post MTL", "Par Memory", "Context", "Motor3"
-)
-
 prior_files <- list.files(file.path(dir_project, "priors", "MSC"), recursive = TRUE, full.names = TRUE)
 
 get_prior_title <- function(base_name, i, prior, encoding, gsr_status) {
@@ -15,8 +8,8 @@ get_prior_title <- function(base_name, i, prior, encoding, gsr_status) {
     label_name <- rownames(prior$template_parc_table)[prior$template_parc_table$Key == i]
     return(paste0("Yeo 17 Network ", label_name, " (#", i, ")"))
   } else if (grepl("MSC", base_name, ignore.case = TRUE)) {
-    network_name <- msc_labels[i + 1]
-    return(paste0("MSC Network ", network_name, " (#", i, ")"))
+    label_name <- rownames(prior$template_parc_table)[i]
+    return(paste0("MSC Network ", label_name, " (#", i-1, ")"))
   }
   ic_match <- regmatches(base_name, regexpr("GICA\\d+", base_name))
 
@@ -43,14 +36,14 @@ for (file in prior_files) {
 
   Q <- dim(prior$prior$mean)[2]
   # Save 4 images for each IC (cortical sd and mean, and subcortical sd and mean)
-  for (i in 13:Q) {
+  for (i in 1:Q) {
     if (grepl("Yeo17", base_name, ignore.case = TRUE)) {
       label_name <- rownames(prior$template_parc_table)[prior$template_parc_table$Key == i]  
       fname <- file.path(dir_data, "outputs", "priors_plots", parcellation, encoding, gsr_status, paste0(base_name, "_", label_name))
     } else if (grepl("MSC", base_name, ignore.case = TRUE)) {
-      network_name <- gsub(" ", "_", msc_labels[i + 1])
+      label_name <- rownames(prior$template_parc_table)[i]
       fname <- file.path(dir_data, "outputs", "priors_plots", parcellation, encoding, gsr_status,
-                         paste0(base_name, "_", network_name))
+                         paste0(base_name, "_", label_name))
     } else {
       fname <- file.path(dir_data, "outputs", "priors_plots",  parcellation, encoding, gsr_status, paste0(base_name, "_IC", i))
     }
