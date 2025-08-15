@@ -410,7 +410,7 @@ cat('
   </style>
   <tr>
     <th>Network</th>
-    <th>Component</th>
+    <th>Template</th>
     <th>Mean</th>
     <th>Standard Deviation</th>
   </tr>
@@ -450,10 +450,10 @@ cat('
   </tr>
   
   <tr>
-    <td>PROFUMO 1</td>
-    <td><img src="data_OSF/outputs/parcellations_plots/PROFUMO/PROFUMO_01.png" width="120"/></td>
-    <td><img src="data_OSF/outputs/priors_plots/MSC/combined/GSR/prior_combined_MSC_GSR_Default_mean.png" width="120"/></td>
-    <td><img src="data_OSF/outputs/priors_plots/MSC/combined/GSR/prior_combined_MSC_GSR_Default_sd.png" width="120"/></td>
+    <td>PROFUMO 8</td>
+    <td><img src="data_OSF/outputs/parcellations_plots/PROFUMO/PROFUMO_08_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/PROFUMO/combined/GSR/prior_combined_PROFUMO_GSR_8_mean_cropped.png" width="120"/></td>
+    <td><img src="data_OSF/outputs/priors_plots/PROFUMO/combined/GSR/prior_combined_PROFUMO_GSR_8_sd_cropped.png" width="120"/></td>
   </tr>
   
 </table>
@@ -675,7 +675,7 @@ for (i in 1:17) {
 ```
 
 ```{r, echo=FALSE, out.width="60%", fig.align="center"}
-knitr::include_graphics(file.path(dir_data, "outputs", "subject_maps",
+knitr::include_graphics(file.path(dir_data, "outputs", "brain_map", "Yeo17", "subject_maps",
                                   "posterior_Yeo17_ContA_mean.png"))
 ```
 
@@ -691,7 +691,7 @@ for (i in 1:17) {
 ```
 
 ```{r, echo=FALSE, out.width="60%", fig.align="center"}
-knitr::include_graphics(file.path(dir_data, "outputs", "subject_maps",
+knitr::include_graphics(file.path(dir_data, "outputs", "brain_map", "Yeo17", "subject_maps",
                                   "posterior_Yeo17_ContA_se.png"))
 ```
 
@@ -707,12 +707,12 @@ for (i in 1:17) {
 ```
 
 ```{r, echo=FALSE, out.width="60%", fig.align="center"}
-knitr::include_graphics(file.path(dir_data, "outputs", "subject_maps", 
+knitr::include_graphics(file.path(dir_data, "outputs", "brain_map", "Yeo17", "engagements",
                                   "subject_Yeo17_ContA_engaged.png"))
 ```
 
 ```{r, echo=FALSE, out.width="30%", fig.align="center"}
-knitr::include_graphics(file.path(dir_data, "outputs", "subject_maps",
+knitr::include_graphics(file.path(dir_data, "outputs", "brain_map", "Yeo17", "engagements",
                                   "subject_Yeo17_ContA_engaged_legend.png"))
 ```
 

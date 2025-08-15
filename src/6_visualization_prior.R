@@ -10,6 +10,9 @@ get_prior_title <- function(base_name, i, prior, encoding, gsr_status) {
   } else if (grepl("MSC", base_name, ignore.case = TRUE)) {
     label_name <- rownames(prior$template_parc_table)[i]
     return(paste0("MSC Network ", label_name, " (#", i-1, ")"))
+  } } else if (grepl("PROFUMO", base_name, ignore.case = TRUE)) {
+    label_name <- rownames(prior$template_parc_table)[prior$template_parc_table$Key == i-1]
+    return(paste0("MSC Network ", label_name, " (#", i-1, ")"))
   }
   ic_match <- regmatches(base_name, regexpr("GICA\\d+", base_name))
 
@@ -44,6 +47,9 @@ for (file in prior_files) {
       label_name <- rownames(prior$template_parc_table)[i]
       fname <- file.path(dir_data, "outputs", "priors_plots", parcellation, encoding, gsr_status,
                          paste0(base_name, "_", label_name))
+    } else if (grepl("PROFUMO", base_name, ignore.case = TRUE)) {
+      label_name <- rownames(prior$template_parc_table)[prior$template_parc_table$Key == i-1]  
+      fname <- file.path(dir_data, "outputs", "priors_plots", parcellation, encoding, gsr_status, paste0(base_name, "_", label_name))
     } else {
       fname <- file.path(dir_data, "outputs", "priors_plots",  parcellation, encoding, gsr_status, paste0(base_name, "_IC", i))
     }

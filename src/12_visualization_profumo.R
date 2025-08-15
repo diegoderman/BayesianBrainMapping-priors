@@ -28,8 +28,7 @@ if (!dir.exists(out_dir)) dir.create(out_dir, recursive = TRUE)
 
 plot(profumo_mw,
     fname = file.path(out_dir, "PROFUMO.png"),
-    title = "PROFUMO Network Parcellation",
-    zlim = c(-0.5, 2.5)
+    title = "PROFUMO Network Parcellation"
 )
 
 for (parc in 1:12) {
@@ -37,8 +36,7 @@ for (parc in 1:12) {
     profumo_mw,
     idx = parc,
     fname = file.path(out_dir, sprintf("PROFUMO_%02d.png", parc)),
-    title = paste("PROFUMO Network", parc),
-    zlim = c(-0.5, 2.5)
+    title = paste("PROFUMO Network", parc)
   )
 }
 
