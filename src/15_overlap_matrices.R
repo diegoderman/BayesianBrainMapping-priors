@@ -1,7 +1,3 @@
-
-library(reshape2)
-library(ggplot2)
-
 # SPATIAL OVERLAP MATRICES - YEO 17
 
 # PARCELLATION
@@ -20,77 +16,20 @@ for (i in seq_along(parcel_ids)) {
   one_hot[, i] <- as.integer(v == parcel_ids[i])
 }
 
-cor <- cor(one_hot)
+mat <- cor(one_hot)
 
-parcel_names <- rownames(parcellation$meta$cifti$labels$parcels)[parcellation$meta$cifti$labels$parcels$Key > 0]
-rownames(cor) <- parcel_names
-colnames(cor) <- parcel_names
-
-cor_melt <- reshape2::melt(cor)
-
-custom_colors <- colorRampPalette(c("blue", "black", "red", "yellow"))(200)
-
-p_parc <- ggplot(cor_melt, aes(x = factor(Var1, levels = rev(unique(Var1))), 
-                     y = Var2, 
-                     fill = value)) +
-  geom_tile() +
-  scale_fill_gradientn(
-    colours = custom_colors,
-    limits = c(-0.5, 0.5),
-    oob = scales::squish,
-    name = NULL
-  ) +
-  theme_minimal() +
-  theme(
-    axis.text.x.top = element_text(angle = 45, hjust = 0, size = 8),
-    axis.text.y = element_text(size = 8),
-    axis.title = element_blank(),
-    panel.grid = element_blank()
-  ) +
-  scale_x_discrete(position = "top") +
-  coord_fixed()
-
-ggsave(file.path(dir_data, "outputs", "overlap_matrices", "Yeo17_parcellation_overlap.png"), plot = p_parc, width = 6, height = 6, dpi = 300, bg = "white")
+labs <- rownames(parcellation$meta$cifti$labels$parcels)[parcellation$meta$cifti$labels$parcels$Key > 0]
+p <- plot_FC_gg(mat, title= "", labs=labs)
+ggplot2::ggsave(file.path(dir_data, "outputs", "overlap_matrices", "Yeo17_parcellation_overlap.png"), plot = p, bg = "white") 
 
 # PRIOR
 prior <- readRDS(file.path(dir_project, "priors", "Yeo17", "prior_combined_Yeo17_GSR.rds"))
 
-cor <- cor(prior$prior$mean)
+mat <- cor(prior$prior$mean)
 
 parcel_names <- rownames(prior$template_parc_table)[prior$template_parc_table$Key > 0]
-rownames(cor) <- parcel_names
-colnames(cor) <- parcel_names
-
-cor_melt <- reshape2::melt(cor)
-
-custom_colors <- colorRampPalette(c("blue", "black", "red", "yellow"))(200)
-
-p_parc <- ggplot(cor_melt, aes(x = factor(Var1, levels = rev(unique(Var1))), 
-                     y = Var2, 
-                     fill = value)) +
-  geom_tile() +
-  scale_fill_gradientn(
-    colours = custom_colors,
-    limits = c(-0.2, 0.2),
-    oob = scales::squish,
-    name = NULL
-  ) +
-  theme_minimal() +
-  theme(
-    axis.text.x.top = element_text(angle = 45, hjust = 0, size = 8),
-    axis.text.y = element_text(size = 8),
-    axis.title = element_blank(),
-    panel.grid = element_blank()
-  ) +
-  scale_x_discrete(position = "top") +
-  coord_fixed()
-
-ggsave(file.path(dir_data, "outputs", "overlap_matrices", "Yeo17_prior_overlap.png"), plot = p_parc, width = 6, height = 6, dpi = 300, bg = "white")
-
-
-
-
-
+p <- plot_FC_gg(mat, title= "", labs=parcel_names)
+ggplot2::ggsave(file.path(dir_data, "outputs", "overlap_matrices", "Yeo17_prior_overlap.png"), plot = p, bg = "white") 
 
 
 # SPATIAL OVERLAP MATRICES - MSC
@@ -103,7 +42,7 @@ v <- c(
   parcellation$data$cortex_right
 )
 
-# parcel_ids  <- 1:17
+parcel_ids  <- 1:17
 
 one_hot <- matrix(0, nrow = length(v), ncol = length(parcel_ids))
 
@@ -111,34 +50,83 @@ for (i in seq_along(parcel_ids)) {
   one_hot[, i] <- as.integer(v == parcel_ids[i])
 }
 
-cor <- cor(one_hot)
+mat <- cor(one_hot)
 
-parcel_names <- rownames(parcellation$meta$cifti$labels$`Column number`)[parcellation$meta$cifti$labels$parcels$Key > 0]
-rownames(cor) <- parcel_names
-colnames(cor) <- parcel_names
+tab  <- parcellation$meta$cifti$labels$`Column number`
+labs <- rownames(tab)[tab$Key > 0]
+p <- plot_FC_gg(mat, title= "", labs=labs)
+ggplot2::ggsave(file.path(dir_data, "outputs", "overlap_matrices", "MSC_parcellation_overlap.png"), plot = p, bg = "white") 
 
-cor_melt <- reshape2::melt(cor)
+# PRIOR
+prior <- readRDS(file.path(dir_project, "priors", "MSC", "prior_combined_MSC_GSR.rds"))
+mat <- cor(prior$prior$mean)
+mat <- mat[2:18, 2:18]
+labs <- rownames(prior$template_parc_table)[prior$template_parc_table$Key > 0]
+p <- plot_FC_gg(mat, title= "", labs=labs)
+ggplot2::ggsave(file.path(dir_data, "outputs", "overlap_matrices", "MSC_prior_overlap.png"), plot = p, bg = "white") 
 
-custom_colors <- colorRampPalette(c("blue", "black", "red", "yellow"))(200)
 
-p_parc <- ggplot(cor_melt, aes(x = factor(Var1, levels = rev(unique(Var1))), 
-                     y = Var2, 
-                     fill = value)) +
-  geom_tile() +
-  scale_fill_gradientn(
-    colours = custom_colors,
-    limits = c(-0.5, 0.5),
-    oob = scales::squish,
-    name = NULL
-  ) +
-  theme_minimal() +
-  theme(
-    axis.text.x.top = element_text(angle = 45, hjust = 0, size = 8),
-    axis.text.y = element_text(size = 8),
-    axis.title = element_blank(),
-    panel.grid = element_blank()
-  ) +
-  scale_x_discrete(position = "top") +
-  coord_fixed()
+# SPATIAL OVERLAP MATRICES - GICA15
 
-ggsave(file.path(dir_data, "outputs", "overlap_matrices", "MSC_parcellation_overlap.png"), plot = p_parc, width = 6, height = 6, dpi = 300, bg = "white")
+# PARCELLATION
+parcellation <- read_cifti(file.path(dir_data, "inputs", "GICA15.dscalar.nii"))
+
+v <- rbind(
+  parcellation$data$cortex_left,
+  parcellation$data$cortex_right
+)           
+
+# Return index of the maximum value in each row
+labels <- max.col(abs(scale(v)), ties.method = "first")
+
+one_hot <- matrix(0, nrow = nrow(v), ncol = ncol(v))
+for (i in seq_along(labels)) {
+  one_hot[i, labels[i]] <- 1
+}
+
+mat <- cor(one_hot)
+
+labs <- paste0("IC", 1:15)
+p <- plot_FC_gg(mat, title= "", labs=labs)
+ggplot2::ggsave(file.path(dir_data, "outputs", "overlap_matrices", "GICA15_parcellation_overlap.png"), plot = p, bg = "white")
+
+
+# PRIOR
+prior <- readRDS(file.path(dir_project, "priors", "GICA15", "prior_combined_GICA15_GSR.rds"))
+mat <- cor(prior$prior$mean)
+labs <- paste0("IC", 1:15)
+p <- plot_FC_gg(mat, title= "", labs=labs)
+ggplot2::ggsave(file.path(dir_data, "outputs", "overlap_matrices", "GICA15_prior_overlap.png"), plot = p, bg = "white") 
+
+
+# SPATIAL OVERLAP MATRICES - PROFUMO
+
+# PARCELLATION
+parcellation <- readRDS(file.path(dir_data, "outputs", "PROFUMO_simplified_mwall.rds"))
+
+v <- rbind(
+  parcellation$data$cortex_left,
+  parcellation$data$cortex_right
+)           
+
+# Return index of the maximum value in each row
+labels <- max.col(abs(scale(v)), ties.method = "first")
+
+one_hot <- matrix(0, nrow = nrow(v), ncol = ncol(v))
+for (i in seq_along(labels)) {
+  one_hot[i, labels[i]] <- 1
+}
+
+mat <- cor(one_hot)
+
+tab  <- parcellation$meta$cifti$labels$`Column number`
+labs <- paste0("Network ", 1:12)
+p <- plot_FC_gg(mat, title= "", labs=labs)
+ggplot2::ggsave(file.path(dir_data, "outputs", "overlap_matrices", "PROFUMO_parcellation_overlap.png"), plot = p, bg = "white")
+
+# PRIOR
+prior <- readRDS(file.path(dir_project, "priors", "PROFUMO", "prior_combined_PROFUMO_GSR.rds"))
+mat <- cor(prior$prior$mean)
+labs <- paste0("Network ", 1:ncol(prior$prior$mean))
+p <- plot_FC_gg(mat, title= "", labs=labs)
+ggplot2::ggsave(file.path(dir_data, "outputs", "overlap_matrices", "PROFUMO_prior_overlap.png"), plot = p, bg = "white") 

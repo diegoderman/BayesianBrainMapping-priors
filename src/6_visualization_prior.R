@@ -10,7 +10,7 @@ get_prior_title <- function(base_name, i, prior, encoding, gsr_status) {
   } else if (grepl("MSC", base_name, ignore.case = TRUE)) {
     label_name <- rownames(prior$template_parc_table)[i]
     return(paste0("MSC Network ", label_name, " (#", i-1, ")"))
-  } } else if (grepl("PROFUMO", base_name, ignore.case = TRUE)) {
+  } else if (grepl("PROFUMO", base_name, ignore.case = TRUE)) {
     label_name <- rownames(prior$template_parc_table)[prior$template_parc_table$Key == i-1]
     return(paste0("MSC Network ", label_name, " (#", i-1, ")"))
   }

@@ -398,8 +398,6 @@ cat('
 
 #### 5.3.5 Mix
 
-TODO: For the paper instead of here? 
-
 ```{r results='asis', echo=FALSE}
 cat('
 <table style="border-collapse: collapse; margin: auto; text-align: center;" border="1">
@@ -460,6 +458,49 @@ cat('
 ')
 ```
 
+#### Spatial Overlap
+
+```{r results='asis', echo=FALSE}
+cat('
+<table style="border-collapse: collapse; margin: auto; text-align: center;" border="1">
+  <style>
+    table td, table th {
+      padding: 6px;
+    }
+  </style>
+  <tr>
+    <th>Network</th>
+    <th>Parcellation</th>
+    <th>Prior</th>
+  </tr>
+  
+  <tr>
+    <td>Yeo17</td>
+    <td><img src="data_OSF/outputs/overlap_matrices/Yeo17_parcellation_overlap.png" width="300"/></td>
+    <td><img src="data_OSF/outputs/overlap_matrices/Yeo17_prior_overlap.png" width="300"/></td>
+  </tr>
+  
+  <tr>
+    <td>GICA15</td>
+    <td><img src="data_OSF/outputs/overlap_matrices/GICA15_parcellation_overlap.png" width="300"/></td>
+    <td><img src="data_OSF/outputs/overlap_matrices/GICA15_prior_overlap.png" width="300"/></td>
+  </tr>
+  
+  <tr>
+    <td>MSC</td>
+    <td><img src="data_OSF/outputs/overlap_matrices/MSC_parcellation_overlap.png" width="300"/></td>
+    <td><img src="data_OSF/outputs/overlap_matrices/MSC_prior_overlap.png" width="300"/></td>
+  </tr>
+  
+  <tr>
+    <td>PROFUMO</td>
+    <td><img src="data_OSF/outputs/overlap_matrices/PROFUMO_parcellation_overlap.png" width="300"/></td>
+    <td><img src="data_OSF/outputs/overlap_matrices/PROFUMO_prior_overlap.png" width="300"/></td>
+  </tr>
+  
+</table>
+')
+```
 
 ### 5.4 Visualize Functional Connectivity Priors
 
@@ -517,18 +558,19 @@ The figures below show the mean and standard deviation of FC priors for each par
 knitr::include_graphics(file.path(dir_data, "outputs",
                                   "priors_plots", "GICA15", "combined", "GSR", "FC",
                                   "prior_combined_GICA15_GSR_FC_Cholesky_mean.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA15", "combined", "GSR", "FC",
-                                  "prior_combined_GICA15_GSR_FC_InverseWishart_mean.png"))
+
+#knitr::include_graphics(file.path(dir_data, "outputs",
+ #                                 "priors_plots", "GICA15", "combined", "GSR", "FC",
+  #                                "prior_combined_GICA15_GSR_FC_InverseWishart_mean.png"))
 ```
 
 ```{r fig.show='hold', out.width='48%', echo=FALSE}
 knitr::include_graphics(file.path(dir_data,"outputs",
                                   "priors_plots", "GICA15", "combined", "GSR", "FC",
                                   "prior_combined_GICA15_GSR_FC_Cholesky_sd.png"))
-knitr::include_graphics(file.path(dir_data,"outputs",
-                                  "priors_plots", "GICA15", "combined", "GSR", "FC",
-                                  "prior_combined_GICA15_GSR_FC_InverseWishart_sd.png"))
+#knitr::include_graphics(file.path(dir_data,"outputs",
+ #                                 "priors_plots", "GICA15", "combined", "GSR", "FC",
+  #                                "prior_combined_GICA15_GSR_FC_InverseWishart_sd.png"))
 ```
 
 #### 5.4.2 25 ICs
@@ -539,18 +581,18 @@ knitr::include_graphics(file.path(dir_data,"outputs",
 knitr::include_graphics(file.path(dir_data, "outputs",
                                   "priors_plots", "GICA25", "combined", "GSR", "FC",
                                   "prior_combined_GICA25_GSR_FC_Cholesky_mean.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA25", "combined", "GSR", "FC",
-                                  "prior_combined_GICA25_GSR_FC_InverseWishart_mean.png"))
+#knitr::include_graphics(file.path(dir_data, "outputs",
+ #                                 "priors_plots", "GICA25", "combined", "GSR", "FC",
+  #                                "prior_combined_GICA25_GSR_FC_InverseWishart_mean.png"))
 ```
 
 ```{r fig.show='hold', out.width='48%', echo=FALSE}
 knitr::include_graphics(file.path(dir_data, "outputs",
                                   "priors_plots", "GICA25", "combined", "GSR", "FC",
                                   "prior_combined_GICA25_GSR_FC_Cholesky_sd.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA25", "combined", "GSR", "FC",
-                                  "prior_combined_GICA25_GSR_FC_InverseWishart_sd.png"))
+#knitr::include_graphics(file.path(dir_data, "outputs",
+ #                                 "priors_plots", "GICA25", "combined", "GSR", "FC",
+    #                              "prior_combined_GICA25_GSR_FC_InverseWishart_sd.png"))
 ```
 
 #### 5.4.3 50 ICs
@@ -561,18 +603,18 @@ knitr::include_graphics(file.path(dir_data, "outputs",
 knitr::include_graphics(file.path(dir_data, "outputs",
                                   "priors_plots", "GICA50", "combined", "GSR", "FC",
                                   "prior_combined_GICA50_GSR_FC_Cholesky_mean.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA50", "combined","GSR", "FC",
-                                  "prior_combined_GICA50_GSR_FC_InverseWishart_mean.png"))
+#knitr::include_graphics(file.path(dir_data, "outputs",
+                   #               "priors_plots", "GICA50", "combined","GSR", "FC",
+                    #              "prior_combined_GICA50_GSR_FC_InverseWishart_mean.png"))
 ```
 
 ```{r fig.show='hold', out.width='48%', echo=FALSE}
 knitr::include_graphics(file.path(dir_data, "outputs",
                                   "priors_plots", "GICA50", "combined","GSR", "FC",
                                   "prior_combined_GICA50_GSR_FC_Cholesky_sd.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA50", "combined", "GSR","FC",
-                                  "prior_combined_GICA50_GSR_FC_InverseWishart_sd.png"))
+#knitr::include_graphics(file.path(dir_data, "outputs",
+ #                                 "priors_plots", "GICA50", "combined", "GSR","FC",
+  #                                "prior_combined_GICA50_GSR_FC_InverseWishart_sd.png"))
 ```
 
 #### 5.4.4 Yeo17
@@ -583,19 +625,26 @@ knitr::include_graphics(file.path(dir_data, "outputs",
 knitr::include_graphics(file.path(dir_data, "outputs",
                                   "priors_plots", "Yeo17", "combined", "GSR","FC",
                                   "prior_combined_yeo17_GSR_FC_Cholesky_mean.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "Yeo17", "combined", "GSR","FC",
-                                  "prior_combined_Yeo17_GSR_FC_InverseWishart_mean.png"))
+#knitr::include_graphics(file.path(dir_data, "outputs",
+ #                                 "priors_plots", "Yeo17", "combined", "GSR","FC",
+  #                                "prior_combined_Yeo17_GSR_FC_InverseWishart_mean.png"))
 ```
 
 ```{r fig.show='hold', out.width='48%', echo=FALSE}
 knitr::include_graphics(file.path(dir_data, "outputs",
                                   "priors_plots", "Yeo17", "combined", "GSR","FC",
                                   "prior_combined_Yeo17_GSR_FC_Cholesky_sd.png"))
-knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "Yeo17", "combined","GSR", "FC",
-                                  "prior_combined_Yeo17_GSR_FC_InverseWishart_sd.png"))
+#knitr::include_graphics(file.path(dir_data, "outputs",
+ #                                 "priors_plots", "Yeo17", "combined","GSR", "FC",
+  #                                "prior_combined_Yeo17_GSR_FC_InverseWishart_sd.png"))
 ```
+
+#### 5.4.5 MSC
+
+
+
+#### 5.4.6 PROFUMO
+TODO: add profumo and msc FC matrices
 
 ## 6. Step 2: Using Priors for Individual-Level Brain Mapping
 
@@ -638,11 +687,10 @@ The fMRI input must be a CIFTI, NIFTI, or matrix object compatible with the prio
 
 #### 6.2 Estimate Subject-Level Networks
 
-Once the data is loaded, we fit the Bayesian brain mapping model to obtain individualized functional networks aligned to the prior components:
+Once the data is loaded, we fit the Bayesian brain mapping model to obtain individualized functional networks aligned to the prior components. We do this twice: once with a single session and once with all four sessions. For each we plot both the mean and standard error.
 
 ```{r warning=FALSE, eval=FALSE}
-# 1 session
-bMap <- BrainMap(
+bMap_1 <- BrainMap(
   BOLD = BOLD_1,
   prior = prior,
   TR = 0.72,
@@ -653,10 +701,10 @@ bMap <- BrainMap(
 ```{r, eval=FALSE, echo=FALSE}
 for (i in 1:17) {
   label_name <- rownames(prior$template_parc_table)[prior$template_parc_table$Key == i]
-  title <- paste0("Yeo 17 Network ", label_name, " (#", i, ") Subject-Level Mean") 
-  fname <- file.path(dir_data, "outputs", "brain_map", "Yeo_17", "single_session",
+  title <- paste0("Yeo 17 ", label_name, " Mean (1 session)") 
+  fname <- file.path(dir_data, "outputs", "brain_map", "Yeo17", "single_session",
                      paste0("posterior_Yeo17_", label_name))
-  plot(bMap, idx = i, stat = "mean", title = title,
+  plot(bMap_1, idx = i, stat = "mean", title = title,
      fname_suffix="idx", fname=fname, zlim=c(-0.2, 0.2)) 
 }
 ```
@@ -664,17 +712,16 @@ for (i in 1:17) {
 ```{r, eval=FALSE, echo=FALSE}
 for (i in 1:17) {
   label_name <- rownames(prior$template_parc_table)[prior$template_parc_table$Key == i]
-  title <- paste0("Yeo 17 Network ", label_name, " (#", i, ") Subject-Level Mean") 
-  fname <- file.path(dir_data, "outputs", "brain_map", "Yeo_17", "single_session",
+  title <- paste0("Yeo 17 ", label_name, " SE (1 session)")  
+  fname <- file.path(dir_data, "outputs", "brain_map", "Yeo17", "single_session",
                      paste0("posterior_Yeo17_", label_name))
-  plot(bMap, idx = i, stat = "se", title = title,
-     fname_suffix="idx", fname=fname, zlim=c(-0.02, 0.02))  
+  plot(bMap_1, idx = i, stat = "se", title = title,
+     fname_suffix="idx", fname=fname, zlim=c(0, 0.03)) 
 }
 ```
 
 ```{r warning=FALSE, eval=FALSE}
-# 4 sessions
-bMap <- BrainMap(
+bMap_4 <- BrainMap(
   BOLD = BOLD_4,
   prior = prior,
   TR = 0.72,
@@ -685,10 +732,10 @@ bMap <- BrainMap(
 ```{r, eval=FALSE, echo=FALSE}
 for (i in 1:17) {
   label_name <- rownames(prior$template_parc_table)[prior$template_parc_table$Key == i]
-  title <- paste0("Yeo 17 Network ", label_name, " (#", i, ") Subject-Level Mean") 
-  fname <- file.path(dir_data, "outputs", "brain_map", "Yeo_17", "four_sessions",
+  title <- paste0("Yeo 17 ", label_name, " Mean (4 sessions)") 
+  fname <- file.path(dir_data, "outputs", "brain_map", "Yeo17", "four_sessions",
                      paste0("posterior_Yeo17_", label_name))
-  plot(bMap, idx = i, stat = "mean", title = title,
+  plot(bMap_4, idx = i, stat = "mean", title = title,
      fname_suffix="idx", fname=fname,  zlim=c(-0.2, 0.2)) 
 }
 ```
@@ -696,87 +743,103 @@ for (i in 1:17) {
 ```{r, eval=FALSE, echo=FALSE}
 for (i in 1:17) {
   label_name <- rownames(prior$template_parc_table)[prior$template_parc_table$Key == i]
-  title <- paste0("Yeo 17 Network ", label_name, " (#", i, ") Subject-Level Mean") 
-  fname <- file.path(dir_data, "outputs", "brain_map", "Yeo_17", "four_sessions",
+  title <- paste0("Yeo 17 ", label_name, " SE (4 sessions)")  
+  fname <- file.path(dir_data, "outputs", "brain_map", "Yeo17", "four_sessions",
                      paste0("posterior_Yeo17_", label_name))
-  plot(bMap, idx = i, stat = "se", title = title,
-     fname_suffix="idx", fname=fname,  zlim=c(-0.02, 0.02)) 
+  plot(bMap_4, idx = i, stat = "se", title = title,
+     fname_suffix="idx", fname=fname,  zlim=c(0, 0.03)) 
 }
+```
+
+```{r fig.show='hold', out.width='25%', echo=FALSE}
+p_mean_1 <- file.path(dir_data, "outputs", "brain_map", "Yeo17", "single_session", "posterior_Yeo17_DefaultA_mean.png")
+p_se_1   <- file.path(dir_data, "outputs", "brain_map", "Yeo17", "single_session", "posterior_Yeo17_DefaultA_se.png")
+p_mean_4 <- file.path(dir_data, "outputs", "brain_map", "Yeo17", "four_sessions", "posterior_Yeo17_DefaultA_mean.png")
+p_se_4   <- file.path(dir_data, "outputs", "brain_map", "Yeo17", "four_sessions", "posterior_Yeo17_DefaultA_se.png")
+
+knitr::include_graphics(p_mean_1)
+knitr::include_graphics(p_se_1)
+knitr::include_graphics(p_mean_4)
+knitr::include_graphics(p_se_4)
 ```
 
 #### 6.3 Identify Engagement Maps
 
 \leavevmode
 
+First, we compute engagements from the four-session brain map, `bMap_4` using `engagements()` with the default parameters:
+
+- `z = 2`
+
+- `alpha = 0.01`
+
+- `type = '>'`
+
+- `method_p = 'BH'` (Benjamini & Hochberg)
+
 ```{r warning=FALSE, eval=FALSE}
 eng <- engagements(
-  bMap = bMap
+  bMap = bMap_4
   )
 ```
 
-#### 6.4 Visualize the Results
-
-\leavevmode
-
-We now plot:
-
-1. The subject-level networks estimated by `BrainMap()` (both mean and standard error).
-
-2. The engagement maps, showing regions of deviation from the prior mean.
-
-For all outputs, we only visualize ContA network from the Yeo 17 parcellation.
-
 ```{r, eval=FALSE, echo=FALSE}
 for (i in 1:17) {
   label_name <- rownames(prior$template_parc_table)[prior$template_parc_table$Key == i]
-  title <- paste0("Yeo 17 Network ", label_name, " (#", i, ") Subject-Level Mean") 
-  fname <- file.path(dir_data, "outputs", "brain_map", "Yeo_17", "single_session",
-                     paste0("posterior_Yeo17_", label_name))
-  plot(bMap, idx = i, stat = "mean", title = title,
-     fname_suffix="idx", fname=fname) 
-}
-```
-
-```{r, echo=FALSE, out.width="60%", fig.align="center"}
-knitr::include_graphics(file.path(dir_data, "outputs", "brain_map", "Yeo17", "subject_maps",
-                                  "posterior_Yeo17_ContA_mean.png"))
-```
-
-```{r, eval=FALSE, echo=FALSE}
-for (i in 1:17) {
-  label_name <- rownames(prior$template_parc_table)[prior$template_parc_table$Key == i]
-  title <- paste0("Yeo 17 Network ", label_name, " (#", i, ") Subject-Level SE") 
-  fname <- file.path(dir_data, "outputs", "subject_maps", 
-                     paste0("posterior_Yeo17_", label_name))
-  plot(bMap, idx = i, stat = "se", title = title,
-     fname_suffix="idx", fname=fname) 
-}
-```
-
-```{r, echo=FALSE, out.width="60%", fig.align="center"}
-knitr::include_graphics(file.path(dir_data, "outputs", "brain_map", "Yeo17", "subject_maps",
-                                  "posterior_Yeo17_ContA_se.png"))
-```
-
-```{r, eval=FALSE, echo=FALSE}
-for (i in 1:17) {
-  label_name <- rownames(prior$template_parc_table)[prior$template_parc_table$Key == i]
-  title <- paste0("Yeo 17 Network ", label_name, " (#", i, ") Engagement Map") 
-  fname <- file.path(dir_data, "outputs", "subject_maps", 
-                     paste0("subject_Yeo17_", label_name))
+  title <- paste0("Yeo 17 ", label_name, " Engagement Map (no z-threshold)")  
+  fname <- file.path(dir_data, "outputs", "brain_map", "Yeo17", "four_sessions",
+                     paste0("default_subject_Yeo17_", label_name))
   plot(eng, idx = i, stat = "engaged", title = title,
      fname_suffix="idx", fname=fname) 
 }
 ```
 
-```{r, echo=FALSE, out.width="60%", fig.align="center"}
-knitr::include_graphics(file.path(dir_data, "outputs", "brain_map", "Yeo17", "engagements",
-                                  "subject_Yeo17_ContA_engaged.png"))
+```{r, eval=FALSE, echo=FALSE}
+for (i in 1:17) {
+  label_name <- rownames(prior$template_parc_table)[prior$template_parc_table$Key == i]
+  title <- paste0("Yeo 17 ", label_name, " Thresholded Map (z=2)")  
+  fname <- file.path(dir_data, "outputs", "brain_map", "Yeo17", "four_sessions",
+                     paste0("default_thresholded_subject_Yeo17_", label_name))
+  plot(eng, idx = i, stat = "engaged", title = title,
+     fname_suffix="idx", fname=fname) 
+}
 ```
 
-```{r, echo=FALSE, out.width="30%", fig.align="center"}
-knitr::include_graphics(file.path(dir_data, "outputs", "brain_map", "Yeo17", "engagements",
-                                  "subject_Yeo17_ContA_engaged_legend.png"))
+Second, we compute engagements with z = 1,3,5 while keeping all other parameters unchanged.
+
+```{r warning=FALSE, eval=FALSE}
+eng_multipleZ <- engagements(
+  bMap = bMap_4,
+  z = c(1,3,5)
+  )
+```
+
+```{r, eval=FALSE, echo=FALSE}
+saveRDS(eng_multipleZ, file.path(dir_data, "outputs", "brain_map", "Yeo17", "four_sessions", "engagements_4sessions_multipleZ.rds"))
+```
+
+```{r, eval=FALSE, echo=FALSE}
+for (i in 1:17) {
+  label_name <- rownames(prior$template_parc_table)[prior$template_parc_table$Key == i]
+  title <- paste0("Yeo 17 ", label_name, " Engagement Map (z=1,3,5)")  
+  fname <- file.path(dir_data, "outputs", "brain_map", "Yeo17", "four_sessions",
+                     paste0("subject_Yeo17_", label_name))
+  plot(eng_multipleZ, idx = i, stat = "engaged", title = title,
+     fname_suffix="idx", fname=fname) 
+}
+```
+
+```{r fig.show='hold', out.width=c('36%','12%','36%','12%'), echo=FALSE}
+first <- file.path(dir_data, "outputs", "brain_map", "Yeo17", "four_sessions", "default_subject_Yeo17_DefaultA_engaged.png")
+second   <- file.path(dir_data, "outputs", "brain_map", "Yeo17", "four_sessions", "subject_Yeo17_DefaultA_engaged.png")
+
+first_legend <- file.path(dir_data, "outputs", "brain_map", "Yeo17", "four_sessions", "default_subject_Yeo17_DefaultA_engaged_legend.png")
+second_legend <- file.path(dir_data, "outputs", "brain_map", "Yeo17", "four_sessions", "subject_Yeo17_DefaultA_engaged_legend.png")
+
+knitr::include_graphics(first)
+knitr::include_graphics(first_legend)
+knitr::include_graphics(second)
+knitr::include_graphics(second_legend)
 ```
 
 \appendix
