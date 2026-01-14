@@ -25,18 +25,21 @@ ciftiTools.setOption("wb_path", wb_path)
 
 # Set up paths
 dir_HCP <- "/N/project/hcp_dcwan" # Location of HCP data
-dir_project <- "~/Documents/GitHub/BayesianBrainMapping-Templates" # Path to GitHub folder
+dir_project <- "~/Documents/GitHub/BayesianBrainMapping-Priors" # Path to GitHub folder
 
 dir_data <- file.path(dir_project, "data_OSF") # Path to data folder
 
+# Bring your own HCP access for both restricted and unrestricted data
+dir_HCP_demo <- "~/Documents/GitHub/BayesianBrainMapping-Priors/data_OSF/inputs/HCP_demo" # Path to folder with HCP demographics CSVs
+
 # HCP_unrestricted_fname <- file.path(dir_data, "inputs", "unrestricted_HCP_demographics.csv")
-# HCP_restricted_fname <- file.path(dir_data, "inputs", "restricted_HCP.csv")
+HCP_restricted_fname <- file.path(dir_HCP_demo, "restricted_HCP.csv")
 
 # Read CSV
-# HCP_unrestricted <- read.csv(HCP_unrestricted_fname)
+HCP_restricted <- read.csv(HCP_restricted_fname)
 
 # All subject IDS
-# subject_ids <- HCP_unrestricted$Subject
+subject_ids <- HCP_restricted$Subject
 
 # Constants
 fd_lag_HCP <- 4 # based on multiband factor?
