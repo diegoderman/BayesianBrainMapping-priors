@@ -39,10 +39,10 @@ dir_data <- file.path(dir_project, "data_OSF") # Path to data folder
 # subject_ids <- HCP_unrestricted$Subject
 
 # Constants
-fd_lag_HCP <- 4 
+fd_lag_HCP <- 4 # based on multiband factor?
 fd_cutoff <- .5 # Motion scrubbing threshold
-TR_HCP <- .72 # Repetition time 
-TR_MSC <- 2.2 # Repetition time for MSC data
+TR_HCP <- .72 # Repetition time, in seconds
+TR_MSC <- 2.2 # Repetition time for MSC data, in seconds
 nT_HCP <- 1200 # Timepoints for each resting state scan
 min_total_sec <- 600 # Minimum duration of time series after scrubbing (600 sec = 10 min)
 
