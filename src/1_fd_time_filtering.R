@@ -3,6 +3,7 @@
 # Declare empty lists 
 valid_LR_subjects_FD <- c()
 valid_RL_subjects_FD <- c()
+fd_flags <- list(LR = list(), RL = list())
 
 # Initialize table
 fd_summary <- data.frame(
@@ -52,6 +53,9 @@ for (subject in subject_ids) {
                 mean_fd = mean_fd,
                 valid_time_sec = total_time_sec
             ))
+
+            # Save fd object for future reference
+            fd_flags[[encoding]][[subject]][[session]] <- fd$outlier_flag
         }
         # If both rest 1 and rest 2 meet both requirements, add to the list of valid for LR or RL
         if (all(session_pass)) {
@@ -73,4 +77,7 @@ write.csv(data.frame(subject_id=valid_LR_subjects_FD), file = file.path(dir_data
 write.csv(data.frame(subject_id=valid_RL_subjects_FD), file = file.path(dir_data, "outputs", "filtering", "valid_RL_subjects_FD.csv"), row.names = FALSE)
 write.csv(data.frame(subject_id=valid_combined_subjects_FD), file = file.path(dir_data, "outputs", "filtering", "valid_combined_subjects_FD.csv"), row.names = FALSE)
 write.csv(fd_summary, file = file.path(dir_data, "outputs", "filtering", "fd_summary.csv"), row.names = TRUE)
+
+saveRDS(fd_flags, file.path(dir_data, "outputs", "filtering", "fd_flags.rds"))
+
 

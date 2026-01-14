@@ -49,12 +49,17 @@ estimate_and_export_prior <- function(
 
     cat(sprintf("Estimating prior for encoding: %s , parcellation: %s , %s\n",encoding, parcellation, gsr_label))
 
-    T_total <- floor(600 / TR_HCP)
-    T_scrub_start <- T_total + 1
-    scrub_BOLD1 <- replicate(length(BOLD_paths1), T_scrub_start:nT_HCP, simplify = FALSE)
-    scrub_BOLD2 <- replicate(length(BOLD_paths2), T_scrub_start:nT_HCP, simplify = FALSE)
-    scrub <- list(scrub_BOLD1, scrub_BOLD2)
+    # T_total <- floor(600 / TR_HCP)
+    # T_scrub_start <- T_total + 1
+    # scrub_BOLD1 <- replicate(length(BOLD_paths1), T_scrub_start:nT_HCP, simplify = FALSE)
+    # scrub_BOLD2 <- replicate(length(BOLD_paths2), T_scrub_start:nT_HCP, simplify = FALSE)
+    # scrub <- list(scrub_BOLD1, scrub_BOLD2)
 
+
+    # FD scrubbing
+    
+
+    
     # Yeo17 parcellation
     if (nIC == 0) {
 

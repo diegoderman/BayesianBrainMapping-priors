@@ -1,5 +1,5 @@
 # Yeo 17 visualization
-parcellation_all <- readRDS(file.path(dir_data, "outputs", "Yeo17_simplified_mwall.rds"))
+parcellation_all <- readRDS(file.path(dir_data, "outputs", "parcellations", "Yeo17_simplified_mwall.rds"))
 parcellation_num <- 17
 
 out_dir <- file.path(dir_data, "outputs", "parcellations_plots", "Yeo17")

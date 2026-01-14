@@ -2,7 +2,9 @@
 
 prior_files <- list.files(file.path(dir_project, "priors"), recursive = TRUE, full.names = TRUE)
 
-prior_files <- prior_files[grepl("combined", prior_files) & grepl("noGSR", prior_files)]
+#prior_combined_Yeo17_noGSR.rds
+# prior_files <- prior_files[grepl("Yeo17", prior_files) & grepl("noGSR", prior_files)]
+prior_files <- "~/Desktop/prior_combined_Yeo17_noGSR.rds"
 
 get_prior_title <- function(base_name, i, prior, encoding, gsr_status) {
 
@@ -13,8 +15,7 @@ get_prior_title <- function(base_name, i, prior, encoding, gsr_status) {
     label_name <- rownames(prior$template_parc_table)[i]
     return(paste0("MSC Network ", label_name, " (#", i-1, ")"))
   } else if (grepl("PROFUMO", base_name, ignore.case = TRUE)) {
-    label_name <- rownames(prior$template_parc_table)[prior$template_parc_table$Key == i-1]
-    return(paste0("MSC Network ", label_name, " (#", i-1, ")"))
+    return(paste0("PROFUMO Network # ", i))
   }
   ic_match <- regmatches(base_name, regexpr("GICA\\d+", base_name))
 
@@ -50,8 +51,9 @@ for (file in prior_files) {
       fname <- file.path(dir_data, "outputs", "priors_plots", parcellation, encoding, gsr_status,
                          paste0(base_name, "_", label_name))
     } else if (grepl("PROFUMO", base_name, ignore.case = TRUE)) {
-      label_name <- rownames(prior$template_parc_table)[prior$template_parc_table$Key == i-1]  
-      fname <- file.path(dir_data, "outputs", "priors_plots", parcellation, encoding, gsr_status, paste0(base_name, "_", label_name))
+      # label_name <- rownames(prior$template_parc_table)[prior$template_parc_table$Key == i-1]  
+      fname <- file.path(dir_data, "outputs", "priors_plots", parcellation, encoding, gsr_status, paste0(base_name, "_", i))
+      print(fname)
     } else {
       fname <- file.path(dir_data, "outputs", "priors_plots",  parcellation, encoding, gsr_status, paste0(base_name, "_IC", i))
     }

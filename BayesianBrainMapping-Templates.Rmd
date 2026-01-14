@@ -25,7 +25,10 @@ library(knitr)
 
 
 ```{r setup-env, include=FALSE}
-dir_data <- "data_OSF"
+# dir_data <- "data_OSF"
+dir_project <- "~/Documents/GitHub/BayesianBrainMapping-Templates" # Path to GitHub folder
+
+dir_data <- file.path(dir_project, "data_OSF")
 ```
 
 ## 2. Methods
@@ -396,68 +399,6 @@ cat('
 ')
 ```
 
-#### 5.3.5 Mix
-
-```{r results='asis', echo=FALSE}
-cat('
-<table style="border-collapse: collapse; margin: auto; text-align: center;" border="1">
-  <style>
-    table td, table th {
-      padding: 6px;
-    }
-  </style>
-  <tr>
-    <th>Network</th>
-    <th>Template</th>
-    <th>Mean</th>
-    <th>Standard Deviation</th>
-  </tr>
-  <tr>
-    <td>Yeo17 DefaultA</td>
-    <td><img src="/Users/nohelia/Desktop/Figure2/Yeo17_DefaultA_cropped.png" width="120"/></td>
-    <td><img src="/Users/nohelia/Desktop/Figure2/Yeo17_DefaultA_mean.png" width="120"/></td>
-    <td><img src="/Users/nohelia/Desktop/Figure2/Yeo17_DefaultA_sd.png" width="120"/></td>
-  </tr>
-  
-  <tr>
-    <td>GICA15 IC 2</td>
-    <td><img src="/Users/nohelia/Desktop/Figure2/GICA15_IC2.png" width="120"/></td>
-    <td><img src="/Users/nohelia/Desktop/Figure2/GICA15_IC2_mean.png" width="120"/></td>
-    <td><img src="/Users/nohelia/Desktop/Figure2/GICA15_IC2_sd.png" width="120"/></td>
-  </tr>
-  
-  <tr>
-    <td>GICA25 IC 2</td>
-    <td><img src="/Users/nohelia/Desktop/Figure2/GICA25_IC2.png" width="120"/></td>
-    <td><img src="/Users/nohelia/Desktop/Figure2/GICA25_IC2_mean.png" width="120"/></td>
-    <td><img src="/Users/nohelia/Desktop/Figure2/GICA25_IC2_sd.png" width="120"/></td>
-  </tr>
-  
-  <tr>
-    <td>GICA50 IC 12</td>
-    <td><img src="/Users/nohelia/Desktop/Figure2/GICA50_IC12.png" width="120"/></td>
-    <td><img src="/Users/nohelia/Desktop/Figure2/GICA50_IC12_mean.png" width="120"/></td>
-    <td><img src="/Users/nohelia/Desktop/Figure2/GICA50_IC12_sd.png" width="120"/></td>
-  </tr>
-  
-  <tr>
-    <td>MSC Default</td>
-    <td><img src="/Users/nohelia/Desktop/Figure2/MSC_Default_cropped.png" width="120"/></td>
-    <td><img src="/Users/nohelia/Desktop/Figure2/MSC_Default_mean.png" width="120"/></td>
-    <td><img src="/Users/nohelia/Desktop/Figure2/MSC_Default_sd.png" width="120"/></td>
-  </tr>
-  
-  <tr>
-    <td>PROFUMO 8</td>
-    <td><img src="/Users/nohelia/Desktop/Figure2/PROFUMO_8.png" width="120"/></td>
-    <td><img src="/Users/nohelia/Desktop/Figure2/PROFUMO_8_mean.png" width="120"/></td>
-    <td><img src="/Users/nohelia/Desktop/Figure2/PROFUMO_8_sd.png" width="120"/></td>
-  </tr>
-  
-</table>
-')
-```
-
 #### Spatial Overlap
 
 ```{r results='asis', echo=FALSE}
@@ -476,26 +417,26 @@ cat('
   
   <tr>
     <td>Yeo17</td>
-    <td><img src="data_OSF/outputs/overlap_matrices/Yeo17_parcellation_overlap.png" width="300"/></td>
-    <td><img src="data_OSF/outputs/overlap_matrices/Yeo17_prior_overlap.png" width="300"/></td>
+    <td><img src="data_OSF/outputs/dice_overlap/Yeo17_parcellation_overlap.png" width="300"/></td>
+    <td><img src="data_OSF/outputs/dice_overlap/Yeo17_prior_overlap.png" width="300"/></td>
   </tr>
   
   <tr>
     <td>GICA15</td>
-    <td><img src="data_OSF/outputs/overlap_matrices/GICA15_parcellation_overlap.png" width="300"/></td>
-    <td><img src="data_OSF/outputs/overlap_matrices/GICA15_prior_overlap.png" width="300"/></td>
+    <td><img src="data_OSF/outputs/dice_overlap/GICA15_parcellation_overlap.png" width="300"/></td>
+    <td><img src="data_OSF/outputs/dice_overlap/GICA15_prior_overlap.png" width="300"/></td>
   </tr>
   
   <tr>
     <td>MSC</td>
-    <td><img src="data_OSF/outputs/overlap_matrices/MSC_parcellation_overlap.png" width="300"/></td>
-    <td><img src="data_OSF/outputs/overlap_matrices/MSC_prior_overlap.png" width="300"/></td>
+    <td><img src="data_OSF/outputs/dice_overlap/MSC_parcellation_overlap.png" width="300"/></td>
+    <td><img src="data_OSF/outputs/dice_overlap/MSC_prior_overlap.png" width="300"/></td>
   </tr>
   
   <tr>
     <td>PROFUMO</td>
-    <td><img src="data_OSF/outputs/overlap_matrices/PROFUMO_parcellation_overlap.png" width="300"/></td>
-    <td><img src="data_OSF/outputs/overlap_matrices/PROFUMO_prior_overlap.png" width="300"/></td>
+    <td><img src="data_OSF/outputs/dice_overlap/PROFUMO_parcellation_overlap.png" width="300"/></td>
+    <td><img src="data_OSF/outputs/dice_overlap/PROFUMO_prior_overlap.png" width="300"/></td>
   </tr>
   
 </table>
@@ -554,23 +495,24 @@ The figures below show the mean and standard deviation of FC priors for each par
 
 \leavevmode
 
+# TODO: Add empirical and IW
 ```{r fig.show='hold', out.width='48%', echo=FALSE}
 knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA15", "combined", "GSR", "FC",
-                                  "prior_combined_GICA15_GSR_FC_Cholesky_mean.png"))
+                                  "priors_plots", "GICA15", "combined", "noGSR", "FC",
+                                  "prior_combined_GICA15_noGSR_FC_Cholesky_mean.png"))
 
 #knitr::include_graphics(file.path(dir_data, "outputs",
- #                                 "priors_plots", "GICA15", "combined", "GSR", "FC",
-  #                                "prior_combined_GICA15_GSR_FC_InverseWishart_mean.png"))
+ #                                 "priors_plots", "GICA15", "combined", "noGSR", "FC",
+  #                                "prior_combined_GICA15_noGSR_FC_InverseWishart_mean.png"))
 ```
 
 ```{r fig.show='hold', out.width='48%', echo=FALSE}
 knitr::include_graphics(file.path(dir_data,"outputs",
-                                  "priors_plots", "GICA15", "combined", "GSR", "FC",
-                                  "prior_combined_GICA15_GSR_FC_Cholesky_sd.png"))
+                                  "priors_plots", "GICA15", "combined", "noGSR", "FC",
+                                  "prior_combined_GICA15_noGSR_FC_Cholesky_sd.png"))
 #knitr::include_graphics(file.path(dir_data,"outputs",
- #                                 "priors_plots", "GICA15", "combined", "GSR", "FC",
-  #                                "prior_combined_GICA15_GSR_FC_InverseWishart_sd.png"))
+ #                                 "priors_plots", "GICA15", "combined", "noGSR", "FC",
+  #                                "prior_combined_GICA15_noGSR_FC_InverseWishart_sd.png"))
 ```
 
 #### 5.4.2 25 ICs
@@ -579,20 +521,20 @@ knitr::include_graphics(file.path(dir_data,"outputs",
 
 ```{r fig.show='hold', out.width='48%', echo=FALSE}
 knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA25", "combined", "GSR", "FC",
-                                  "prior_combined_GICA25_GSR_FC_Cholesky_mean.png"))
+                                  "priors_plots", "GICA25", "combined", "noGSR", "FC",
+                                  "prior_combined_GICA25_noGSR_FC_Cholesky_mean.png"))
 #knitr::include_graphics(file.path(dir_data, "outputs",
- #                                 "priors_plots", "GICA25", "combined", "GSR", "FC",
-  #                                "prior_combined_GICA25_GSR_FC_InverseWishart_mean.png"))
+ #                                 "priors_plots", "GICA25", "combined", "noGSR", "FC",
+  #                                "prior_combined_GICA25_noGSR_FC_InverseWishart_mean.png"))
 ```
 
 ```{r fig.show='hold', out.width='48%', echo=FALSE}
 knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA25", "combined", "GSR", "FC",
-                                  "prior_combined_GICA25_GSR_FC_Cholesky_sd.png"))
+                                  "priors_plots", "GICA25", "combined", "noGSR", "FC",
+                                  "prior_combined_GICA25_noGSR_FC_Cholesky_sd.png"))
 #knitr::include_graphics(file.path(dir_data, "outputs",
- #                                 "priors_plots", "GICA25", "combined", "GSR", "FC",
-    #                              "prior_combined_GICA25_GSR_FC_InverseWishart_sd.png"))
+ #                                 "priors_plots", "GICA25", "combined", "noGSR", "FC",
+    #                              "prior_combined_GICA25_noGSR_FC_InverseWishart_sd.png"))
 ```
 
 #### 5.4.3 50 ICs
@@ -601,20 +543,20 @@ knitr::include_graphics(file.path(dir_data, "outputs",
 
 ```{r fig.show='hold', out.width='48%', echo=FALSE}
 knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA50", "combined", "GSR", "FC",
-                                  "prior_combined_GICA50_GSR_FC_Cholesky_mean.png"))
+                                  "priors_plots", "GICA50", "combined", "noGSR", "FC",
+                                  "prior_combined_GICA50_noGSR_FC_Cholesky_mean.png"))
 #knitr::include_graphics(file.path(dir_data, "outputs",
-                   #               "priors_plots", "GICA50", "combined","GSR", "FC",
-                    #              "prior_combined_GICA50_GSR_FC_InverseWishart_mean.png"))
+                   #               "priors_plots", "GICA50", "combined","noGSR", "FC",
+                    #              "prior_combined_GICA50_noGSR_FC_InverseWishart_mean.png"))
 ```
 
 ```{r fig.show='hold', out.width='48%', echo=FALSE}
 knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "GICA50", "combined","GSR", "FC",
-                                  "prior_combined_GICA50_GSR_FC_Cholesky_sd.png"))
+                                  "priors_plots", "GICA50", "combined","noGSR", "FC",
+                                  "prior_combined_GICA50_noGSR_FC_Cholesky_sd.png"))
 #knitr::include_graphics(file.path(dir_data, "outputs",
- #                                 "priors_plots", "GICA50", "combined", "GSR","FC",
-  #                                "prior_combined_GICA50_GSR_FC_InverseWishart_sd.png"))
+ #                                 "priors_plots", "GICA50", "combined", "noGSR","FC",
+  #                                "prior_combined_GICA50_noGSR_FC_InverseWishart_sd.png"))
 ```
 
 #### 5.4.4 Yeo17
@@ -623,20 +565,20 @@ knitr::include_graphics(file.path(dir_data, "outputs",
 
 ```{r fig.show='hold', out.width='48%', echo=FALSE}
 knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "Yeo17", "combined", "GSR","FC",
-                                  "prior_combined_yeo17_GSR_FC_Cholesky_mean.png"))
+                                  "priors_plots", "Yeo17", "combined", "noGSR","FC",
+                                  "prior_combined_yeo17_noGSR_FC_Cholesky_mean.png"))
 #knitr::include_graphics(file.path(dir_data, "outputs",
- #                                 "priors_plots", "Yeo17", "combined", "GSR","FC",
-  #                                "prior_combined_Yeo17_GSR_FC_InverseWishart_mean.png"))
+ #                                 "priors_plots", "Yeo17", "combined", "noGSR","FC",
+  #                                "prior_combined_Yeo17_noGSR_FC_InverseWishart_mean.png"))
 ```
 
 ```{r fig.show='hold', out.width='48%', echo=FALSE}
 knitr::include_graphics(file.path(dir_data, "outputs",
-                                  "priors_plots", "Yeo17", "combined", "GSR","FC",
-                                  "prior_combined_Yeo17_GSR_FC_Cholesky_sd.png"))
+                                  "priors_plots", "Yeo17", "combined", "noGSR","FC",
+                                  "prior_combined_Yeo17_noGSR_FC_Cholesky_sd.png"))
 #knitr::include_graphics(file.path(dir_data, "outputs",
- #                                 "priors_plots", "Yeo17", "combined","GSR", "FC",
-  #                                "prior_combined_Yeo17_GSR_FC_InverseWishart_sd.png"))
+ #                                 "priors_plots", "Yeo17", "combined","noGSR", "FC",
+  #                                "prior_combined_Yeo17_noGSR_FC_InverseWishart_sd.png"))
 ```
 
 #### 5.4.5 MSC
@@ -691,7 +633,7 @@ Once the data is loaded, we fit the Bayesian brain mapping model to obtain indiv
 
 ```{r warning=FALSE, eval=FALSE}
 bMap_1 <- BrainMap(
-  BOLD = BOLD_1,
+  BOLD = BOLD_4,
   prior = prior,
   TR = 0.72,
   drop_first = 15
@@ -797,7 +739,8 @@ bMap_4 <- readRDS(file.path(dir_data, "outputs", "brain_map", "Yeo17", "four_ses
 ```{r warning=FALSE, eval=FALSE}
 eng <- engagements(
   bMap = bMap_4,
-  method_p = 'bonferroni'
+  method_p = 'bonferroni',
+  z=5
   )
 ```
 

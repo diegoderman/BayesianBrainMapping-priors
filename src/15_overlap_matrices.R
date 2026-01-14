@@ -1,20 +1,23 @@
 #latest
-
 # remove.packages("fMRItools")
 # devtools::install_github("mandymejia/fMRItools", "7.0")
 # library(fMRItools)
 
 
-# remove.packages("BayesBrainMap")
-# devtools::install_github("mandymejia/BayesBrainMap", "2.0")
-# library(BayesBrainMap)
+remove.packages("BayesBrainMap")
+devtools::install_github("mandymejia/BayesBrainMap", "2.0")
+library(BayesBrainMap)
 
 # library(ggplot2)
 # library(scales)
 
-cols <- ciftiTools::ROY_BIG_BL()
-jet_diverging <- function(limits=c(-1,1), ...) {
-  ggplot2::scale_fill_gradientn(colours=rev(cols$color), values=cols$value, limits=limits, ...)
+jet_diverging <- function(...) {
+  scale_fill_gradientn(
+    colours = c("cyan", "green", "purple", "blue", "black", "red", "orange", "yellow"),
+    values  = rescale(c(-0.5, -0.45, -0.3, -0.15, 0, 0.2, 0.3, 0.5)), 
+    limits  = c(-0.5, 0.5),
+    oob     = squish
+  )
 }
 
 # SPATIAL OVERLAP MATRICES - YEO 17

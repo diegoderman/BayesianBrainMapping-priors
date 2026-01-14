@@ -48,7 +48,7 @@ run_brainmap_for_subject <- function(subject) {
 }
 
 
-for (i in 2:10) {
+for (i in 1:10) {
   subject_id <- sprintf("sub-MSC%02d", i)
   cat("Running:", subject_id, "\n")
   run_brainmap_for_subject(subject_id)
