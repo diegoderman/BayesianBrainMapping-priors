@@ -3,7 +3,7 @@
 # Declare empty lists 
 valid_LR_subjects_FD <- c()
 valid_RL_subjects_FD <- c()
-fd_flags <- list(LR = list(), RL = list())
+fd_flags <- list()
 
 # Initialize table
 fd_summary <- data.frame(
@@ -53,9 +53,12 @@ for (subject in subject_ids) {
                 mean_fd = mean_fd,
                 valid_time_sec = total_time_sec
             ))
-
+            
+            # for the list, subject id needs to be string
+            subject_str <- as.character(subject)
+            
             # Save fd object for future reference
-            fd_flags[[encoding]][[subject]][[session]] <- fd$outlier_flag
+            fd_flags[[encoding]][[subject_str]][[session]] <- fd$outlier_flag
         }
         # If both rest 1 and rest 2 meet both requirements, add to the list of valid for LR or RL
         if (all(session_pass)) {
