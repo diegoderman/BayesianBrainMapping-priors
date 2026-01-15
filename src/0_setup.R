@@ -19,11 +19,12 @@ library(fMRIscrub)       # version 0.14.7
 library(fMRItools)       # version 0.5.3
 library(viridis)         # version 0.6.5
 library(BayesBrainMap)   # version: 0.2.0
+library(tidyverse)       # version: 2.0.0
+library(purrr)           # version: 0.2.0
 
 # Set CIFTI Workbench path
 wb_path <- "~/Downloads/workbench"
 ciftiTools.setOption("wb_path", wb_path) 
-
 # Set up paths
 dir_HCP <- "/N/project/hcp_dcwan" # Location of HCP data
 dir_project <- "~/Documents/GitHub/BayesianBrainMapping-priors" # Path to GitHub folder
@@ -35,12 +36,15 @@ dir_HCP_demo <- "~/Documents/GitHub/BayesianBrainMapping-priors/data_OSF/inputs/
 
 # HCP_unrestricted_fname <- file.path(dir_data, "inputs", "unrestricted_HCP_demographics.csv")
 HCP_restricted_fname <- file.path(dir_HCP_demo, "restricted_HCP.csv")
+# TEST PURPOSES ONLY TRYING WITH RESTRICTED DEMEOGRAPHICS
+HCP_unrestricted_fname <- file.path(dir_data, "inputs", "restricted_HCP_demographics.csv")
 
 # Read CSV
 HCP_restricted <- read.csv(HCP_restricted_fname)
+HCP_unrestricted <- read.csv(HCP_unrestricted_fname)
 
 # All subject IDS
-subject_ids <- HCP_restricted$Subject
+subject_ids <- HCP_unrestricted$Subject
 
 # Constants
 fd_lag_HCP <- 4 # based on multiband factor?
@@ -49,5 +53,12 @@ TR_HCP <- .72 # Repetition time, in seconds
 TR_MSC <- 2.2 # Repetition time for MSC data, in seconds
 nT_HCP <- 1200 # Timepoints for each resting state scan
 min_total_sec <- 600 # Minimum duration of time series after scrubbing (600 sec = 10 min)
+
+# Parameter sweep definition for prior estimation
+encoding_sweep = c("combined") # Using only combined c("LR", "RL", "combined") 
+nIC_sweep = c(0, 1, 2, 15, 25)
+GSR_sweep = c(FALSE, TRUE)
+
+
 
 
