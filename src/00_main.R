@@ -1,7 +1,10 @@
 # Main script to run reproducibility GitHub repository 
 
+# Initialize libraries
+Sys.setenv(R_LIBS_USER='$R_LIBS_USER')
 # Set scriptdir as working directory
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+#setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+setwd("/N/u/dderman/Quartz/Documents/GitHub/BayesianBrainMapping-priors/src")
 
 source("0_setup.R")
 
@@ -21,7 +24,17 @@ source("4_parcellations.R")
 source("5_estimate_prior.R")
 
 # Intialize performance summary
-performance_tbl <- tibble()
+performance_tbl <- tibble(
+  encoding = character(),
+  nIC = integer(),
+  GSR = logical(),
+  elapsed_sec = numeric(),
+  user_sec = numeric(),
+  sys_sec = numeric(),
+  num_thr = numeric()
+)
+
+# Go over parameter sweep
 
 for(encoding in encoding_sweep){
   for(nIC in nIC_sweep){
@@ -33,7 +46,8 @@ for(encoding in encoding_sweep){
                                   nIC,
                                   GSR,
                                   dir_data,
-                                  TR_HCP)
+                                  TR_HCP,
+                                  usePar = nThreads)
       })
       
       performance_tbl <- add_row(
@@ -43,7 +57,8 @@ for(encoding in encoding_sweep){
         GSR = GSR,
         elapsed_sec = timing["elapsed"],
         user_sec = timing["user.self"],
-        sys_sec = timing["sys.self"]
+        sys_sec = timing["sys.self"],
+        num_thr = nThreads
       )
     }
   }

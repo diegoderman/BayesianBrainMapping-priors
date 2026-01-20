@@ -6,7 +6,8 @@
 
 # install.packages("ciftiTools")            
 # devtools::install_github("mandymejia/fMRIscrub", "14.0")          
-# install.packages("fMRItools")          
+# install.packages("fMRItools") # deprecated for new BBM
+# withr::with_libpaths(new = "/geode2/home/u020/dderman/Quartz/R/x86_64-pc-linux-gnu-library/4.4", devtools::install_github("mandymejia/fMRItools", "7.0", force=TRUE))
 # install.packages("viridis")
 # install.packages("BayesBrainMap")
 # devtools::install_github("mandymejia/BayesBrainMap", ref = "2.0")
@@ -15,8 +16,9 @@
 library(ggcorrplot)      # version 0.1.4.1
 library(gsignal)         # version 0.3.7
 library(ciftiTools)      # version 0.17.4
+library(stringi, lib="/geode2/home/u020/dderman/Quartz/R/x86_64-pc-linux-gnu-library/4.4")
+library(fMRItools, lib="/geode2/home/u020/dderman/Quartz/R/x86_64-pc-linux-gnu-library/4.4")       # version 0.7.2
 library(fMRIscrub)       # version 0.14.7
-library(fMRItools)       # version 0.5.3
 library(viridis)         # version 0.6.5
 library(BayesBrainMap)   # version: 0.2.0
 library(tidyverse)       # version: 2.0.0
@@ -53,6 +55,9 @@ TR_HCP <- .72 # Repetition time, in seconds
 TR_MSC <- 2.2 # Repetition time for MSC data, in seconds
 nT_HCP <- 1200 # Timepoints for each resting state scan
 min_total_sec <- 600 # Minimum duration of time series after scrubbing (600 sec = 10 min)
+
+# Calculation constants
+nThreads = 62 # number of threads to use to estimate priors
 
 # Parameter sweep definition for prior estimation
 encoding_sweep = c("combined") # Using only combined c("LR", "RL", "combined") 

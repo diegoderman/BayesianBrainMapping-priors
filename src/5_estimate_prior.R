@@ -93,7 +93,7 @@ estimate_and_export_prior <- function(
           fd,
           ~ {
             over_threshold <- !.x
-            (cumsum(bad) <= keep_volumes) & over_threshold
+            (cumsum(over_threshold) <= keep_volumes) & over_threshold
           }
         )
       )
