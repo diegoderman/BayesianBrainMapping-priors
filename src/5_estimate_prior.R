@@ -9,7 +9,8 @@ estimate_and_export_prior <- function(
   nIC,
   GSR,
   dir_data,
-  TR_HCP
+  TR_HCP,
+  usePar
 ) {
     # Get final list of subjects 
     final_subject_ids <- readRDS(file.path(dir_data, "outputs", "filtering", sprintf("valid_%s_subjects_balanced.rds", encoding)))
@@ -55,7 +56,7 @@ estimate_and_export_prior <- function(
     save_dir <- file.path(dir_project, "priors", parcellation)
     if (!dir.exists(save_dir)) dir.create(save_dir, recursive = TRUE)
 
-    cat(sprintf("Estimating prior for encoding: %s , parcellation: %s , %s\n",encoding, parcellation, gsr_label))
+    cat(sprintf("Estimating prior for encoding: %s , parcellation: %s , %s, Using %s threads\n",encoding, parcellation, gsr_label, as.character(usePar)))
     
     # Start scrubbing procedure, keeping ten minutes below FD threshold.
     
@@ -125,6 +126,8 @@ estimate_and_export_prior <- function(
         valid_keys <- GICA$meta$cifti$labels[[1]]$Key
         inds <- valid_keys[valid_keys > 0]
 
+        # Diego Debug print libpaths
+
         prior <- estimate_prior(
                 BOLD = BOLD_paths1,
                 BOLD2 = BOLD_paths2,
@@ -138,7 +141,9 @@ estimate_and_export_prior <- function(
                 inds = inds,
                 brainstructures = c("left", "right"),
                 drop_first = 15,
-                scrub = scrub
+                scrub = scrub,
+                usePar=usePar,
+                wb_path = wb_path
             )
         
         # Save file
@@ -161,7 +166,9 @@ estimate_and_export_prior <- function(
                 verbose = TRUE,
                 brainstructures = c("left", "right"),
                 drop_first = 15,
-                scrub = scrub
+                scrub = scrub,
+                usePar=usePar,
+                wb_path = wb_path
             )
 
         # Save file
@@ -184,7 +191,9 @@ estimate_and_export_prior <- function(
                 verbose = TRUE,
                 brainstructures = c("left", "right"),
                 drop_first = 15,
-                scrub = scrub
+                scrub = scrub,
+                usePar=usePar,
+                wb_path = wb_path
             )
 
         # Save file
@@ -208,7 +217,9 @@ estimate_and_export_prior <- function(
                 Q2_max = NULL,
                 verbose = TRUE,
                 drop_first = 15,
-                scrub = scrub
+                scrub = scrub,
+                usePar=usePar,
+                wb_path = wb_path
                 )
 
         # Save file
