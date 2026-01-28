@@ -25,8 +25,24 @@ ciftiTools.setOption("wb_path", wb_path)
 # TR = 0.72 for HCP data
 
 # Example function call:
-BOLD <- "~/Desktop/rfMRI_REST1_LR_Atlas_MSMAll_hp2000_clean.dtseries.nii"
-prior <- "~/Desktop/prior_combined_Yeo17_noGSR.rds"
+BOLD <- file.path(dir_data, "inputs", "rfMRI_REST1_LR_Atlas_MSMAll_hp2000_clean.dtseries.nii")
+
+# Select prior through nIC encoding (specified in 5_estimate_prior.R)
+nIC <- 0
+prior <- if (nIC == 0) {
+  file.path(dir_project, "priors", "Yeo17", "prior_combined_Yeo17_noGSR.rds")
+} else if (nIC == 1) {
+  file.path(dir_project, "priors", "MSC", "prior_combined_MSC_noGSR.rds")
+} else if (nIC == 2) {
+  file.path(dir_project, "priors", "PROFUMO", "prior_combined_PROFUMO_noGSR.rds")
+} else {
+  file.path(dir_project, "priors", sprintf("GICA%d", nIC), paste0("prior_combined_", sprintf("GICA%d", nIC), "_noGSR.rds"))
+}
+
+# Start scrubbing
+
+
+
 bMap <- BrainMap(
   BOLD = BOLD, # path to BOLD data
   prior = prior, # path to prior
