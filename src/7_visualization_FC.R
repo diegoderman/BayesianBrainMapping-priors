@@ -12,11 +12,11 @@
 
 library(ggplot2)
 
-# prior_files <- list.files(file.path(dir_project, "priors"), recursive = TRUE, full.names = TRUE)
+prior_files <- list.files(file.path(dir_project, "priors"), recursive = TRUE, full.names = TRUE)
 
 # prior_files <- prior_files[grepl("combined", prior_files) & grepl("GSR", prior_files) & grepl("GICA15", prior_files)]
 
-prior_files <- "~/Desktop/prior_combined_Yeo17_noGSR.rds"
+# prior_files <- "~/Desktop/prior_combined_Yeo17_noGSR.rds"
 
 get_prior_title <- function(base_name, encoding) {
   gsr <- if (grepl("noGSR", base_name)) "noGSR" else "GSR"

@@ -16,8 +16,8 @@
 library(ggcorrplot)      # version 0.1.4.1
 library(gsignal)         # version 0.3.7
 library(ciftiTools)      # version 0.17.4
-library(stringi, lib="/geode2/home/u020/dderman/Quartz/R/x86_64-pc-linux-gnu-library/4.4")
-library(fMRItools, lib="/geode2/home/u020/dderman/Quartz/R/x86_64-pc-linux-gnu-library/4.4")       # version 0.7.2
+#library(stringi, lib="/geode2/home/u020/dderman/Quartz/R/x86_64-pc-linux-gnu-library/4.4")
+#library(fMRItools, lib="/geode2/home/u020/dderman/Quartz/R/x86_64-pc-linux-gnu-library/4.4")       # version 0.7.2
 library(fMRIscrub)       # version 0.14.7
 library(viridis)         # version 0.6.5
 library(BayesBrainMap)   # version: 0.2.0
