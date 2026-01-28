@@ -17,25 +17,25 @@ estimate_and_export_prior <- function(
 
     # Construct file paths
     if (encoding == "LR" | encoding == "RL") {
-        BOLD_paths1 <- file.path("/N/project/hcp_dcwan", 
+        BOLD_paths1 <- file.path(dir_HCP, 
                                 final_subject_ids, 
                                 sprintf("MNINonLinear/Results/rfMRI_REST1_%s/rfMRI_REST1_%s_Atlas_MSMAll_hp2000_clean.dtseries.nii", encoding, encoding))
         encoding1 = encoding
         session1 = "REST1"
     
-        BOLD_paths2 <- file.path("/N/project/hcp_dcwan", 
+        BOLD_paths2 <- file.path(dir_HCP, 
                                 final_subject_ids, 
                                 sprintf("MNINonLinear/Results/rfMRI_REST2_%s/rfMRI_REST2_%s_Atlas_MSMAll_hp2000_clean.dtseries.nii", encoding, encoding))
         encoding2 = encoding
         session2 = "REST2"
     } else {
-        BOLD_paths1 <- file.path("/N/project/hcp_dcwan", 
+        BOLD_paths1 <- file.path(dir_HCP, 
                                 final_subject_ids, 
                                 sprintf("MNINonLinear/Results/rfMRI_REST1_LR/rfMRI_REST1_LR_Atlas_MSMAll_hp2000_clean.dtseries.nii"))
         encoding1 = "LR"
         session1 = "REST1"
     
-        BOLD_paths2 <- file.path("/N/project/hcp_dcwan", 
+        BOLD_paths2 <- file.path(dir_HCP, 
                                 final_subject_ids, 
                                 sprintf("MNINonLinear/Results/rfMRI_REST1_RL/rfMRI_REST1_RL_Atlas_MSMAll_hp2000_clean.dtseries.nii"))
         encoding2 = "RL"
