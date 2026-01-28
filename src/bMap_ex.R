@@ -40,11 +40,18 @@ prior <- if (nIC == 0) {
 }
 
 # Start scrubbing
+# read BOLD timeseries as matrix 
+X = as.matrix(read_cifti(BOLD))
+BOLD_cifti = read_cifti(BOLD)
 
+# projection scrub
+scrubbed_xifti = scrub_xifti(BOLD_cifti)
 
+# save results
+write_cifti(scrubbed_xifti, paste0(BOLD, "_scrubbed"))
 
 bMap <- BrainMap(
-  BOLD = BOLD, # path to BOLD data
+  BOLD = paste0(BOLD, "_scrubbed"), # path to BOLD data
   prior = prior, # path to prior
   TR = 0.72
 )
