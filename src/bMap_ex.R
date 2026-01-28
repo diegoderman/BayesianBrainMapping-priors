@@ -45,10 +45,13 @@ X = as.matrix(read_cifti(BOLD))
 BOLD_cifti = read_cifti(BOLD)
 
 # projection scrub
-scrubbed_xifti = scrub_xifti(BOLD_cifti)
+scrubing_results = scrub_xifti(BOLD_cifti)
+
+# perform scrubbing 
+BOLD_scrubbed = BOLD_cifti[,scrubing_results[4]$outlier_flag]
 
 # save results
-write_cifti(scrubbed_xifti, paste0(BOLD, "_scrubbed"))
+write_cifti(BOLD_scrubbed, paste0(BOLD, "_scrubbed"))
 
 bMap <- BrainMap(
   BOLD = paste0(BOLD, "_scrubbed"), # path to BOLD data
