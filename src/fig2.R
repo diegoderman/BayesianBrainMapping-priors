@@ -132,7 +132,6 @@ plot(
   prior,
   what = "maps",
   stat  = "sd", var_method = variance_method,
-  var_method = variance_method,
   idx   = idx,
   title = "",
   cex.title = 1e-6,
