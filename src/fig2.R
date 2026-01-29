@@ -1,98 +1,179 @@
 # Yeo 17 -> idx 14
+# GICA 15, 25 idx 2
 # MSC -> 2 (Q=17)
 # PROFUMO -> 8 (Q=12)
 
-# prior_file <- "/Users/nohelia/Documents/GitHub/BayesianBrainMapping-Templates/priors/GICA15/prior_combined_GICA15_noGSR.rds"
-prior_file <- "~/Desktop/prior_combined_Yeo17_noGSR.rds"
-prior <- readRDS(prior_file)
+out_dir <- "~/Documents/GitHub/BayesianBrainMapping-priors/figure_export"
 
-out_dir <- "~/Desktop"
-
-Q <- 17
+# set var_method for exporting figures 
+variance_method <- "unbiased"
 
 # YEO17
+prior_file <- "~/Documents/GitHub/BayesianBrainMapping-priors/priors/Yeo17/prior_combined_Yeo17_noGSR.rds"
+prior <- readRDS(prior_file)
+
+# Set the prior parameters
+Q <- 17
+idx <- 14
 prior$template_parc_table <- subset(prior$template_parc_table, prior$template_parc_table$Key > 0)
 
 plot(
     prior,
     what = "maps",
-    stat  = "sd",
-    idx   = 14,
+    stat  = "mean",
+    idx   = idx,
     title = "",
     cex.title = 1e-6,
     legend_embed = FALSE,   
     zlim = c(-3/Q, 3/Q),                              
-    fname = file.path(out_dir, "Figure2", "GICA15_IC2.png"),
+    fname = file.path(out_dir, "Figure2", "Yeo17_IC14.png"),
 )
-
-files_written <- plot(
-    prior,
-    what = "maps",
-    stat  = "sd",
-    idx   = 12,
-    title = "",
-    zlim = c(0, 0.1),
-    cex.title = 1e-6,
-    legend_embed = FALSE,                                 
-    fname = file.path(out_dir, "Yeo17_comp2_mean"),      
-    legend_fname = file.path(out_dir, "Yeo17_comp2_legend.png")
-)
-
-# GICA
-map_png    <- files_written$surface[1]  
-legend_png <- files_written$surface[2] 
-
-# PROFUMO, MSC, YEO17
-# map_png    <- files_written[1]  
-# legend_png <- files_written[2] 
-
-ciftiTools::view_comp(
-    img    = map_png,title=NULL,
-    legend = legend_png,
-    legend_height = 0.5,
-    fname  = file.path(out_dir, "Figure2_new", "GICA50_IC12_sd.png")
-) 
-
-
-
-
-
-# PARCELLATION 
-
-GICA <- read_cifti(file.path(dir_data, "inputs", sprintf("GICA%d.dscalar.nii", 15)))
 
 plot(
-        GICA,
-        idx   = 2,
-        title = "",cex.title = 1e-6,
-        legend_embed = FALSE,                                    
-        fname = file.path(out_dir, "Figure2", "GICA50_IC12.png")
+  prior,
+  what = "maps",
+  stat  = "sd", var_method = variance_method,
+  idx   = idx,
+  title = "",
+  cex.title = 1e-6,
+  legend_embed = FALSE,   
+  zlim = c(0, 2/Q),                              
+  fname = file.path(out_dir, "Figure2", "Yeo17_IC14.png"),
 )
 
 
+# GICA15
+prior_file <- file.path(dir_project, "priors", sprintf("GICA%d/prior_combined_GICA%d_noGSR.rds", 15, 15))
+prior <- readRDS(prior_file)
 
-files_written <- plot(
-        GICA,
-        idx   = 2,
-        title = "",cex.title = 1e-6,
-        legend_embed = FALSE,                                 
-        fname = file.path(out_dir, "GICA50"),      
-        legend_fname = file.path(out_dir, "GICA25_legend.png")
+# Set the prior parameters
+Q <- 15
+idx <- 2
+prior$template_parc_table <- subset(prior$template_parc_table, prior$template_parc_table$Key > 0)
+
+plot(
+  prior,
+  what = "maps",
+  stat  = "mean",
+  idx   = idx,
+  title = "",
+  cex.title = 1e-6,
+  legend_embed = FALSE,   
+  zlim = c(-3/Q, 3/Q),                              
+  fname = file.path(out_dir, "Figure2", "GICA15_IC2.png"),
 )
 
-map_png    <- files_written$surface[1]  
-legend_png <- files_written$surface[2] 
+plot(
+  prior,
+  what = "maps",
+  stat  = "sd", var_method = variance_method,
+  idx   = idx,
+  title = "",
+  cex.title = 1e-6,
+  legend_embed = FALSE,   
+  zlim = c(0, 2/Q),                              
+  fname = file.path(out_dir, "Figure2", "GICA15_IC2.png"),
+)
 
+# GICA25
+prior_file <- file.path(dir_project, "priors", sprintf("GICA%d/prior_combined_GICA%d_noGSR.rds", 25, 25))
+prior <- readRDS(prior_file)
 
-# map_png    <- files_written[1]  
-# legend_png <- files_written[2] 
+# Set the prior parameters
+Q <- 25
+idx <- 2
+prior$template_parc_table <- subset(prior$template_parc_table, prior$template_parc_table$Key > 0)
 
-ciftiTools::view_comp(
-    img    = map_png,title=NULL,
-    legend = legend_png,
-    legend_height = 0.5,
-    fname  = file.path(out_dir, "Figure2", "GICA15_IC2.png")
-) 
+plot(
+  prior,
+  what = "maps",
+  stat  = "mean",
+  idx   = idx,
+  title = "",
+  cex.title = 1e-6,
+  legend_embed = FALSE,   
+  zlim = c(-3/Q, 3/Q),                              
+  fname = file.path(out_dir, "Figure2", "GICA25_IC2.png"),
+)
+
+plot(
+  prior,
+  what = "maps",
+  stat  = "sd", var_method = variance_method,
+  idx   = idx,
+  title = "",
+  cex.title = 1e-6,
+  legend_embed = FALSE,   
+  zlim = c(0, 2/Q),                              
+  fname = file.path(out_dir, "Figure2", "GICA25_IC2.png"),
+)
+
+# MSC
+prior_file <- file.path(dir_project, "priors", sprintf("MSC/prior_combined_MSC_noGSR.rds"))
+prior <- readRDS(prior_file)
+
+# Set the prior parameters
+Q <- 18
+idx <- 2
+
+plot(
+  prior,
+  what = "maps",
+  stat  = "mean",
+  idx   = idx,
+  title = "",
+  cex.title = 1e-6,
+  legend_embed = FALSE,   
+  zlim = c(-3/Q, 3/Q),                              
+  fname = file.path(out_dir, "Figure2", "MSC_IC2.png"),
+)
+
+plot(
+  prior,
+  what = "maps",
+  stat  = "sd", var_method = variance_method,
+  var_method = variance_method,
+  idx   = idx,
+  title = "",
+  cex.title = 1e-6,
+  legend_embed = FALSE,   
+  zlim = c(0, 2/Q),                              
+  fname = file.path(out_dir, "Figure2", "MSC_IC2.png"),
+)
+
+# PROFUMO
+
+prior_file <- file.path(dir_project, "priors", sprintf("PROFUMO/prior_combined_PROFUMO_noGSR.rds"))
+prior <- readRDS(prior_file)
+
+# Set the prior parameters
+Q <- 12
+idx <- 8
+prior$template_parc_table <- subset(prior$template_parc_table, prior$template_parc_table$Key > 0)
+
+plot(
+  prior,
+  what = "maps",
+  stat  = "mean",
+  idx   = idx,
+  title = "",
+  cex.title = 1e-6,
+  legend_embed = FALSE,   
+  zlim = c(-3/Q, 3/Q),                              
+  fname = file.path(out_dir, "Figure2", "PROFUMO_IC8.png"),
+)
+
+plot(
+  prior,
+  what = "maps",
+  stat  = "sd", var_method = variance_method,
+  idx   = idx,
+  title = "",
+  cex.title = 1e-6,
+  legend_embed = FALSE,   
+  zlim = c(0, 2/Q),                              
+  fname = file.path(out_dir, "Figure2", "PROFUMO_IC8.png"),
+)
 
 profumo_mw <- readRDS(file.path(dir_data, "outputs", "parcellations", "PROFUMO_simplified_mwall.rds"))
 
