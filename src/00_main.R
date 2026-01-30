@@ -10,16 +10,16 @@ sourcedir = "~/Documents/GitHub/BayesianBrainMapping-priors/src"
 source(file.path(sourcedir, "0_setup.R"))
 
 # Run framewise displacement filtering 
-source(file.path(sourcedir, "1_fd_time_filtering.R")
+source(file.path(sourcedir, "1_fd_time_filtering.R"))
 
 # Filter unrelated subjects
-source(file.path(sourcedir, "2_unrelated_filtering.R")
+source(file.path(sourcedir, "2_unrelated_filtering.R"))
 
 # Balance sex within age groups
-source(file.path(sourcedir, "3_balance_age_sex.R")
+source(file.path(sourcedir, "3_balance_age_sex.R"))
 
 # Prepare Yeo17 parcellation for Prior estimation
-source(file.path(sourcedir, "4_parcellations.R")
+source(file.path(sourcedir, "4_parcellations.R"))
 
 ######## Begin estimate priors over the parameter sweep defined in 0_setup.R ######
 source(file.path(sourcedir,"5_estimate_prior.R"))
