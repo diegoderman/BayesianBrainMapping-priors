@@ -28,7 +28,8 @@ library(purrr)           # version: 0.2.0
 wb_path <- "~/Downloads/workbench"
 ciftiTools.setOption("wb_path", wb_path) 
 # Set up paths
-dir_HCP <- "/N/project/hcp_dcwan" # Location of HCP data
+#dir_HCP <- "/N/project/hcp_dcwan" # Location of HCP data
+dir_HCP <- "~/Documents/hcp_dcwan"
 dir_project <- "~/Documents/GitHub/BayesianBrainMapping-priors" # Path to GitHub folder
 
 dir_data <- file.path(dir_project, "data_OSF") # Path to data folder
@@ -57,11 +58,11 @@ nT_HCP <- 1200 # Timepoints for each resting state scan
 min_total_sec <- 600 # Minimum duration of time series after scrubbing (600 sec = 10 min)
 
 # Calculation constants
-nThreads = 62 # number of threads to use to estimate priors
+nThreads = 46 # number of threads to use to estimate priors
 
 # Parameter sweep definition for prior estimation
 encoding_sweep = c("combined") # Using only combined c("LR", "RL", "combined") 
-nIC_sweep = c(0, 1, 2, 15, 25)
+nIC_sweep = c(1)
 GSR_sweep = c(FALSE, TRUE)
 
 
