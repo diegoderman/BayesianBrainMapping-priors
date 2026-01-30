@@ -58,11 +58,7 @@ nT_HCP <- 1200 # Timepoints for each resting state scan
 min_total_sec <- 600 # Minimum duration of time series after scrubbing (600 sec = 10 min)
 
 # Calculation constants
-<<<<<<< HEAD
 nThreads = 46 # number of threads to use to estimate priors
-=======
-nThreads = 40 # number of threads to use to estimate priors
->>>>>>> f1d0730ac3feabdf212696aabacb0869d0006173
 
 # Parameter sweep definition for prior estimation
 encoding_sweep = c("combined") # Using only combined c("LR", "RL", "combined") 

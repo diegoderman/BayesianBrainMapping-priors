@@ -11,8 +11,61 @@
 
 # TR = 0.72 for HCP data
 
-# Example function call:
-BOLD <- file.path(dir_data, "inputs", "rfMRI_REST1_LR_Atlas_MSMAll_hp2000_clean.dtseries.nii")
+run_brainmap_for_subject <- function(bold, prior, scrubbing, smoothing, output_dir) {
+  # run_brainmap_for_subject <- function(prior_path, subject) {
+  prior_path <- prior
+  
+  bm_dir <- file.path(output_dir)
+  dir.create(bm_dir, recursive = TRUE, showWarnings = FALSE)
+  
+  if(scrubbing){
+  
+    cat("Running scrubbing for bold timeseries...", "\n")
+  
+    # read cifti files
+    bold_cifti <- lapply(bold, read_cifti)
+    
+    # projection scrub
+    scrubbing_results <- lapply(bold_cifti, scrub_xifti)
+    
+    scrub = lapply(scrubbing_results, `[[`, "outlier_flag")
+  
+  }
+  
+  bMap <- BrainMap(
+    BOLD = bold,
+    prior = prior_path,
+    TR = TR_HCP,
+    drop_first = 5,
+    hpf = 0,
+    GSR = FALSE,
+    scrub = scrub,
+    usePar = nThreads
+  )
+  
+  saveRDS(bMap, file.path(bm_dir, paste0(subject, "_", session, "_bMap.rds")))
+  
+  eng <- engagements(
+    bMap,
+    z = 5,
+    method_p = "bonferroni"
+  )
+  
+  saveRDS(eng, file.path(bm_dir, paste0(subject, "_", session, "_engagements_bon_z5.rds")))
+  
+  cat("Finished subject", subject, "session", session, "\n")
+}
+
+
+# Select parameters
+# output directory 
+output_dir <- "~/Documents/GitHub/BayesianBrainMapping-priors/data_OSF/outputs/brain_map"
+
+# BOLD timeseries
+bold1 <- file.path(dir_data, "inputs", "rfMRI_REST1_LR_Atlas_MSMAll_hp2000_clean.dtseries.nii")
+bold2 <- file.path(dir_data, "inputs", "rfMRI_REST2_LR_Atlas_MSMAll_hp2000_clean.dtseries.nii")
+
+bold <- c(bold1, bold2)
 
 # Select prior through nIC encoding (specified in 5_estimate_prior.R)
 nIC <- 0
@@ -31,22 +84,7 @@ prior <- if (nIC == 0) {
 X = as.matrix(read_cifti(BOLD))
 BOLD_cifti = read_cifti(BOLD)
 
-# projection scrub
-scrubing_results = scrub_xifti(BOLD_cifti)
 
-# perform scrubbing 
-BOLD_scrubbed = BOLD_cifti[,scrubing_results[4]$outlier_flag]
 
-# save results
-write_cifti(BOLD_scrubbed, paste0(BOLD, "_scrubbed"))
+bMap = run_brainmap_for_subject(bold, prior, scrubbing = TRUE, smoothing = FALSE, output_dir = output_dir)
 
-bMap <- BrainMap(
-  BOLD = paste0(BOLD, "_scrubbed"), # path to BOLD data
-  prior = prior, # path to prior
-  TR = 0.72
-)
-
-# Can run engagements after with bMap
-eng <- engagements(
-        bMap
-        )
