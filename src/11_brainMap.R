@@ -1,55 +1,89 @@
-# remove.packages("BayesBrainMap")
+# Main function is BrainMap
+# Most important parameters are BOLD, prior, and TR
 
-# devtools::install_github("mandymejia/BayesBrainMap", "2.0")
-# library(BayesBrainMap)
+# BOLD which is the user's data for Human Connectome Project can be found in slate
+# For each subject there are two paths you can use:
+# /N/project/hcp_dcwan/<subject_id>/MNINonLinear/Results/rfMRI_REST1_LR/rfMRI_REST1_LR_Atlas_MSMAll_hp2000_clean.dtseries.nii
+# /N/project/hcp_dcwan/<subject_id>/MNINonLinear/Results/rfMRI_REST1_RL/rfMRI_REST1_RL_Atlas_MSMAll_hp2000_clean.dtseries.nii
 
-run_brainmap_for_subject <- function(subject) {
-# run_brainmap_for_subject <- function(prior_path, subject) {
-  base_dir   <- "/N/project/clubneuro/MSC/washu_preproc/surface_pipeline"
-  output_dir <- "~/Documents/GitHub/BayesianBrainMapping-Templates/data_OSF/outputs/brain_map/MSC"
+# For the prior you can download it from here: https://osf.io/k6vx8/overview?view_only=b614888e9aca42999ee75eb2c3e02877
+# Example: priors/GICA15/prior_combined_GICA15_GSR.rds
 
-  for (i in 1:10) {
-    session <- sprintf("ses-func%02d", i)
-    bm_dir <- file.path(output_dir, subject, session)
-    dir.create(bm_dir, recursive = TRUE, showWarnings = FALSE)
+# TR = 0.72 for HCP data
 
-    # bold_file <- file.path(
-    #   base_dir, subject, "processed_restingstate_timecourses", session, "cifti",
-    #   paste0(subject, "_", session, "_task-rest_bold_32k_fsLR.dtseries.nii")
-    # )
-
-    cat("Running engagements for", subject, session, "\n")
-
-    # bMap <- BrainMap(
-    #   BOLD = bold_file,
-    #   prior = prior_path,
-    #   TR = 2.2,
-    #   drop_first = 15,
-    #   hpf = 0,
-    #   GSR = FALSE
-    # )
-
-    # saveRDS(bMap, file.path(bm_dir, paste0(subject, "_", session, "_bMap.rds")))
-    path <- file.path(bm_dir, paste0(subject, "_", session, "_bMap.rds"))
-    cat("path:", path, "\n ")
-    bMap <- readRDS(path)
-
+run_brainmap_for_subject <- function(bold, prior, scrubbing, smoothing, output_dir) {
+  # run_brainmap_for_subject <- function(prior_path, subject) {
+  prior_path <- prior
+  
+  bm_dir <- file.path(output_dir)
+  dir.create(bm_dir, recursive = TRUE, showWarnings = FALSE)
+  
+  if(scrubbing){
+    
+    cat("Running scrubbing for bold timeseries...", "\n")
+    
+    # read cifti files
+    bold_cifti <- lapply(bold, read_cifti)
+    
+    # projection scrub
+    scrubbing_results <- lapply(bold_cifti, scrub_xifti)
+    
+    scrub = lapply(scrubbing_results, `[[`, "outlier_flag")
+    
+  }
+  
+  bMap <- BrainMap(
+    BOLD = bold,
+    prior = prior_path,
+    TR = TR_HCP,
+    drop_first = 5,
+    GSR = FALSE,
+    scrub = scrub,
+    usePar = nThreads
+  )
+  
+  saveRDS(bMap, file.path(bm_dir, paste0("BOLD_single-subject", "_bMap.rds")))
+  
+  for (z in c(1, 2, 3, 4, 5)){
+    
     eng <- engagements(
       bMap,
-      z = 5,
+      z = z,
       method_p = "bonferroni"
     )
-
-    saveRDS(eng, file.path(bm_dir, paste0(subject, "_", session, "_engagements_bon_z5.rds")))
-
+    
+    saveRDS(eng, file.path(bm_dir, paste0("BOLD", "_engagements_bon_z-", z, ".rds")))
+    
   }
-
-  cat("Finished subject", subject, "\n")
+  
+  cat("Finished subject", subject, "session", session, "\n")
 }
 
+# Select parameters
+# output directory 
+output_dir <- "~/Documents/GitHub/BayesianBrainMapping-priors/data_OSF/outputs/brain_map"
 
-for (i in 1:10) {
-  subject_id <- sprintf("sub-MSC%02d", i)
-  cat("Running:", subject_id, "\n")
-  run_brainmap_for_subject(subject_id)
+# BOLD timeseries
+bold1 <- file.path(dir_data, "inputs", "rfMRI_REST1_LR_Atlas_MSMAll_hp2000_clean.dtseries.nii")
+bold2 <- file.path(dir_data, "inputs", "rfMRI_REST2_LR_Atlas_MSMAll_hp2000_clean.dtseries.nii")
+
+bold <- c(bold1, bold2)
+
+# Select prior through nIC encoding (specified in 5_estimate_prior.R)
+nIC <- 0
+prior <- if (nIC == 0) {
+  file.path(dir_project, "priors", "Yeo17", "prior_combined_Yeo17_noGSR.rds")
+} else if (nIC == 1) {
+  file.path(dir_project, "priors", "MSC", "prior_combined_MSC_noGSR.rds")
+} else if (nIC == 2) {
+  file.path(dir_project, "priors", "PROFUMO", "prior_combined_PROFUMO_noGSR.rds")
+} else {
+  file.path(dir_project, "priors", sprintf("GICA%d", nIC), paste0("prior_combined_", sprintf("GICA%d", nIC), "_noGSR.rds"))
 }
+
+# Start scrubbing
+# read BOLD timeseries as matrix 
+X = as.matrix(read_cifti(BOLD))
+BOLD_cifti = read_cifti(BOLD)
+
+bMap = run_brainmap_for_subject(bold, prior, scrubbing = TRUE, smoothing = FALSE, output_dir = output_dir)
