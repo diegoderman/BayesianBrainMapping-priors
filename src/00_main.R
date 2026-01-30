@@ -4,24 +4,25 @@
 Sys.setenv(R_LIBS_USER='$R_LIBS_USER')
 # Set scriptdir as working directory
 #setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-setwd("/N/u/dderman/Quartz/Documents/GitHub/BayesianBrainMapping-priors/src")
+#setwd("/N/u/dderman/Quartz/Documents/GitHub/BayesianBrainMapping-priors/src")
+sourcedir = "~/Documents/GitHub/BayesianBrainMapping-priors/src"
 
-source("0_setup.R")
+source(file.path(sourcedir, "0_setup.R"))
 
 # Run framewise displacement filtering 
-source("1_fd_time_filtering.R")
+#source("1_fd_time_filtering.R")
 
 # Filter unrelated subjects
-source("2_unrelated_filtering.R")
+#source("2_unrelated_filtering.R")
 
 # Balance sex within age groups
-source("3_balance_age_sex.R")
+#source("3_balance_age_sex.R")
 
 # Prepare Yeo17 parcellation for Prior estimation
-source("4_parcellations.R")
+#source("4_parcellations.R")
 
 ######## Begin estimate priors over the parameter sweep defined in 0_setup.R ######
-source("5_estimate_prior.R")
+source(file.path(sourcedir,"5_estimate_prior.R"))
 
 # Intialize performance summary
 performance_tbl <- tibble(
