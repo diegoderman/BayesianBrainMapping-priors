@@ -1,16 +1,3 @@
-# Packages must be installed and loaded into R
-# install.packages("BayesBrainMap")
-remove.packages("BayesBrainMap")
-devtools::install_github("mandymejia/BayesBrainMap", "2.0")
-library(BayesBrainMap)
-install.packages("ciftiTools") 
-library(BayesBrainMap)
-library(ciftiTools)
-
-# Set CIFTI Workbench path (download from https://www.humanconnectome.org/software/connectome-workbench)
-wb_path <- "~/Downloads/workbench" # path to where you downloaded it
-ciftiTools.setOption("wb_path", wb_path) 
-
 # Main function is BrainMap
 # Most important parameters are BOLD, prior, and TR
 
