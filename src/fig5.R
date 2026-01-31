@@ -46,7 +46,7 @@ ciftiTools::view_comp(
 bMap <- readRDS(file.path(dir_data, "outputs", "brain_map", "Yeo17", "four_sessions", "brainMap_4sessions.rds"))
 
 for (z in c(0, 1, 2, 3)){
-eng <- readRDS(file.path(dir_data, "outputs", "brain_map", "Yeo17", "BOLD_engagements_bon_z-", z, ".rds"))
+eng <- readRDS(file.path(dir_data, "outputs", "brain_map", "Yeo17", paste0("BOLD_engagements_bon_z-", z, ".rds")))
 fname = file.path(dir_data, "../figure_export/Figure5", paste0("posterior_engagement_Yeo17_", label_name, "_z-", z))
 plot(eng, idx = 14, stat = "engaged", title = "", cex.title = 1e-6, legend_embed = FALSE, fname=fname) 
 }
