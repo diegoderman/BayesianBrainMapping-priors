@@ -44,7 +44,7 @@ run_brainmap_for_subject <- function(bold, prior, scrubbing, smoothing, output_d
   
   saveRDS(bMap, file.path(bm_dir, paste0("BOLD_single-subject", "_bMap.rds")))
   
-  for (z in c(1, 2, 3, 4, 5)){
+  z = c(0, 1, 2)
     
     eng <- engagements(
       bMap,
@@ -52,7 +52,7 @@ run_brainmap_for_subject <- function(bold, prior, scrubbing, smoothing, output_d
       method_p = "bonferroni"
     )
     
-    saveRDS(eng, file.path(bm_dir, paste0("BOLD", "_engagements_bon_z-", z, ".rds")))
+    saveRDS(eng, file.path(bm_dir, paste0("BOLD", "_engagements_bon_z-012", ".rds")))
     
   }
   
