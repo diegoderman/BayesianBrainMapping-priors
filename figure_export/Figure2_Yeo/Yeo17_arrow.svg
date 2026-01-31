@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   xml:space="preserve"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="Yeo17_arrow.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.69300238"
+     inkscape:cx="23.087944"
+     inkscape:cy="456.70839"
+     inkscape:window-width="1920"
+     inkscape:window-height="989"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" /><defs
+     id="defs2" /><g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"><image
+       width="264.58334"
+       height="222.25"
+       preserveAspectRatio="none"
+       xlink:href="Yeo17_DefaultA_mean.png"
+       id="image187"
+       x="-87.995827"
+       y="-2.9269559"
+       inkscape:export-filename="Yeo17_DefaultA_mean_arrow.png"
+       inkscape:export-xdpi="300.00009"
+       inkscape:export-ydpi="300.00009" /><path
+       d="m -31.592551,80.333783 c -4.9904,-1.94063 -9.986861,-3.86455 -14.975731,-5.80816 0.43405,-0.44125 0.87602,-0.87607 1.31264,-1.31626 -3.63056,-3.63662 -7.26717,-7.26872 -10.9,-10.903066 2.30014,-2.30186 4.60056,-4.60346 6.90297,-6.90303 3.63665,3.6321 7.26558,7.270316 10.904551,10.900036 0.43834,-0.43541 0.8731,-0.87591 1.31302,-1.31129 2.00419,5.16757 4.01369,10.33443 6.00424,15.5066 -0.199,0.0188 -0.37707,-0.10464 -0.56106,-0.16411 z"
+       id="path102-3-9"
+       style="display:inline;fill:#ffffff;stroke:#000000;stroke-width:0.755706;stroke-miterlimit:4;stroke-dasharray:none"
+       inkscape:export-filename="/home/diego/anan/current_research/paper_latex/arxiv/figures/Fig4-2.1.png"
+       inkscape:export-xdpi="300.00009"
+       inkscape:export-ydpi="300.00009" /></g></svg>
