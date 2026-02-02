@@ -2,11 +2,10 @@
 
 # Initialize libraries
 Sys.setenv(R_LIBS_USER='$R_LIBS_USER')
-# Set scriptdir as working directory
-#setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-#setwd("/N/u/dderman/Quartz/Documents/GitHub/BayesianBrainMapping-priors/src")
+# Set script directory as working directory
 sourcedir = "~/Documents/GitHub/BayesianBrainMapping-priors/src"
 
+# Setup up dependencies and parameters
 source(file.path(sourcedir, "0_setup.R"))
 
 # Run framewise displacement filtering 

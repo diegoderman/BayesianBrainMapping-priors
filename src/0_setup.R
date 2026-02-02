@@ -3,11 +3,10 @@
 # install.packages("devtools")
 # install.packages("gsignal")
 # install.packages("ggcorrplot")
-
 # install.packages("ciftiTools")            
 # devtools::install_github("mandymejia/fMRIscrub", "14.0")          
 # install.packages("fMRItools") # deprecated for new BBM
-# withr::with_libpaths(new = "/geode2/home/u020/dderman/Quartz/R/x86_64-pc-linux-gnu-library/4.4", devtools::install_github("mandymejia/fMRItools", "7.0", force=TRUE))
+# devtools::install_github("mandymejia/fMRItools", "7.0", force=TRUE)
 # install.packages("viridis")
 # install.packages("BayesBrainMap")
 # devtools::install_github("mandymejia/BayesBrainMap", ref = "2.0")
@@ -16,8 +15,6 @@
 library(ggcorrplot)      # version 0.1.4.1
 library(gsignal)         # version 0.3.7
 library(ciftiTools)      # version 0.17.4
-#library(stringi, lib="/geode2/home/u020/dderman/Quartz/R/x86_64-pc-linux-gnu-library/4.4")
-#library(fMRItools, lib="/geode2/home/u020/dderman/Quartz/R/x86_64-pc-linux-gnu-library/4.4")       # version 0.7.2
 library(fMRIscrub)       # version 0.14.7
 library(viridis)         # version 0.6.5
 library(BayesBrainMap)   # version: 0.2.0
