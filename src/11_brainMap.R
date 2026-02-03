@@ -11,12 +11,19 @@
 
 # TR = 0.72 for HCP data
 
-run_brainmap_for_subject <- function(bold, prior, scrubbing, smoothing, output_dir) {
+run_brainmap_for_subject <- function(bold, 
+  prior, 
+  scrubbing = FALSE, 
+  smoothing = FALSE,
+  var_method = method_variance,
+  output_dir) {
   # run_brainmap_for_subject <- function(prior_path, subject) {
   prior_path <- prior
   
   bm_dir <- file.path(output_dir)
   dir.create(bm_dir, recursive = TRUE, showWarnings = FALSE)
+
+  base_name <- "BOLD_single-subject"
   
   if(scrubbing){
     
@@ -29,12 +36,32 @@ run_brainmap_for_subject <- function(bold, prior, scrubbing, smoothing, output_d
     scrubbing_results <- lapply(bold_cifti, scrub_xifti)
     
     scrub = lapply(scrubbing_results, `[[`, "outlier_flag")
+
+    # add _scrubbed to the file names
+    base_name <- paste0(base_name, "_scrubbed")
     
   }
   
-  bMap <- BrainMap(
+  if (smoothing){
+
+    # check if smoothing is an integer, otherwiwe set to 4 mm FWHM
+    if (!is.numeric(smoothing) | length(smoothing) != 1){
+      smoothing = 4
+    }
+    
+    # Apply spatial smoothing
+    bold <- lapply(bold, function(x) {
+      smooth_cifti(x, fwhm = smoothing)
+    })
+
+    # add _smoothed-XXmm to the file names
+    base_name <- paste0(base_name, "_smoothed-", smoothing, "mm")
+  }
+  
+  bMap <- fit_BBM(
     BOLD = bold,
     prior = prior_path,
+    var_method = var_method,
     TR = TR_HCP,
     drop_first = 5,
     GSR = FALSE,
@@ -42,26 +69,26 @@ run_brainmap_for_subject <- function(bold, prior, scrubbing, smoothing, output_d
     usePar = nThreads
   )
   
-  saveRDS(bMap, file.path(bm_dir, paste0("BOLD_single-subject", "_bMap.rds")))
+  saveRDS(bMap, file.path(bm_dir, paste0(base_name, ".rds")))
   
   z = c(0, 1, 2)
     
-    eng <- engagements(
+    eng <- id_engagements(
       bMap,
       z = z,
       method_p = "bonferroni"
     )
     
-    saveRDS(eng, file.path(bm_dir, paste0("BOLD", "_engagements_bon_z-012", ".rds")))
-    
-  }
+    saveRDS(eng, file.path(bm_dir, paste0(base_name, "_engagements_bon_z-012", ".rds")))
   
-  cat("Finished subject", subject, "session", session, "\n")
+    cat("Finished subject", "\n")
 }
 
 # Select parameters
 # output directory 
-output_dir <- "~/Documents/GitHub/BayesianBrainMapping-priors/data_OSF/outputs/brain_map"
+output_dir <- file.path(dir_data, "outputs", "brain_map")
+# create if directory does not exist
+dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 
 # BOLD timeseries
 bold1 <- file.path(dir_data, "inputs", "rfMRI_REST1_LR_Atlas_MSMAll_hp2000_clean.dtseries.nii")
@@ -70,7 +97,7 @@ bold2 <- file.path(dir_data, "inputs", "rfMRI_REST2_LR_Atlas_MSMAll_hp2000_clean
 bold <- c(bold1, bold2)
 
 # Select prior through nIC encoding (specified in 5_estimate_prior.R)
-nIC <- 0
+nIC <- brainMap_prior
 prior <- if (nIC == 0) {
   file.path(dir_project, "priors", "Yeo17", "prior_combined_Yeo17_noGSR.rds")
 } else if (nIC == 1) {
@@ -80,10 +107,6 @@ prior <- if (nIC == 0) {
 } else {
   file.path(dir_project, "priors", sprintf("GICA%d", nIC), paste0("prior_combined_", sprintf("GICA%d", nIC), "_noGSR.rds"))
 }
-
-# Start scrubbing
-# read BOLD timeseries as matrix 
-X = as.matrix(read_cifti(BOLD))
-BOLD_cifti = read_cifti(BOLD)
-
+  
+# Run BrainMap
 bMap = run_brainmap_for_subject(bold, prior, scrubbing = TRUE, smoothing = FALSE, output_dir = output_dir)

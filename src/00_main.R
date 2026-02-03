@@ -69,3 +69,7 @@ saveRDS(performance_tbl, file.path(dir_data, "outputs", "prior_estimation_timing
 
 # End of priors estimation
 ####################################################################################
+
+# Start individual fit_BBM
+
+source(file.path(sourcedir,"11_brainMap.R"))

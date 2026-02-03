@@ -9,7 +9,7 @@
 # devtools::install_github("mandymejia/fMRItools", "7.0", force=TRUE)
 # install.packages("viridis")
 # install.packages("BayesBrainMap")
-# devtools::install_github("mandymejia/BayesBrainMap", ref = "2.0")
+# devtools::install_github("diegoderman/BayesBrainMap", ref = "2.0")
 
 # Load packages
 library(ggcorrplot)      # version 0.1.4.1
@@ -62,6 +62,7 @@ encoding_sweep = c("combined") # Using only combined c("LR", "RL", "combined")
 nIC_sweep = c(1)
 GSR_sweep = c(FALSE, TRUE)
 
-
-
+# Parameter definition for fit BBM
+method_variance = "unbiased"
+brainMap_prior = 0 # Yeo 17 selected, see details in 5_estimate_priors.R
 
