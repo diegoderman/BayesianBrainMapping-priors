@@ -14,7 +14,7 @@ run_brainmap_for_subject <- function(subject, session) {
 
     cat("Running engagements for", subject, session, "\n")
 
-    bMap <- BrainMap(
+    bMap <- fit_BBM(
       BOLD = bold_file,
       prior = prior_path,
       TR = 2.2,
@@ -25,7 +25,7 @@ run_brainmap_for_subject <- function(subject, session) {
 
     saveRDS(bMap, file.path(bm_dir, paste0(subject, "_", session, "_bMap.rds")))
 
-    eng <- engagements(
+    eng <- id_engagements(
       bMap,
       z = 5,
       method_p = "bonferroni"

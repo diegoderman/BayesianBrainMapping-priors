@@ -19,7 +19,7 @@ scrub_BOLD1 <- replicate(length(BOLD_paths1), T_scrub_start:nT_HCP, simplify = F
 scrub_BOLD2 <- replicate(length(BOLD_paths2), T_scrub_start:nT_HCP, simplify = FALSE)
 scrub <- list(scrub_BOLD1, scrub_BOLD2)
 
-bMap <- BrainMap(
+bMap <- fit_BBM(
   BOLD = BOLD,
   prior = prior,
   TR = 0.72,
@@ -48,7 +48,7 @@ for (i in seq_along(BOLD)) {
   )
 }
 
-bMap <- BrainMap(
+bMap <- fit_BBM(
   BOLD = BOLD_smooth,
   prior = prior,
   TR = 0.72,
@@ -80,7 +80,7 @@ plot(bMap, idx = 14, stat = "mean", title = "", cex.title = 1e-6, legend_embed =
 
 bMap <- readRDS(file.path(dir_data, "outputs", "brain_map", "Yeo17", "figure", "100408", "brainMap_REST2.rds"))
 
-eng <- engagements(
+eng <- id_engagements(
    bMap = bMap,
    z=0,
    method_p="bonferroni"
