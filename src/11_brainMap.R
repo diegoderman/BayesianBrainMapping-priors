@@ -50,8 +50,8 @@ run_brainmap_for_subject <- function(bold,
     }
     
     # Apply spatial smoothing
-    bold <- lapply(bold, function(x) {
-      smooth_cifti(x, fwhm = smoothing)
+    bold_cifti <- lapply(bold_cifti, function(x) {
+      smooth_cifti(x, surface_FWHM = smoothing, volume_FWHM = smoothing)
     })
 
     # add _smoothed-XXmm to the file names
@@ -59,7 +59,7 @@ run_brainmap_for_subject <- function(bold,
   }
   
   bMap <- fit_BBM(
-    BOLD = bold,
+    BOLD = bold_cifti,
     prior = prior_path,
     var_method = var_method,
     TR = TR_HCP,
@@ -73,7 +73,7 @@ run_brainmap_for_subject <- function(bold,
   
   z = c(0, 1, 2)
     
-    eng <- id_engagements(
+    eng <- engagements(
       bMap,
       z = z,
       method_p = "bonferroni"
@@ -86,9 +86,7 @@ run_brainmap_for_subject <- function(bold,
 
 # Select parameters
 # output directory 
-output_dir <- file.path(dir_data, "outputs", "brain_map")
-# create if directory does not exist
-dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
+output_dir <- "~/Documents/GitHub/BayesianBrainMapping-priors/data_OSF/outputs/brain_map"
 
 # BOLD timeseries
 bold1 <- file.path(dir_data, "inputs", "rfMRI_REST1_LR_Atlas_MSMAll_hp2000_clean.dtseries.nii")
@@ -97,7 +95,7 @@ bold2 <- file.path(dir_data, "inputs", "rfMRI_REST2_LR_Atlas_MSMAll_hp2000_clean
 bold <- c(bold1, bold2)
 
 # Select prior through nIC encoding (specified in 5_estimate_prior.R)
-nIC <- brainMap_prior
+nIC <- 0
 prior <- if (nIC == 0) {
   file.path(dir_project, "priors", "Yeo17", "prior_combined_Yeo17_noGSR.rds")
 } else if (nIC == 1) {
@@ -108,5 +106,3 @@ prior <- if (nIC == 0) {
   file.path(dir_project, "priors", sprintf("GICA%d", nIC), paste0("prior_combined_", sprintf("GICA%d", nIC), "_noGSR.rds"))
 }
   
-# Run BrainMap
-bMap = run_brainmap_for_subject(bold, prior, scrubbing = TRUE, smoothing = FALSE, output_dir = output_dir)

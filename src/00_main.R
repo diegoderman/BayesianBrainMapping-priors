@@ -73,3 +73,5 @@ saveRDS(performance_tbl, file.path(dir_data, "outputs", "prior_estimation_timing
 # Start individual fit_BBM
 
 source(file.path(sourcedir,"11_brainMap.R"))
+# Run BrainMap
+bMap = run_brainmap_for_subject(bold, prior, scrubbing = TRUE, smoothing = FALSE, output_dir = output_dir)
