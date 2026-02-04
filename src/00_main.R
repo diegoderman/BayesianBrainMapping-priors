@@ -1,8 +1,8 @@
-# Main script to run reproducibility GitHub repository 
+# Main script to run reproducibility demo in GitHub repository 
 
 # Initialize libraries
 Sys.setenv(R_LIBS_USER='$R_LIBS_USER')
-# Set script directory as working directory
+# Set script directory
 sourcedir = "~/Documents/GitHub/BayesianBrainMapping-priors/src"
 
 # Setup up dependencies and parameters

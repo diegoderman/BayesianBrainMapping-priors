@@ -3,9 +3,23 @@
 #' 
 #' HCP data is fetched directly from HCP directory. 
 #' Outputs are saved in a separate directory for manuscript composition.
- 
+#' 
+
+### Start setting up of environment ############################################
+
+# set source directory
+sourcedir = "~/Documents/GitHub/BayesianBrainMapping-priors/src"
+# run setup steps
+# Setup up dependencies and parameters
+source(file.path(sourcedir, "0_setup.R"))
+
+# load dependencies
+library("parallel")
+
 # source brainMap for function
 source(file.path(sourcedir, "11_brainMap.R"))
+
+### Start parameter definition #################################################
 
 # set output directory
 manuscript_output_dir <- "~/Documents/GitHub/BayesianBrainMapping-priors/manuscript"
@@ -14,8 +28,11 @@ output_dir <- file.path(manuscript_output_dir, "outputs", "brain_map")
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 
 # set subject and session
-subject_ids <- c("100307", "100206") # example subject
+subject_ids <- c("100408", "100610", "101006", "101107") # example subject
 session_id <- c("REST1", "REST2")
+
+# set number of concurrent openMP cores
+Sys.setenv(OMP_NUM_THREADS = as.character(48/length(subject_ids)))
 
 # set parameters
 encoding <- c("LR", "RL") 
@@ -33,13 +50,27 @@ prior_path <- if (nIC == 0) {
     file.path(dir_project, "priors", sprintf("GICA%d", nIC), paste0("prior_combined_", sprintf("GICA%d", nIC), "_noGSR.rds"))
 }
 
+### Start running brain map and saving results ##################################
 
 # run brain mapping and save outputs
-mclapply(subject_ids, mc.cores = 2, function(subject_id) {
+mclapply(subject_ids, mc.cores = length(subject_ids), function(subject_id) {
+  
+  # create new tempdir for each thread
+  td <- tempfile(pattern = "dir_")
+  dir.create(td)
+  Sys.setenv(TMPDIR = td)
+  
     cat("Processing subject:", subject_id, "\n")
 
     for (sesid in session_id) {
         cat("  Session:", sesid, "\n")
+      
+        # Define base name for outputs
+        base_name <- paste0("sub-", subject_id, "ses-", sesid, "_brainmap")
+      
+        bm_dir <- file.path(output_dir, paste0("sub-", subject_id, "_ses-", sesid))
+      
+        if(file.exists(file.path(bm_dir, paste0(base_name, ".rds")))) continue
 
         # Define BOLD file paths for the subject
         bold1 <- file.path(dir_HCP, subject_id, "MNINonLinear", "Results", paste0("rfMRI_", sesid, "_LR"), paste0("rfMRI_", sesid, "_LR_Atlas_MSMAll_hp2000_clean.dtseries.nii"))
@@ -47,14 +78,11 @@ mclapply(subject_ids, mc.cores = 2, function(subject_id) {
         
         bold <- c(bold1, bold2)
         
-        # Define base name for outputs
-        base_name <- paste0("sub-", subject_id, "ses-", sesid, "_brainmap")
-        
         # Define brain map output directory for the subject
-        bm_dir <- file.path(output_dir, paste0("sub-", subject_id, "ses-", sesid))
         dir.create(bm_dir, recursive = TRUE, showWarnings = FALSE)
 
         # read cifti files
+        stopifnot(file.exists(bold2))
         bold_cifti <- lapply(bold, read_cifti)
         
         if (scrubbing) {
@@ -72,7 +100,7 @@ mclapply(subject_ids, mc.cores = 2, function(subject_id) {
             
             
                 # projection scrub
-                scrubbing_results <- lapply(bold_cifti, scrub_xifti)
+                scrubbing_results <- mclapply(bold_cifti, mc.cores = 2, scrub_xifti)
                 scrub = lapply(scrubbing_results, `[[`, "outlier_flag")
 
                 # save scrubbing results for this subject and session
@@ -101,14 +129,6 @@ mclapply(subject_ids, mc.cores = 2, function(subject_id) {
 
         saveRDS(bMap, file.path(bm_dir, paste0(base_name, ".rds")))
 
-        # save engagements
-        z = c(0, 1, 2, 3)
-        eng <- id_engagements(
-            bMap,
-            z = z,
-            method_p = "bonferroni"
-        )
-        saveRDS(eng, file.path(bm_dir, paste0(base_name, "_engagements_bon_z-0123", ".rds")))
         cat("Finished subject", subject_id, "session", sesid, "\n")
     }
 })
