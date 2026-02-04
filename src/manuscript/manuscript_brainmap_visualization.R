@@ -15,7 +15,7 @@ output_dir <- file.path(manuscript_output_dir, "outputs", "brain_map")
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 
 # set subject and session
-subject_ids <- c("100307", "100206", "100408", "100610", "101107", "103111") # example subject
+subject_ids <- c("100307", "100206", "100408", "100610", "101107", "103111") # example subject 
 session_id <- c("REST1", "REST2")
 
 # set parameters
@@ -44,7 +44,7 @@ for (subid in subject_ids){
 
     # Get name
 
-    cat("Subject; ", subid, " Session:", sesid, "\n")
+    cat("Subject: ", subid, " Session:", sesid, "\n")
     
     # Define base name for outputs
     base_name <- paste0("sub-", subid, "ses-", sesid, "_brainmap")
@@ -67,6 +67,10 @@ for (subid in subject_ids){
   
     bMap = readRDS(file.path(bm_dir, paste0(base_name, ".rds")))
     
+    # plot brainMap scalar maps
+    fname = file.path(dir_data, "../manuscript/figures", paste0("sub-", subid, "_ses-", sesid, "_DefaultA.png"))
+    plot(eng, idx = 14, stat = "engaged", title = "", cex.title = 1e-6, legend_embed = FALSE, fname=fname) 
+    
     # Generate engagement map ############## FIGURE FOCAL ENGAGEMENT MAP ##############
 
     z = c(1, 2, 3)
@@ -76,8 +80,7 @@ for (subid in subject_ids){
       method_p = "bonferroni"
     )
     
-    eng = readRDS(file.path(bm_dir, paste0(base_name, "_engagements_bon_z-0123", ".rds")))
-    fname = file.path(dir_data, "../manuscript/figures", paste0("posterior_engagement_Yeo17_", label_name, "_z-", z))
+    fname = file.path(dir_data, "../manuscript/figures", paste0("posterior_engagement_Yeo17_", label_name, "_z-123"))
     plot(eng, idx = 14, stat = "engaged", title = "", cex.title = 1e-6, legend_embed = FALSE, fname=fname) 
 
 
@@ -101,7 +104,6 @@ for (subid in subject_ids){
   plot(comparison_cifti, idx = 14, alpha = 1, color_mode = "qualitative", bg = "white", NA_color="white", fname=fname)
 
   # plot comparison
-  fname = file.path(dir_data, "../manuscript/figures", paste0("posterior_engagement_Yeo17_", label_name, "_comparison.png"))
   #plot(comparison_cifti, idx = 14, stat = "engaged", title = "", cex.title = 1e-6, legend_embed = FALSE, fname=fname)
 
 
