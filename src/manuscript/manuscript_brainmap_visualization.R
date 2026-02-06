@@ -34,7 +34,7 @@ output_dir <- file.path(manuscript_output_dir, "outputs", "brain_map")
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 
 # Set "fake" transparent colours for visualization.
-transparent_colors <- c("FF8080", "8080FF", "CC00CC")
+transparent_colors <- c("#ff8080", "#8080ff", "#CC80B3")
 
 # set subject and session
 subject_ids <- c("100307", "100206", "100408", "100610", "101107", "103111") # example subject 
@@ -49,7 +49,6 @@ GSR = FALSE
 nIC <- brainMap_prior
 prior_path <- if (nIC == 0) {
   file.path(dir_project, "priors", "Yeo17", "prior_combined_Yeo17_noGSR.rds")
-  prior_name = "Yeo17"
 } else if (nIC == 1) {
   file.path(dir_project, "priors", "MSC", "prior_combined_MSC_noGSR.rds")
 } else if (nIC == 2) {
@@ -60,6 +59,7 @@ prior_path <- if (nIC == 0) {
 
 # get label names
 prior <- readRDS(prior_path)
+prior_name = "Yeo17"
 prior$template_parc_table <- subset(prior$template_parc_table, prior$template_parc_table$Key > 0)
 Q <- dim(prior$prior$mean)[2]
 
@@ -76,7 +76,7 @@ for (subid in subject_ids){
     cat("Subject: ", subid, " Session:", sesid, "\n")
     
     # Define base name for outputs
-    base_name <- paste0("sub-", subid, "ses-", sesid, "_brainmap-", prior_name)
+    base_name <- paste0("sub-", subid, "ses-", sesid, "_brainmap")
     
     # Define brain map output directory for the subject
     bm_dir <- file.path(output_dir, paste0("sub-", subid, "_ses-", sesid))
@@ -97,7 +97,7 @@ for (subid in subject_ids){
 
     # Calculate engagements for all networks
     z = c(1, 2, 3)
-    eng <- engagements(
+    eng <- id_engagements(
       bMap,
       z = z,
       method_p = "bonferroni"
